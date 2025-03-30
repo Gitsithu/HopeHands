@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('cities', function (Blueprint $table) {
+        Schema::create('townships', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('division_id')->nullable()->constrained('divisions');
+            $table->foreignId('city_id')->nullable()->constrained('cities');
             $table->string('name')->nullable();
             $table->string('name_mm')->nullable();
             $table->tinyInteger('status')->default(1);
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('cities');
+        Schema::dropIfExists('townships');
     }
 };

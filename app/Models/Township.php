@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class City extends Model
+class Township extends Model
 {
     use SoftDeletes;
 
@@ -15,9 +15,4 @@ class City extends Model
         'name_mm',
         'status',
     ];
-
-    public function division()
-    {
-        return $this->belongsTo(Division::class)->select('id', 'name');
-    }
 }

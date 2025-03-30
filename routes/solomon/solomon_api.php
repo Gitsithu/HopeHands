@@ -18,6 +18,7 @@ use App\Http\Controllers\Backend\Admin\ProfitSettingController;
 use App\Http\Controllers\Backend\Admin\PublicContentController;
 use App\Http\Controllers\Backend\Admin\CurrencyConversionController;
 use App\Http\Controllers\Backend\DivisionController;
+use App\Http\Controllers\Backend\HelpSeekerController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -46,5 +47,13 @@ Route::prefix('admin')->group(function () {
         Route::post('store', [CategoryController::class, 'store']);
         Route::post('update/{id}', [CategoryController::class, 'update']);
         Route::delete('delete/{id}', [CategoryController::class, 'delete']);
+    });
+
+    Route::prefix('help-seeker')->group(function () {
+        // category
+        Route::get('/', [HelpSeekerController::class, 'index']);
+        Route::post('store', [HelpSeekerController::class, 'store']);
+        Route::post('update/{id}', [HelpSeekerController::class, 'update']);
+        Route::delete('delete/{id}', [HelpSeekerController::class, 'delete']);
     });
 });
