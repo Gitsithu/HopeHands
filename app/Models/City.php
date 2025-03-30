@@ -14,4 +14,9 @@ class City extends Model
         'name',
         'status',
     ];
+
+    public function division()
+    {
+        return $this->belongsTo(Division::class)->select('id', 'name');
+    }
 }
