@@ -149,7 +149,9 @@
                     <h3 class="text-lg font-semibold text-gray-800">${item.name}</h3>
                     <p class="text-gray-600 mt-2"><strong>မြို့နယ်:</strong> ${item.township?.name || 'N/A'}</p>
                     <p class="text-gray-600 mt-2"><strong>တိုင်းဒေသကြီး:</strong> ${item.division?.name || 'N/A'}</p>
+                    <p class="text-gray-600 mt-2"><strong>အရေးပေါ်သတ်မှတ်ချက်:</strong> ${item.urgent_level || 'N/A'}</p>
                     <p class="text-gray-600 mt-2"><strong>အကူအညီ:</strong> ${item.content || 'N/A'}</p>
+                    
                     
                     <button onclick="showDonatorDetail(${JSON.stringify(item).replace(/"/g, '&quot;')})"
                         class="mt-4 w-full py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition">
