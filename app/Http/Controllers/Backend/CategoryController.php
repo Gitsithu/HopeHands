@@ -19,7 +19,7 @@ class CategoryController extends Controller
 
     public function index()
     {
-        $data = Category::orderBy('updated_at')->get();
+        $data = Category::orderBy('updated_at')->select('id', 'name_mm as name')->get();
         return $this->successResponse($data);
     }
 

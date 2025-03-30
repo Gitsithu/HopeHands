@@ -17,7 +17,7 @@ class HelpSeekerController extends Controller
 
     public function index()
     {
-        $data = HelpSeeker::orderBy('updated_at')->paginate(10);
+        $data = HelpSeeker::orderBy('updated_at')->with('division', 'city', 'township', 'category')->paginate(9);
         return $this->successResponse($data);
     }
 
@@ -26,12 +26,21 @@ class HelpSeekerController extends Controller
         DB::beginTransaction();
         try {
             $postData = $request->validated();
-            dd($postData);
             HelpSeeker::create([
-                'contact' => array_merge([
-                    'telegram' => $request[0],
-                    'viber' => $request[1],
-                ], $postData),
+                'name' => $postData['name'],
+                'phone' => $postData['phone'],
+                'city_id' => $postData['city_id'],
+                'division_id' => $postData['division_id'],
+                'category_id' => $postData['category_id'],
+                'township_id' => $postData['township_id'],
+                'location' => $postData['location'],
+                'content' => $postData['content'],
+                'urgent_level' => $postData['urgent_level'],
+                'contact' => [
+                    'telegram' => $postData['telegram'] ?? null,
+                    'telegram_usename' => $postData['telegram_usename'] ?? null,
+                    'viber' => $postData['viber'] ?? null,
+                ],
             ]);
             DB::commit();
             return $this->successResponse(Message::createdSuccess);
@@ -39,7 +48,6 @@ class HelpSeekerController extends Controller
             DB::rollBack();
             Log::error('Error creating help seeker: ' . $e->getMessage());
             return $this->successResponse(Message::createdFail);
-
         }
     }
 

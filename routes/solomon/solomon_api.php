@@ -18,6 +18,7 @@ use App\Http\Controllers\Backend\Admin\ProfitSettingController;
 use App\Http\Controllers\Backend\Admin\PublicContentController;
 use App\Http\Controllers\Backend\Admin\CurrencyConversionController;
 use App\Http\Controllers\Backend\DivisionController;
+use App\Http\Controllers\Backend\FetchController;
 use App\Http\Controllers\Backend\HelpSeekerController;
 
 Route::get('/user', function (Request $request) {
@@ -30,6 +31,8 @@ Route::prefix('admin')->group(function () {
         Route::get('/', [DivisionController::class, 'index']);
         Route::post('store', [DivisionController::class, 'store']);
         Route::post('update/{id}', [DivisionController::class, 'update']);
+        Route::get('city-fetch/{divisionId}', [DivisionController::class, 'cityFetch']);
+        Route::get('township-fetch/{cityId}', [DivisionController::class, 'townshipFetch']);
         Route::delete('delete/{id}', [DivisionController::class, 'delete']);
     });
 
@@ -55,5 +58,10 @@ Route::prefix('admin')->group(function () {
         Route::post('store', [HelpSeekerController::class, 'store']);
         Route::post('update/{id}', [HelpSeekerController::class, 'update']);
         Route::delete('delete/{id}', [HelpSeekerController::class, 'delete']);
+    });
+
+    Route::prefix('filter')->group(function () {
+        // category
+        Route::post('/', [FetchController::class, 'filter']);
     });
 });

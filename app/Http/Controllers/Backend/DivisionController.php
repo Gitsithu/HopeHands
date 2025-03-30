@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Backend;
 
 use Exception;
+use App\Models\City;
 use App\Util\Message;
 use App\Models\Division;
+use App\Models\Township;
 use Illuminate\Http\Request;
 use App\Traits\ApiResponseTrait;
 use Illuminate\Support\Facades\DB;
@@ -19,7 +21,19 @@ class DivisionController extends Controller
 
     public function index()
     {
-        $data = Division::orderBy('updated_at')->get();
+        $data = Division::orderBy('updated_at')->select('id', 'name_mm as name')->get();
+        return $this->successResponse($data);
+    }
+
+    public function cityFetch($divisionId)
+    {
+        $data = City::orderBy('updated_at')->where('division_id', $divisionId)->select('id', 'name_mm as name')->get();
+        return $this->successResponse($data);
+    }
+
+    public function townshipFetch($cityId)
+    {
+        $data = Township::orderBy('updated_at')->where('city_id', $cityId)->select('id', 'name_mm as name')->get();
         return $this->successResponse($data);
     }
 
@@ -35,7 +49,6 @@ class DivisionController extends Controller
             DB::rollBack();
             Log::error('Error creating division: ' . $e->getMessage());
             return $this->successResponse(Message::createdFail);
-
         }
     }
 
