@@ -447,6 +447,35 @@
     });
 </script>
 
+<!-- Store API -->
+<script>
+    // Handle Form Submission
+    document.getElementById('search-button').addEventListener('click', function () {
+        let searchData = {
+            type: document.getElementById('type-search')?.value || '',
+            division: document.getElementById('division-search').value,
+            city: document.getElementById('city-search').value,
+            township: document.getElementById('township-search').value,
+            category: document.getElementById('category-search').value
+        };
+
+        sendSearchRequest(searchData);
+    });
+
+    function sendSearchRequest(searchData) {
+        console.log(searchData, 'searchData');
+
+        axios.post(`${url}/filter`, searchData)
+            .then(response => {
+                console.log('Search results:', response.data);
+            })
+            .catch(error => {
+                console.error('Error fetching search results:', error);
+            });
+    }
+
+</script>
+
 <style>
     /* Button disabled state */
     button:disabled {
