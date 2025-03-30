@@ -15,21 +15,21 @@ class FetchController extends Controller
     public function filter(Request $request)
     {
         $type = $request->input('type');
-        $division = $request->input('division');
+        // $division = $request->input('division');
         $city = $request->input('city');
         $township = $request->input('township');
         $category = $request->input('category');
 
         if ($type == 'donators') {
-            $query = Donate::query();
+            $query = Donate::query()->with('city', 'township', 'category');
 
             if ($category) {
                 $query->where('category_id', $category);
             }
 
-            if ($division) {
-                $query->where('division_id', $division);
-            }
+            // if ($division) {
+            //     $query->where('division_id', $division);
+            // }
 
             if ($city) {
                 $query->where('city_id', $city);
@@ -42,15 +42,15 @@ class FetchController extends Controller
             $donator = $query->paginate(9);
             return $this->successResponse($donator);
         } else {
-            $query = HelpSeeker::query()->with('division', 'city', 'township', 'category');
+            $query = HelpSeeker::query()->with('city', 'township', 'category');
 
             if ($category) {
                 $query->where('category_id', $category);
             }
 
-            if ($division) {
-                $query->where('division_id', $division);
-            }
+            // if ($division) {
+            //     $query->where('division_id', $division);
+            // }
 
             if ($city) {
                 $query->where('city_id', $city);
