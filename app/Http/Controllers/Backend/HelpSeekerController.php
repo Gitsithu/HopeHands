@@ -26,12 +26,20 @@ class HelpSeekerController extends Controller
         DB::beginTransaction();
         try {
             $postData = $request->validated();
-            dd($postData);
             HelpSeeker::create([
+                'name' => $postData['name'],
+                'phone' => $postData['phone'],
+                'city_id' => $postData['city_id'],
+                'division_id' => $postData['division_id'],
+                'category_id' => $postData['category_id'],
+                'township_id' => $postData['township_id'],
+                'location' => $postData['location'],
+                'content' => $postData['content'],
+                'urgent_level' => $postData['urgent_level'],
                 'contact' => array_merge([
-                    'telegram' => $request[0],
-                    'viber' => $request[1],
-                ], $postData),
+                    'telegram' => $postData->input('telegram'),
+                    'viber' => $postData->input('viber'),
+                ]),
             ]);
             DB::commit();
             return $this->successResponse(Message::createdSuccess);

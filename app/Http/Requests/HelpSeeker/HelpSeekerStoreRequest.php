@@ -2,10 +2,12 @@
 
 namespace App\Http\Requests\HelpSeeker;
 
+use App\Traits\ApiResponseTrait;
 use Illuminate\Foundation\Http\FormRequest;
 
 class HelpSeekerStoreRequest extends FormRequest
 {
+    use ApiResponseTrait;
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -25,15 +27,18 @@ class HelpSeekerStoreRequest extends FormRequest
             'name' => [
                 'required',
             ],
-            'phone' => 'nullable|min:8|regex:/^([0-9\s\-\+\(\)]*)$/|max:12',
+            'phone' => 'required',
             'city_id' => 'required',
             'division_id' => 'required',
             'category_id' => 'required',
             'location' => 'required',
-            'contact' => 'required|json',
+            'contact' => "nullable",
             'content' => 'required',
             'urgent_level' => 'required',
-            'status' => 1
+            // 'viber' => 'required_without:telegram|phone:international',
+            // 'telegram' => 'required_without:viber|phone:international',
+            'viber' => 'required_without:telegram',
+            'telegram' => 'required_without:viber',
         ];
     }
 
