@@ -20,7 +20,7 @@ class FetchController extends Controller
         $township = $request->input('township');
         $category = $request->input('category');
 
-        if ($type == 'donator') {
+        if ($type == 'donators') {
             $query = Donate::query();
 
             if ($category) {
