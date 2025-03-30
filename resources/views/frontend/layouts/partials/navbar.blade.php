@@ -80,8 +80,12 @@
                         class="w-50 px-10 py-3 bg-blue-600 text-white rounded-lg transition-all duration-300 font-medium shadow-md">
                         ရှာဖွေရန်
                     </button>
-                    <button
+                    {{-- <button
                         class="w-50 px-10 border-2 border-blue-500 text-white rounded-lg hover:bg-blue-500 transition-all duration-300 font-medium shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
+                        စာရင်းသွင်းရန်
+                    </button> --}}
+                    <button id="openModal"
+                        class="w-50 px-10 py-3 border-2 border-blue-500 text-blue-500 rounded-lg hover:bg-blue-500 hover:text-white transition-all duration-300 font-medium shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
                         စာရင်းသွင်းရန်
                     </button>
                 </div>
@@ -236,10 +240,14 @@
 
     function checkSelections() {
         // Check desktop inputs
-        const division = document.getElementById('division-search')?.value || document.getElementById('mobile-division-search')?.value;
-        const township = document.getElementById('township-search')?.value || document.getElementById('mobile-township-search')?.value;
-        const city = document.getElementById('city-search')?.value || document.getElementById('mobile-city-search')?.value;
-        const category = document.getElementById('category-search')?.value || document.getElementById('mobile-category-search')?.value;
+        const division = document.getElementById('division-search')?.value || document.getElementById(
+            'mobile-division-search')?.value;
+        const township = document.getElementById('township-search')?.value || document.getElementById(
+            'mobile-township-search')?.value;
+        const city = document.getElementById('city-search')?.value || document.getElementById('mobile-city-search')
+            ?.value;
+        const category = document.getElementById('category-search')?.value || document.getElementById(
+            'mobile-category-search')?.value;
 
         const searchButton = document.getElementById('search-button');
         const mobileSearchButton = document.getElementById('mobile-search-button');
@@ -250,10 +258,12 @@
         if (searchButton) {
             searchButton.disabled = !isComplete;
             if (isComplete) {
-                searchButton.classList.add('hover:bg-blue-700', 'transform', 'hover:-translate-y-0.5', 'hover:shadow-lg');
+                searchButton.classList.add('hover:bg-blue-700', 'transform', 'hover:-translate-y-0.5',
+                    'hover:shadow-lg');
                 searchButton.classList.remove('opacity-75', 'cursor-not-allowed');
             } else {
-                searchButton.classList.remove('hover:bg-blue-700', 'transform', 'hover:-translate-y-0.5', 'hover:shadow-lg');
+                searchButton.classList.remove('hover:bg-blue-700', 'transform', 'hover:-translate-y-0.5',
+                    'hover:shadow-lg');
                 searchButton.classList.add('opacity-75', 'cursor-not-allowed');
             }
         }
@@ -271,10 +281,14 @@
     }
 
     function performSearch() {
-        const division = document.getElementById('division-search')?.value || document.getElementById('mobile-division-search')?.value;
-        const township = document.getElementById('township-search')?.value || document.getElementById('mobile-township-search')?.value;
-        const city = document.getElementById('city-search')?.value || document.getElementById('mobile-city-search')?.value;
-        const category = document.getElementById('category-search')?.value || document.getElementById('mobile-category-search')?.value;
+        const division = document.getElementById('division-search')?.value || document.getElementById(
+            'mobile-division-search')?.value;
+        const township = document.getElementById('township-search')?.value || document.getElementById(
+            'mobile-township-search')?.value;
+        const city = document.getElementById('city-search')?.value || document.getElementById('mobile-city-search')
+            ?.value;
+        const category = document.getElementById('category-search')?.value || document.getElementById(
+            'mobile-category-search')?.value;
 
         if (!division || !township || !city || !category) {
             showErrorToast("Please fill all search fields");
