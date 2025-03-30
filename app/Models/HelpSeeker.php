@@ -18,11 +18,12 @@ class HelpSeeker extends Model
         'category_id',
         'location',
         'content',
+        'contact',
         'urgent_level',
         'status',
     ];
 
     protected $casts = [
-        'contact' => 'array',
+        'contact' => 'json',
     ];
 }

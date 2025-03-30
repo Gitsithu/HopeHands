@@ -26,7 +26,7 @@ class HelpSeekerController extends Controller
         DB::beginTransaction();
         try {
             $postData = $request->validated();
-            HelpSeeker::create([
+            $help = HelpSeeker::create([
                 'name' => $postData['name'],
                 'phone' => $postData['phone'],
                 'city_id' => $postData['city_id'],
@@ -36,10 +36,11 @@ class HelpSeekerController extends Controller
                 'location' => $postData['location'],
                 'content' => $postData['content'],
                 'urgent_level' => $postData['urgent_level'],
-                'contact' => array_merge([
-                    'telegram' => $postData->input('telegram'),
-                    'viber' => $postData->input('viber'),
-                ]),
+                'contact' => [
+                    'telegram' => $postData['telegram'] ?? null,
+                    'telegram_usename' => $postData['telegram_usename'] ?? null,
+                    'viber' => $postData['viber'] ?? null,
+                ],
             ]);
             DB::commit();
             return $this->successResponse(Message::createdSuccess);
@@ -47,7 +48,6 @@ class HelpSeekerController extends Controller
             DB::rollBack();
             Log::error('Error creating help seeker: ' . $e->getMessage());
             return $this->successResponse(Message::createdFail);
-
         }
     }
 

@@ -31,14 +31,14 @@ class HelpSeekerStoreRequest extends FormRequest
             'city_id' => 'required',
             'division_id' => 'required',
             'category_id' => 'required',
+            'township_id' => 'required',
             'location' => 'required',
             'contact' => "nullable",
             'content' => 'required',
             'urgent_level' => 'required',
-            // 'viber' => 'required_without:telegram|phone:international',
-            // 'telegram' => 'required_without:viber|phone:international',
             'viber' => 'required_without:telegram',
             'telegram' => 'required_without:viber',
+            'telegram_usename' => 'required_without:telegram',
         ];
     }
 
