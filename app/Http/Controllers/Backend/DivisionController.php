@@ -19,7 +19,7 @@ class DivisionController extends Controller
 
     public function index()
     {
-        $data = Division::orderBy('updated_at')->get();
+        $data = Division::orderBy('updated_at')->select('id', 'name_mm as name')->get();
         return $this->successResponse($data);
     }
 
@@ -35,7 +35,6 @@ class DivisionController extends Controller
             DB::rollBack();
             Log::error('Error creating division: ' . $e->getMessage());
             return $this->successResponse(Message::createdFail);
-
         }
     }
 
