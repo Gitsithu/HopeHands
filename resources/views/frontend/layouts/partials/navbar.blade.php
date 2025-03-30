@@ -6,14 +6,14 @@
             <a href="#" class="flex items-center">
                 <img src="/frontend/assets/images/logo.png" alt="MyApp Logo" class="w-28">
             </a>
-            
+
             <!-- Mobile Menu Button -->
             <button id="mobile-menu-button" class="text-white focus:outline-none">
                 <svg id="menu-icon" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                 </svg>
                 <svg id="close-icon" class="h-8 w-8 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                 </svg>
             </button>
         </div>
@@ -33,8 +33,9 @@
                     <div class="relative">
                         <input type="text" id="division-search"
                             class="px-4 py-3 w-full bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 rounded-lg text-white placeholder-gray-400"
-                            placeholder="တိုင်းဒေသကြီး/ပြည်နယ်" readonly onclick="showDropdown('division-dropdown')"/>
-                        <div id="division-dropdown" class="hidden absolute z-20 mt-1 w-full bg-gray-800 text-white rounded-lg shadow-xl max-h-60 overflow-y-auto border border-gray-700">
+                            placeholder="တိုင်းဒေသကြီး/ပြည်နယ်" readonly onclick="showDropdown('division-dropdown')" />
+                        <div id="division-dropdown"
+                            class="hidden absolute z-20 mt-1 w-full bg-gray-800 text-white rounded-lg shadow-xl max-h-60 overflow-y-auto border border-gray-700">
                             <!-- options... -->
                         </div>
                     </div>
@@ -43,8 +44,9 @@
                     <div class="relative">
                         <input type="text" id="city-search"
                             class="px-4 py-3 w-full bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 rounded-lg text-white placeholder-gray-400"
-                            placeholder="မြို့" readonly onclick="showDropdown('city-dropdown')"/>
-                        <div id="city-dropdown" class="hidden absolute z-20 mt-1 w-full bg-gray-800 text-white rounded-lg shadow-xl max-h-60 overflow-y-auto border border-gray-700">
+                            placeholder="မြို့" readonly onclick="showDropdown('city-dropdown')" />
+                        <div id="city-dropdown"
+                            class="hidden absolute z-20 mt-1 w-full bg-gray-800 text-white rounded-lg shadow-xl max-h-60 overflow-y-auto border border-gray-700">
                             <!-- options... -->
                         </div>
                     </div>
@@ -53,8 +55,9 @@
                     <div class="relative">
                         <input type="text" id="township-search"
                             class="px-4 py-3 w-full bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 rounded-lg text-white placeholder-gray-400"
-                            placeholder="မြို့နယ်" readonly onclick="showDropdown('township-dropdown')"/>
-                        <div id="township-dropdown" class="hidden absolute z-20 mt-1 w-full bg-gray-800 text-white rounded-lg shadow-xl max-h-60 overflow-y-auto border border-gray-700">
+                            placeholder="မြို့နယ်" readonly onclick="showDropdown('township-dropdown')" />
+                        <div id="township-dropdown"
+                            class="hidden absolute z-20 mt-1 w-full bg-gray-800 text-white rounded-lg shadow-xl max-h-60 overflow-y-auto border border-gray-700">
                             <!-- options... -->
                         </div>
                     </div>
@@ -63,8 +66,9 @@
                     <div class="relative">
                         <input type="text" id="category-search"
                             class="px-4 py-3 w-full bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 rounded-lg text-white placeholder-gray-400"
-                            placeholder="အမျိုးအစား" readonly onclick="showDropdown('category-dropdown')"/>
-                        <div id="category-dropdown" class="hidden absolute z-20 mt-1 w-full bg-gray-800 text-white rounded-lg shadow-xl max-h-60 overflow-y-auto border border-gray-700">
+                            placeholder="အမျိုးအစား" readonly onclick="showDropdown('category-dropdown')" />
+                        <div id="category-dropdown"
+                            class="hidden absolute z-20 mt-1 w-full bg-gray-800 text-white rounded-lg shadow-xl max-h-60 overflow-y-auto border border-gray-700">
                             <!-- options... -->
                         </div>
                     </div>
@@ -72,10 +76,12 @@
 
                 <!-- Action Buttons -->
                 <div class="flex flex-row gap-4">
-                    <button id="search-button" class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all duration-300 font-medium shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
+                    <button id="search-button"
+                        class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all duration-300 font-medium shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
                         Search
                     </button>
-                    <button class="px-6 py-3 border-2 border-blue-500 text-white rounded-lg hover:bg-blue-500 transition-all duration-300 font-medium shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
+                    <button
+                        class="px-6 py-3 border-2 border-blue-500 text-white rounded-lg hover:bg-blue-500 transition-all duration-300 font-medium shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
                         Register
                     </button>
                 </div>
@@ -89,8 +95,10 @@
                 <div class="relative">
                     <input type="text" id="mobile-division-search"
                         class="px-4 py-3 w-full bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 rounded-lg text-white placeholder-gray-400"
-                        placeholder="တိုင်းဒေသကြီး/ပြည်နယ်" readonly onclick="showDropdown('mobile-division-dropdown')"/>
-                    <div id="mobile-division-dropdown" class="hidden absolute z-20 mt-1 w-full bg-gray-800 text-white rounded-lg shadow-xl max-h-60 overflow-y-auto border border-gray-700">
+                        placeholder="တိုင်းဒေသကြီး/ပြည်နယ်" readonly
+                        onclick="showDropdown('mobile-division-dropdown')" />
+                    <div id="mobile-division-dropdown"
+                        class="hidden absolute z-20 mt-1 w-full bg-gray-800 text-white rounded-lg shadow-xl max-h-60 overflow-y-auto border border-gray-700">
                         <!-- options... -->
                     </div>
                 </div>
@@ -98,8 +106,9 @@
                 <div class="relative">
                     <input type="text" id="mobile-city-search"
                         class="px-4 py-3 w-full bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 rounded-lg text-white placeholder-gray-400"
-                        placeholder="မြို့" readonly onclick="showDropdown('mobile-city-dropdown')"/>
-                    <div id="mobile-city-dropdown" class="hidden absolute z-20 mt-1 w-full bg-gray-800 text-white rounded-lg shadow-xl max-h-60 overflow-y-auto border border-gray-700">
+                        placeholder="မြို့" readonly onclick="showDropdown('mobile-city-dropdown')" />
+                    <div id="mobile-city-dropdown"
+                        class="hidden absolute z-20 mt-1 w-full bg-gray-800 text-white rounded-lg shadow-xl max-h-60 overflow-y-auto border border-gray-700">
                         <!-- options... -->
                     </div>
                 </div>
@@ -107,8 +116,9 @@
                 <div class="relative">
                     <input type="text" id="mobile-township-search"
                         class="px-4 py-3 w-full bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 rounded-lg text-white placeholder-gray-400"
-                        placeholder="မြို့နယ်" readonly onclick="showDropdown('mobile-township-dropdown')"/>
-                    <div id="mobile-township-dropdown" class="hidden absolute z-20 mt-1 w-full bg-gray-800 text-white rounded-lg shadow-xl max-h-60 overflow-y-auto border border-gray-700">
+                        placeholder="မြို့နယ်" readonly onclick="showDropdown('mobile-township-dropdown')" />
+                    <div id="mobile-township-dropdown"
+                        class="hidden absolute z-20 mt-1 w-full bg-gray-800 text-white rounded-lg shadow-xl max-h-60 overflow-y-auto border border-gray-700">
                         <!-- options... -->
                     </div>
                 </div>
@@ -116,8 +126,9 @@
                 <div class="relative">
                     <input type="text" id="mobile-category-search"
                         class="px-4 py-3 w-full bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 rounded-lg text-white placeholder-gray-400"
-                        placeholder="အမျိုးအစား" readonly onclick="showDropdown('mobile-category-dropdown')"/>
-                    <div id="mobile-category-dropdown" class="hidden absolute z-20 mt-1 w-full bg-gray-800 text-white rounded-lg shadow-xl max-h-60 overflow-y-auto border border-gray-700">
+                        placeholder="အမျိုးအစား" readonly onclick="showDropdown('mobile-category-dropdown')" />
+                    <div id="mobile-category-dropdown"
+                        class="hidden absolute z-20 mt-1 w-full bg-gray-800 text-white rounded-lg shadow-xl max-h-60 overflow-y-auto border border-gray-700">
                         <!-- options... -->
                     </div>
                 </div>
@@ -125,10 +136,12 @@
 
             <!-- Action Buttons -->
             <div class="flex flex-col space-y-4">
-                <button id="mobile-search-button" class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all duration-300 font-medium shadow-md hover:shadow-lg">
+                <button id="mobile-search-button"
+                    class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all duration-300 font-medium shadow-md hover:shadow-lg">
                     Search
                 </button>
-                <button class="px-6 py-3 border-2 border-blue-500 text-white rounded-lg hover:bg-blue-500 transition-all duration-300 font-medium shadow-md hover:shadow-lg">
+                <button
+                    class="px-6 py-3 border-2 border-blue-500 text-white rounded-lg hover:bg-blue-500 transition-all duration-300 font-medium shadow-md hover:shadow-lg">
                     Register
                 </button>
             </div>
@@ -137,6 +150,10 @@
 </nav>
 
 <script>
+    // API Configuration
+    const BASE_API_URL = "http://localhost:8000/api/admin";
+    const DIVISIONS_API_URL = BASE_API_URL + "/division";
+
     // Mobile menu toggle
     const mobileMenuButton = document.getElementById('mobile-menu-button');
     const mobileMenuContent = document.getElementById('mobile-menu-content');
@@ -163,9 +180,9 @@
 
     // Close menu when clicking outside on mobile
     document.addEventListener('click', (e) => {
-        if (window.innerWidth < 768 && 
-            !e.target.closest('#mobile-menu-content') && 
-            !e.target.closest('#mobile-menu-button') && 
+        if (window.innerWidth < 768 &&
+            !e.target.closest('#mobile-menu-content') &&
+            !e.target.closest('#mobile-menu-button') &&
             !mobileMenuContent.classList.contains('hidden')) {
             mobileMenuContent.classList.add('hidden');
             menuIcon.classList.remove('hidden');
@@ -197,7 +214,7 @@
         const township = document.getElementById('township-search')?.value || document.getElementById('mobile-township-search')?.value;
         const city = document.getElementById('city-search')?.value || document.getElementById('mobile-city-search')?.value;
         const category = document.getElementById('category-search')?.value || document.getElementById('mobile-category-search')?.value;
-        
+
         const searchButton = document.getElementById('search-button');
         const mobileSearchButton = document.getElementById('mobile-search-button');
 
@@ -224,5 +241,59 @@
                 dropdown.classList.add('hidden');
             });
         }
+    });
+
+    // Function to fetch divisions from API
+    async function fetchDivisions() {
+        try {
+            const response = await axios.get(DIVISIONS_API_URL);
+
+            if (response.data.status && response.data.data) {
+                const divisions = response.data.data;
+
+                // Populate desktop division dropdown
+                populateDropdown('division-dropdown', divisions, 'division-search');
+
+                // Populate mobile division dropdown
+                populateDropdown('mobile-division-dropdown', divisions, 'mobile-division-search');
+
+                return true;
+            } else {
+                console.error('API returned false status:', response.data.message);
+                return false;
+            }
+        } catch (error) {
+            console.error('Error fetching divisions:', error);
+            return false;
+        }
+    }
+
+    // Function to populate a dropdown with options
+    function populateDropdown(dropdownId, items, inputId) {
+        const dropdown = document.getElementById(dropdownId);
+        if (!dropdown) return;
+
+        dropdown.innerHTML = ''; // Clear existing options
+
+        items.forEach(item => {
+            const option = document.createElement('div');
+            option.className = 'px-4 py-2 hover:bg-gray-700 cursor-pointer';
+            option.textContent = item.name;
+            option.onclick = () => {
+                selectItem(inputId, item.name, dropdownId);
+                // Here you could chain-load cities if needed
+                // fetchCities(item.id);
+            };
+            dropdown.appendChild(option);
+        });
+    }
+
+    // Initialize when DOM is loaded
+    document.addEventListener('DOMContentLoaded', () => {
+        fetchDivisions();
+
+        // Add event listeners for search buttons
+        document.getElementById('search-button')?.addEventListener('click', performSearch);
+        document.getElementById('mobile-search-button')?.addEventListener('click', performSearch);
     });
 </script>
