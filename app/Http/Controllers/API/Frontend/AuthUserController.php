@@ -129,11 +129,11 @@ class AuthUserController extends Controller
             $donators = $query->paginate(9);
 
             if ($donators->isEmpty()) {
-                return $this->errorResponse('Donator not found', 500, ['error' => $e->getMessage()]);
+                return $this->errorResponse('Donator not found', 500, ['error' => 'not data found']);
             }
             return $this->successResponse($donators);
         } catch (\Exception $e) {
-            return $this->errorResponse('Donator Fetched fail', 500, ['error' => $e->getMessage()]);
+            return $this->errorResponse('Donator Fetched fail', 500, ['error' => 'not data found']);
         }
     }
 
