@@ -26,24 +26,23 @@ class Donator extends Model
 
     public function division()
     {
-        return $this->belongsTo(Division::class);
+        return $this->belongsTo(Division::class)->select('id', 'name_mm as name');
     }
 
     public function city()
     {
-        return $this->belongsTo(City::class);
+        return $this->belongsTo(City::class)->select('id', 'name_mm as name');
     }
 
     public function township()
     {
-        return $this->belongsTo(Township::class);
+        return $this->belongsTo(Township::class)->select('id', 'name_mm as name');
     }
 
     public function category()
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(Category::class)->select('id', 'name_mm as name');
     }
-
     public function user()
     {
         return $this->belongsTo(User::class);

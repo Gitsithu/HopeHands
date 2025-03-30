@@ -43,7 +43,7 @@ class AuthUserController extends Controller
             $token   = $user->createToken('User Token')->plainTextToken;
             $donator = [
                 'category_id' => $postData['category_id'],
-                'division_id' => $postData['division_id'],
+                // 'division_id' => $postData['division_id'],
                 'city_id'     => $postData['city_id'],
                 'township_id' => $postData['township_id'],
                 'phone'       => $postData['phone'],
@@ -120,7 +120,7 @@ class AuthUserController extends Controller
         try {
             $user = auth()->guard('api')->user();
 
-            $query = Donator::with(['user', 'division', 'city', 'township'])->orderByDesc('created_at');
+            $query = Donator::with(['user', 'city', 'township' , 'category'])->orderByDesc('created_at');
 
             if ($user) {
                 $query->where('user_id', '!=', $user->id);
