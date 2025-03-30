@@ -26,4 +26,19 @@ class HelpSeeker extends Model
     protected $casts = [
         'contact' => 'json',
     ];
+
+    public function division()
+    {
+        return $this->belongsTo(Division::class)->select('id', 'name_mm as name');
+    }
+
+    public function city()
+    {
+        return $this->belongsTo(City::class)->select('id', 'name_mm as name');
+    }
+
+    public function township()
+    {
+        return $this->belongsTo(Township::class)->select('id', 'name_mm as name');
+    }
 }
