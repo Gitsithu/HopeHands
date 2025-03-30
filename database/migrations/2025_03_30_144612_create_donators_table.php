@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->json('contact')->nullable();
             $table->text('remark')->nullable();
-            $table->tinyInteger('stauts')->default(1);
+            $table->tinyInteger('status')->default(1);
             $table->timestamps();
             $table->softDeletes();
         });
