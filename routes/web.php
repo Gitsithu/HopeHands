@@ -16,3 +16,13 @@ Route::get('/receivers', function () {
 })->name('receivers');
 
 Route::get('/donators', [App\Http\Controllers\DonatorController::class, 'donators'])->name('donators');
+Route::prefix('admin')->group(function () {
+
+    Route::get('login', function () {
+        return view('backend.pages.auth.login');
+    })->name('admin.login');
+
+    Route::get('dashboard', function () {
+        return view('backend.pages.dashboard.dashboard');
+    })->name('admin.dashboard');
+});
