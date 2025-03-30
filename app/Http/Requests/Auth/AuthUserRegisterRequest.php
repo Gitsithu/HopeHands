@@ -33,9 +33,17 @@ class AuthUserRegisterRequest extends FormRequest
             'township_id'      => 'required|exists:townships,id',
             'category_id'      => 'required|exists:categories,id',
             'phone'            => 'required|unique:users,phone',
-            'viber'            => 'required_without:telegram|phone:international',
-            'telegram'         => 'required_without:viber|phone:international',
-            'telegram_usename' => 'required_without:telegram',
+            'viber'            => 'required_without:telegram|string|regex:/^\+[1-9]\d{7,10}$/',
+            'telegram'         => 'required_without:viber|string|regex:/^\+[1-9]\d{7,10}$/',
+            'telegram_usename' => 'required_without_all:viber,telegram',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'viber.regex'    => 'Please enter a valid international phone number (e.g., +8801712345678).',
+            'telegram.regex' => 'Please enter a valid international phone number (e.g., +8801712345678).',
         ];
     }
 
