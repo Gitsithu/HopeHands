@@ -17,7 +17,7 @@ class HelpSeekerController extends Controller
 
     public function index()
     {
-        $data = HelpSeeker::orderBy('updated_at')->with('division', 'city', 'township')->paginate(10);
+        $data = HelpSeeker::orderBy('updated_at')->with('division', 'city', 'township', 'category')->paginate(9);
         return $this->successResponse($data);
     }
 
