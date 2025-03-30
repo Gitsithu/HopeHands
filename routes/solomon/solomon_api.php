@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Backend\CategoryController;
+use App\Http\Controllers\Backend\CityController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthUserController;
@@ -23,10 +25,26 @@ Route::get('/user', function (Request $request) {
 
 Route::prefix('admin')->group(function () {
     Route::prefix('division')->group(function () {
-        // Role
+        // division
         Route::get('/', [DivisionController::class, 'index']);
         Route::post('store', [DivisionController::class, 'store']);
         Route::post('update/{id}', [DivisionController::class, 'update']);
         Route::delete('delete/{id}', [DivisionController::class, 'delete']);
+    });
+
+    Route::prefix('city')->group(function () {
+        // city
+        Route::get('/', [CityController::class, 'index']);
+        Route::post('store', [CityController::class, 'store']);
+        Route::post('update/{id}', [CityController::class, 'update']);
+        Route::delete('delete/{id}', [CityController::class, 'delete']);
+    });
+
+    Route::prefix('category')->group(function () {
+        // category
+        Route::get('/', [CategoryController::class, 'index']);
+        Route::post('store', [CategoryController::class, 'store']);
+        Route::post('update/{id}', [CategoryController::class, 'update']);
+        Route::delete('delete/{id}', [CategoryController::class, 'delete']);
     });
 });

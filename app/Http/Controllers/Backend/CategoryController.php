@@ -4,53 +4,53 @@ namespace App\Http\Controllers\Backend;
 
 use Exception;
 use App\Util\Message;
-use App\Models\Division;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Traits\ApiResponseTrait;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Division\DivisionStoreRequest;
-use App\Http\Requests\Division\DivisionUpdateRequest;
+use App\Http\Requests\Category\CategoryStoreRequest;
+use App\Http\Requests\Category\CategoryUpdateRequest;
 
-class DivisionController extends Controller
+class CategoryController extends Controller
 {
     use ApiResponseTrait;
 
     public function index()
     {
-        $data = Division::orderBy('updated_at')->get();
+        $data = Category::orderBy('updated_at')->get();
         return $this->successResponse($data);
     }
 
-    public function store(DivisionStoreRequest $request)
+    public function store(CategoryStoreRequest $request)
     {
         DB::beginTransaction();
         try {
             $postData = $request->validated();
-            Division::create($postData);
+            Category::create($postData);
             DB::commit();
             return $this->successResponse(Message::createdSuccess);
         } catch (Exception $e) {
             DB::rollBack();
-            Log::error('Error creating division: ' . $e->getMessage());
+            Log::error('Error creating category: ' . $e->getMessage());
             return $this->successResponse(Message::createdFail);
 
         }
     }
 
-    public function update(DivisionUpdateRequest $request, $id)
+    public function update(CategoryUpdateRequest $request, $id)
     {
         DB::beginTransaction();
         try {
             $postData = $request->validated();
-            $division = Division::findOrFail($id);
-            $division->update($postData);
+            $category = Category::findOrFail($id);
+            $category->update($postData);
             DB::commit();
             return $this->successResponse(Message::updatedSuccess);
         } catch (Exception $e) {
             DB::rollBack();
-            Log::error('Error creating Contact Form: ' . $e->getMessage());
+            Log::error('Error creating Category: ' . $e->getMessage());
             return $this->errorResponse(Message::updatedFail);
         }
     }
@@ -59,23 +59,14 @@ class DivisionController extends Controller
     {
         DB::beginTransaction();
         try {
-            $division = Division::findOrFail($id);
-            $division->delete();
+            $category = Category::findOrFail($id);
+            $category->delete();
             DB::commit();
             return $this->successResponse(Message::deletedSuccess);
         } catch (Exception $e) {
             DB::rollBack();
-            Log::error('Error deleting Contact Form: ' . $e->getMessage());
+            Log::error('Error deleting Category: ' . $e->getMessage());
             return $this->errorResponse(Message::deletedFail);
         }
     }
-
-    // public function find($id)
-    // {
-    //     $term = Term::find($id);
-    //     if ($term) {
-    //         return response()->json($term);
-    //     }
-    //     return response()->json(['error' => 'Term not found'], 404);
-    // }
 }
