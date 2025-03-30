@@ -26,7 +26,7 @@ class HelpSeekerController extends Controller
         DB::beginTransaction();
         try {
             $postData = $request->validated();
-            $help = HelpSeeker::create([
+            HelpSeeker::create([
                 'name' => $postData['name'],
                 'phone' => $postData['phone'],
                 'city_id' => $postData['city_id'],
