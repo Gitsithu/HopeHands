@@ -41,4 +41,9 @@ class HelpSeeker extends Model
     {
         return $this->belongsTo(Township::class)->select('id', 'name_mm as name');
     }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class)->select('id', 'name_mm as name');
+    }
 }
