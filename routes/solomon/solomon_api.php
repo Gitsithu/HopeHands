@@ -30,6 +30,8 @@ Route::prefix('admin')->group(function () {
         Route::get('/', [DivisionController::class, 'index']);
         Route::post('store', [DivisionController::class, 'store']);
         Route::post('update/{id}', [DivisionController::class, 'update']);
+        Route::get('city-fetch/{divisionId}', [DivisionController::class, 'cityFetch']);
+        Route::get('township-fetch/{cityId}', [DivisionController::class, 'townshipFetch']);
         Route::delete('delete/{id}', [DivisionController::class, 'delete']);
     });
 
