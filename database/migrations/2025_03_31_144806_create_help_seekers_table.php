@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('location')->nullable();
             $table->string('content')->nullable();
             $table->json('contact')->nullable();
-            $table->string('urgent_level')->nullable();
+            $table->enum('urgent_level', ['low', 'medium', 'high'])->nullable();
             $table->tinyInteger('status')->default(1);
             $table->timestamps();
             $table->softDeletes();
