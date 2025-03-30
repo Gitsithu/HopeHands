@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
         // ]);
         $this->call([
             CategorySeeder::class,
-            DivisionSeeder::class,
+            // DivisionSeeder::class,
             CitySeeder::class,
             TownshipSeeder::class,
         ]);

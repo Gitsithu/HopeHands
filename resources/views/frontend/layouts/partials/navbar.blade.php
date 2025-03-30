@@ -30,24 +30,22 @@
                 <!-- Search Inputs -->
                 <div class="grid grid-cols-4 gap-4">
                     <!-- Division Search -->
-                    <div class="relative">
+                    <!-- <div class="relative">
                         <input type="text" id="division-search"
                             class="px-4 py-3 w-full bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 rounded-lg text-white placeholder-gray-400"
                             placeholder="တိုင်းဒေသကြီး/ပြည်နယ်" readonly onclick="showDropdown('division-dropdown')" />
                         <div id="division-dropdown"
                             class="hidden absolute z-20 mt-1 w-full bg-gray-800 text-white rounded-lg shadow-xl max-h-60 overflow-y-auto border border-gray-700">
-                            <!-- Options will be populated by JavaScript -->
                         </div>
-                    </div>
+                    </div> -->
 
                     <!-- City Search -->
                     <div class="relative">
                         <input type="text" id="city-search"
                             class="px-4 py-3 w-full bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 rounded-lg text-white placeholder-gray-400"
-                            placeholder="မြို့" readonly onclick="showDropdown('city-dropdown')" />
+                            placeholder="တိုင်းဒေသကြီး/ပြည်နယ်" readonly onclick="showDropdown('city-dropdown')" />
                         <div id="city-dropdown"
                             class="hidden absolute z-20 mt-1 w-full bg-gray-800 text-white rounded-lg shadow-xl max-h-60 overflow-y-auto border border-gray-700">
-                            <!-- Options will be populated by JavaScript -->
                         </div>
                     </div>
 
@@ -96,21 +94,20 @@
         <div id="mobile-menu-content" class="hidden md:hidden p-4 space-y-4">
             <!-- Search Inputs -->
             <div class="space-y-4">
-                <div class="relative">
+                <!-- <div class="relative">
                     <input type="text" id="mobile-division-search"
                         class="px-4 py-3 w-full bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 rounded-lg text-white placeholder-gray-400"
                         placeholder="တိုင်းဒေသကြီး/ပြည်နယ်" readonly
                         onclick="showDropdown('mobile-division-dropdown')" />
                     <div id="mobile-division-dropdown"
                         class="hidden absolute z-20 mt-1 w-full bg-gray-800 text-white rounded-lg shadow-xl max-h-60 overflow-y-auto border border-gray-700">
-                        <!-- Options will be populated by JavaScript -->
                     </div>
-                </div>
+                </div> -->
 
                 <div class="relative">
                     <input type="text" id="mobile-city-search"
                         class="px-4 py-3 w-full bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 rounded-lg text-white placeholder-gray-400"
-                        placeholder="မြို့" readonly onclick="showDropdown('mobile-city-dropdown')" />
+                        placeholder="တိုင်းဒေသကြီး/ပြည်နယ်" readonly onclick="showDropdown('mobile-city-dropdown')" />
                     <div id="mobile-city-dropdown"
                         class="hidden absolute z-20 mt-1 w-full bg-gray-800 text-white rounded-lg shadow-xl max-h-60 overflow-y-auto border border-gray-700">
                         <!-- Options will be populated by JavaScript -->
@@ -294,10 +291,6 @@
             showErrorToast("Please fill all search fields");
             return;
         }
-
-        // Here you would typically redirect to search results or make an API call
-        console.log(`Searching for: ${category} in ${city}, ${township}, ${division}`);
-        // window.location.href = `/search?division=${division}&city=${city}&township=${township}&category=${category}`;
     }
 
     document.addEventListener('click', (e) => {
@@ -329,10 +322,10 @@
                 const divisions = response.data.data;
 
                 // Populate desktop division dropdown
-                populateDropdown('division-dropdown', divisions, 'division-search');
+                populateDropdown('city-dropdown', divisions, 'city-search');
 
                 // Populate mobile division dropdown
-                populateDropdown('mobile-division-dropdown', divisions, 'mobile-division-search');
+                populateDropdown('mobile-city-dropdown', divisions, 'mobile-city-search');
 
                 return true;
             } else {
@@ -459,6 +452,42 @@
         // Initial check of selections
         checkSelections();
     });
+</script>
+
+<!-- Store API -->
+<script>
+
+    document.getElementById('search-button').addEventListener('click', function () {
+
+        const localUrl = "http://localhost:8000/";
+
+        let getUrl = window.location.href;;
+        let result = getUrl.replace(localUrl,'');
+
+        let searchData = {
+            type: result,
+            division: document.getElementById('division-search').value,
+            city: document.getElementById('city-search').value,
+            township: document.getElementById('township-search').value,
+            category: document.getElementById('category-search').value
+        };
+
+        sendSearchRequest(searchData, 'hehe');
+    });
+
+
+    function sendSearchRequest(searchData) {
+        console.log(searchData, 'searchData');
+
+        axios.post(`${BASE_API_URL}/filter`, searchData)
+            .then(response => {
+                console.log('Search results:', response.data);
+            })
+            .catch(error => {
+                console.error('Error fetching search results:', error);
+            });
+    }
+
 </script>
 
 <style>
