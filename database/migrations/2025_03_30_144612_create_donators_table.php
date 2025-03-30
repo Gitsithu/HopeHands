@@ -16,9 +16,10 @@ return new class extends Migration
             $table->foreignId('division_id')->nullable()->constrained('divisions');
             $table->foreignId('city_id')->nullable()->constrained('cities');
             $table->foreignId('category_id')->nullable()->constrained('categories');
-            $table->string('name')->nullable();
+            $table->foreignId('user_id')->nullable()->constrained('users');
             $table->string('phone')->nullable();
             $table->json('contact')->nullable();
+            $table->text('remark')->nullable();
             $table->tinyInteger('stauts')->default(1);
             $table->timestamps();
             $table->softDeletes();
