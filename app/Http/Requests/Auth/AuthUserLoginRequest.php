@@ -1,10 +1,12 @@
 <?php
 namespace App\Http\Requests\Auth;
 
+use App\Traits\ApiResponseTrait;
 use Illuminate\Foundation\Http\FormRequest;
 
 class AuthUserLoginRequest extends FormRequest
 {
+    use ApiResponseTrait;
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -21,7 +23,7 @@ class AuthUserLoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'username' => 'required|email|unique:users,email',
+            'username' => 'required',
             'password' => 'required|min:6',
         ];
     }
