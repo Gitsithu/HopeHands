@@ -30,7 +30,7 @@ class HelpSeekerController extends Controller
                 'name' => $postData['name'],
                 'phone' => $postData['phone'],
                 'city_id' => $postData['city_id'],
-                'division_id' => $postData['division_id'],
+                // 'division_id' => $postData['division_id'],
                 'category_id' => $postData['category_id'],
                 'township_id' => $postData['township_id'],
                 'location' => $postData['location'],

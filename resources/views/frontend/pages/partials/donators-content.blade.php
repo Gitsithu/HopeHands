@@ -42,36 +42,32 @@
             <div class="space-y-5">
                 <!-- Location Section -->
                 <div class="space-y-3">
-                    <h4 class="text-sm font-semibold text-gray-500 uppercase tracking-wider">Location Information</h4>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div class="bg-gray-50 p-4 rounded-lg border border-gray-100">
-                            <p class="text-xs font-medium text-gray-500 mb-1">မြို့နယ်</p>
-                            <p id="modalTownship" class="text-base font-medium text-gray-800"></p>
-                        </div>
-                        <div class="bg-gray-50 p-4 rounded-lg border border-gray-100">
+                    <h4 class="text-sm font-semibold text-gray-500 uppercase tracking-wider">လိပ်စာအချက်အလက်</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
                             <p class="text-xs font-medium text-gray-500 mb-1">တိုင်းဒေသကြီး</p>
                             <p id="modalState" class="text-base font-medium text-gray-800"></p>
                         </div>
-                        <div class="bg-gray-50 p-4 rounded-lg border border-gray-100">
-                            <p class="text-xs font-medium text-gray-500 mb-1">မြို့</p>
-                            <p id="modalCity" class="text-base font-medium text-gray-800"></p>
+                        <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                            <p class="text-xs font-medium text-gray-500 mb-1">မြို့နယ်</p>
+                            <p id="modalTownship" class="text-base font-medium text-gray-800"></p>
                         </div>
                     </div>
                 </div>
 
                 <!-- Contact Section -->
                 <div class="space-y-3">
-                    <h4 class="text-sm font-semibold text-gray-500 uppercase tracking-wider">Contact Information</h4>
+                    <h4 class="text-sm font-semibold text-gray-500 uppercase tracking-wider">ဆက်သွယ်ရန်လိပ်စာ</h4>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div class="bg-gray-50 p-4 rounded-lg border border-gray-100">
+                        <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
                             <p class="text-xs font-medium text-gray-500 mb-1">ဖုန်းနံပါတ်</p>
                             <p id="modalPhone" class="text-base font-medium text-gray-800"></p>
                         </div>
-                        <div class="bg-gray-50 p-4 rounded-lg border border-gray-100">
+                        <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
                             <p class="text-xs font-medium text-gray-500 mb-1">Viber</p>
                             <p id="modalViber" class="text-base font-medium text-gray-800"></p>
                         </div>
-                        <div class="bg-gray-50 p-4 rounded-lg border border-gray-100">
+                        <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
                             <p class="text-xs font-medium text-gray-500 mb-1">Telegram</p>
                             <p id="modalTelegram" class="text-base font-medium text-gray-800"></p>
                         </div>
@@ -80,8 +76,8 @@
 
                 <!-- Notes Section -->
                 <div class="space-y-3">
-                    <h4 class="text-sm font-semibold text-gray-500 uppercase tracking-wider">Additional Information</h4>
-                    <div class="bg-gray-50 p-4 rounded-lg border border-gray-100">
+                    <h4 class="text-sm font-semibold text-gray-500 uppercase tracking-wider">အသေးစိတ်အချက်အလက်</h4>
+                    <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
                         <p class="text-xs font-medium text-gray-500 mb-2">မှတ်ချက်</p>
                         <p id="modalNotes" class="text-gray-700"></p>
                     </div>
@@ -164,7 +160,7 @@
 
         data.forEach(item => {
             const card = document.createElement('div');
-            card.className = 'bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-all';
+            card.className = 'bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-all';
             card.innerHTML = `
                 <div class="p-5">
                     <div class="flex items-start justify-between">
@@ -176,24 +172,31 @@
                             </span>
                     </div>
                     
-                    <div class="mt-4 space-y-2">
-                        <div class="flex items-center text-sm text-gray-600">
-                            <svg class="flex-shrink-0 mr-1.5 h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="mt-4 space-y-3">
+                        <div class="flex items-start">
+                            <svg class="flex-shrink-0 mt-0.5 mr-2 h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
                             </svg>
-                            ${item.township?.name_mm || item.township?.name || 'N/A'}, ${item.city?.name_mm || item.city?.name || 'N/A'}
+                            <div>
+                                <p class="text-sm text-gray-500">မြို့နယ်</p>
+                                <p class="text-sm font-medium text-gray-800 mt-2">${item.township?.name_mm || item.township?.name || 'N/A'}</p>
+                            </div>
                         </div>
-                        <div class="flex items-center text-sm text-gray-600">
-                            <svg class="flex-shrink-0 mr-1.5 h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        
+                        <div class="flex items-start">
+                            <svg class="flex-shrink-0 mt-0.5 mr-2 h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
                             </svg>
-                            ${item.phone || 'Not provided'}
+                            <div>
+                                <p class="text-sm text-gray-500">ဖုန်းနံပါတ်</p>
+                                <p class="text-sm font-medium text-gray-800 mt-2">${item.phone || 'Not provided'}</p>
+                            </div>
                         </div>
                     </div>
                     
                     <button onclick="showDonatorDetail(${JSON.stringify(item).replace(/"/g, '&quot;')})"
-                        class="mt-4 w-full py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition flex items-center justify-center gap-2">
+                        class="mt-4 w-full py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition flex items-center justify-center gap-2">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
@@ -308,8 +311,7 @@
         document.getElementById('modalName').textContent = donator.user?.name || 'N/A';
         document.getElementById('modalCategory').textContent = donator.category?.name || 'Donor';
         document.getElementById('modalTownship').textContent = donator.township?.name_mm || donator.township?.name || 'N/A';
-        document.getElementById('modalState').textContent = donator.division?.name_mm || donator.division?.name || 'N/A';
-        document.getElementById('modalCity').textContent = donator.city?.name_mm || donator.city?.name || 'N/A';
+        document.getElementById('modalState').textContent = donator.city?.name_mm || donator.city?.name || 'N/A';
         document.getElementById('modalPhone').textContent = donator.phone || 'Not provided';
         document.getElementById('modalViber').textContent = donator.contact?.viber || 'Not provided';
         document.getElementById('modalTelegram').textContent = donator.contact?.telegram || donator.contact?.telegram_usename || 'Not provided';
