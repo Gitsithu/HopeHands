@@ -14,11 +14,15 @@ class HelpSeeker extends Model
         'phone',
         'division_id',
         'city_id',
+        'township_id',
         'category_id',
         'location',
         'content',
-        'contact',
         'urgent_level',
         'status',
+    ];
+
+    protected $casts = [
+        'contact' => 'array',
     ];
 }

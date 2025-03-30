@@ -11,17 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('help_seekers', function (Blueprint $table) {
+        Schema::create('townships', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('division_id')->nullable()->constrained('divisions');
             $table->foreignId('city_id')->nullable()->constrained('cities');
-            $table->foreignId('category_id')->nullable()->constrained('categories');
             $table->string('name')->nullable();
-            $table->string('phone')->nullable();
-            $table->string('location')->nullable();
-            $table->string('content')->nullable();
-            $table->string('contact')->nullable();
-            $table->string('urgent_level')->nullable();
+            $table->string('name_mm')->nullable();
             $table->tinyInteger('status')->default(1);
             $table->timestamps();
             $table->softDeletes();
@@ -33,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('help_seekers');
+        Schema::dropIfExists('townships');
     }
 };
