@@ -28,7 +28,7 @@ class DonatorStoreRequest extends FormRequest
             ],
             'phone' => 'nullable|min:8|regex:/^([0-9\s\-\+\(\)]*)$/|max:12',
             'city_id' => 'required',
-            'division_id' => 'required',
+            // 'division_id' => 'required',
             'category_id' => 'required',
             'contact' => 'nullable',
             'status' => [

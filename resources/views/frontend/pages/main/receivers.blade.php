@@ -10,7 +10,7 @@
                 class="px-6 py-3 bg-gray-300 text-black font-semibold rounded-lg hover:bg-gray-400">
                 အလှူရှင်
             </a>
-            <a href="{{ route('receivers') }}" class="px-6 py-3 bg-black text-white font-semibold rounded-lg">
+            <a href="{{ route('receivers') }}" class="px-6 py-3 bg-[#44991a] text-white font-semibold rounded-lg">
                 အလှူခံပုဂ္ဂိုလ်
             </a>
         </div>
