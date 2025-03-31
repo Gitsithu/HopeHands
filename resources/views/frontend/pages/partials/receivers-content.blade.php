@@ -37,7 +37,7 @@
         <p class="mt-2 text-gray-600">Loading help seekers...</p>
     </div>
     <button onclick="openCreateModal()"
-        class="floating-button fixed bottom-12 right-6 flex items-center justify-center w-14 h-14 rounded-full bg-blue-600 text-white hover:bg-blue-700 transition shadow-lg z-40">
+        class="floating-button fixed bottom-6 right-6 flex items-center justify-center w-14 h-14 rounded-full bg-blue-600 text-white hover:bg-blue-700 transition shadow-lg z-40">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
         </svg>
@@ -230,6 +230,7 @@
                             </select>
                         </div>
                     </div>
+                    <div id="contact-fields-container"></div>
 
                     <div class="mt-4 space-y-2">
                         <label for="content" class="block text-sm font-medium text-gray-700">
@@ -290,43 +291,34 @@
                     <h4 class="text-base font-semibold text-gray-700 mb-4 flex items-center">
                         <svg class="w-5 h-5 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                                d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z">
+                            </path>
                         </svg>
                         ဆက်သွယ်ရန်နံပါတ်များ
                     </h4>
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                        <div class="space-y-2">
-                            <label for="phone" class="block text-sm font-medium text-gray-700">
-                                Primary Phone <span class="text-red-500">*</span>
-                            </label>
-                            <input type="tel" id="phone" name="phone" required
-                                class="w-full px-4 py-2.5 text-sm text-gray-800 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                        </div>
-
-                        <div class="space-y-2">
-                            <label for="viber" class="block text-sm font-medium text-gray-700">
-                                Viber Number
-                            </label>
-                            <input type="text" id="viber" name="viber"
-                                class="w-full px-4 py-2.5 text-sm text-gray-800 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                        </div>
-
-                        <div class="space-y-2">
-                            <label for="telegram_username" class="block text-sm font-medium text-gray-700">
-                                Telegram Username
-                            </label>
-                            <input type="text" id="telegram_username" name="telegram_username"
-                                class="w-full px-4 py-2.5 text-sm text-gray-800 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                        </div>
-                        <div class="space-y-2">
-                            <label for="telegram" class="block text-sm font-medium text-gray-700">
-                                Telegram Phone Number
-                            </label>
-                            <input type="text" id="telegram" name="telegram"
-                                class="w-full px-4 py-2.5 text-sm text-gray-800 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                        </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="phone">
+                            ဖုန်းနံပါတ်
+                        </label>
+                        <input
+                            class="w-full px-4 py-2.5 text-sm text-gray-800 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                            id="phone" type="text" name="phone" placeholder="ဖုန်းနံပါတ်...">
+                        <p class="text-red-500 text-sm mt-1 error-text" id="error-phone"></p>
                     </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="contact-method">
+                            ဆက်သွယ်ရန်
+                        </label>
+                        <select
+                            class="w-full px-4 py-2.5 text-sm text-gray-800 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                            id="contact-method" name="contact_method">
+                            <option value="">ဆက်သွယ်ရန် ရွေးချယ်ပါ။</option>
+                            <option value="viber">Viber</option>
+                            <option value="telegram">Telegram</option>
+                        </select>
+                    </div>
+                    <div id="contact-fields-container"></div>
                 </div>
 
                 <!-- Form Actions -->
@@ -350,6 +342,13 @@
 </div>
 
 <script src="{{ asset('frontend/assets/js/app.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+    integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+<!-- Include Select2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script>
     // API Configuration
     const HELP_SEEKERS_API_URL = BASE_API_URL + "/donator";
@@ -369,6 +368,48 @@
     function cleanUrl() {
         window.history.replaceState({}, document.title, window.location.pathname);
     }
+    document.getElementById('contact-method').addEventListener('change', function () {
+        const container = document.getElementById('contact-fields-container');
+        container.innerHTML = ''; // Clear previous fields
+        if (this.value === 'viber') {
+            // Add Viber field
+            container.innerHTML = `
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="viber-number">
+                    Viber ဖုန်းနံပါတ်
+                </label>
+                <input
+                    class="w-full px-4 py-2.5 text-sm text-gray-800 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    type="text" id="viber-number" name="viber" placeholder="+959xxxxxxxx">
+                    <p class="text-red-500 text-sm mt-1 error-text" id="error-viber"></p>
+            </div>
+        `;
+        } else if (this.value === 'telegram') {
+            // Add Telegram fields
+            container.innerHTML = `
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="telegram-username">
+                    Telegram username
+                </label>
+                <input
+                    class="w-full px-4 py-2.5 text-sm text-gray-800 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    type="text" id="telegram-username" name="telegram_username" placeholder="@username">
+                    <p class="text-red-500 text-sm mt-1 error-text" id="error-telegram_username"></p>
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="telegram-phone">
+                    Telegram ဖုန်းနံပါတ် (optional)
+                </label>
+                <input
+                    class="w-full px-4 py-2.5 text-sm text-gray-800 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    type="text" id="telegram-phone" name="telegram" placeholder="+959xxxxxxxx">
+                    <p class="text-red-500 text-sm mt-1 error-text" id="error-telegram"></p>
+            </div>
+        `;
+        }
+    });
+
+
 
     document.addEventListener('DOMContentLoaded', function () {
         // Extract the search data from the URL
@@ -771,7 +812,24 @@
 
         for (let key in formObject) {
             if (formObject[key] === "" || formObject[key] === undefined) {
-                formObject[key] = null; 
+                formObject[key] = null;
+            }
+
+            formData.forEach((value, key) => {
+                // Only include fields that have values
+                if (value) {
+                    formObject[key] = value;
+                }
+            });
+            if (contactMethod === 'viber') {
+                formObject.telegram_username = null;
+                formObject.telegram = null;
+            } else if (contactMethod === 'telegram') {
+                formObject.viber = null;
+            } else {
+                formObject.viber = null;
+                formObject.telegram_username = null;
+                formObject.telegram = null;
             }
         }
 
