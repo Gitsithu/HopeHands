@@ -675,4 +675,130 @@
         `;
         document.head.appendChild(style);
     });
+
+    function openCreateModal() {
+        document.getElementById('createHelpSeekerModal').classList.remove('hidden');
+        loadFormSelectOptions();
+    }
+
+    function closeCreateModal() {
+        document.getElementById('createHelpSeekerModal').classList.add('hidden');
+    }
+
+    async function loadFormSelectOptions() {
+        try {
+            // Load categories
+            const categoriesResponse = await fetch(`${BASE_API_URL}/category`);
+            const categoriesData = await categoriesResponse.json();
+            const categorySelect = document.getElementById('category');
+
+            if (categoriesData.status && categoriesData.data) {
+                categorySelect.innerHTML = '<option value="">Select a category</option>' +
+                    categoriesData.data.map(cat =>
+                        `<option value="${cat.id}">${cat.name}</option>`
+                    ).join('');
+            }
+
+            // Load cities
+            const citiesResponse = await fetch(`${BASE_API_URL}/city`);
+            const citiesData = await citiesResponse.json();
+            const citySelect = document.getElementById('city');
+
+            if (citiesData.status && citiesData.data) {
+                citySelect.innerHTML = '<option value="">Select a city</option>' +
+                    citiesData.data.map(city =>
+                        `<option value="${city.id}">${city.name}</option>`
+                    ).join('');
+            }
+
+            // Load townships when city is selected
+            document.getElementById('city').addEventListener('change', async function () {
+                const cityId = this.value;
+                const townshipSelect = document.getElementById('township');
+
+                if (cityId) {
+                    const townshipsResponse = await fetch(
+                        `${BASE_API_URL}/division/township-fetch/${cityId}`);
+                    const townshipsData = await townshipsResponse.json();
+
+                    if (townshipsData.status && townshipsData.data) {
+                        townshipSelect.innerHTML = '<option value="">Select a township</option>' +
+                            townshipsData.data.map(township =>
+                                `<option value="${township.id}">${township.name}</option>`
+                            ).join('');
+                    }
+                } else {
+                    townshipSelect.innerHTML = '<option value="">Select a township</option>';
+                }
+            });
+        } catch (error) {
+            console.error('Error loading form options:', error);
+            showErrorToast("Error loading form data");
+        }
+    }
+
+    // Handle form submission
+    // Handle form submission
+    document.getElementById('createHelpSeekerForm').addEventListener('submit', async function (e) {
+        e.preventDefault();
+
+        // Get form data
+        const formData = new FormData(this);
+        const formObject = Object.fromEntries(formData.entries());
+
+        // Add CSRF token if needed (assuming you're using Laravel)
+        // formObject._token = document.querySelector('meta[name="csrf-token"]').content;
+
+        try {
+            // Show loading state
+            const submitButton = this.querySelector('button[type="submit"]');
+            const originalButtonText = submitButton.innerHTML;
+            submitButton.innerHTML = `
+            <svg class="animate-spin -ml-1 mr-2 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            Processing...
+        `;
+            submitButton.disabled = true;
+
+            // Make the API request
+            const response = await fetch(`${BASE_API_URL}/help-seeker/store`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    // Add CSRF token header if needed
+                    // 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                },
+                body: JSON.stringify(formObject)
+            });
+
+            const data = await response.json();
+
+            if (response.ok && data.status) {
+                showSuccessToast("Help seeker created successfully!");
+                closeCreateModal();
+                this.reset();
+                bindSearchData(currentPage); // Refresh the list
+            } else {
+                // Handle validation errors or other errors
+                if (data.errors) {
+                    const errorMessages = Object.values(data.errors).join('<br>');
+                    showErrorToast(errorMessages);
+                } else {
+                    showErrorToast(data.message || "Error creating help seeker");
+                }
+            }
+        } catch (error) {
+            console.error('Error creating help seeker:', error);
+            showErrorToast("Network error. Please try again.");
+        } finally {
+            // Reset button state
+            if (submitButton) {
+                submitButton.innerHTML = originalButtonText;
+                submitButton.disabled = false;
+            }
+        }
+    });
 </script>
