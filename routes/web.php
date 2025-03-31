@@ -1,9 +1,10 @@
 <?php
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DonatorController;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('frontend.pages.main.main'); // Load main.blade.php
+    // return view('frontend.pages.main.donators'); // Load main.blade.php
+    return redirect()->route('donators');
 });
 
 Route::get('/donator', function () {
