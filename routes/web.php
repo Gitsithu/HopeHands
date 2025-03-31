@@ -5,7 +5,7 @@ Route::get('/', function () {
     return view('frontend.pages.main.main'); // Load main.blade.php
 });
 
-Route::get('/donators', function () {
+Route::get('/donator', function () {
     $donators = []; // Your donators data
     return view('frontend.pages.main.donators', compact('donators'));
 })->name('donators');

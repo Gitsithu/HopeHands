@@ -640,27 +640,31 @@
 
         document.getElementById('search-button').addEventListener('click', function () {
 
+            const localUrl = WEB_BASE_API_URL;            
+            let getUrl = window.location.href;
+            let result = getUrl.replace(localUrl, '');
+
             let searchData = {
-                type: window.location.href.replace("http://localhost:8000/", ""),
-                division: document.getElementById('city-search').getAttribute('data-id'),
-                township: document.getElementById('township-search').getAttribute('data-id'),
-                category: document.getElementById('category-search').getAttribute('data-id')
+                type: result,
+                division: document.getElementById('city-search').getAttribute('data-id') ?? null,
+                township: document.getElementById('township-search').getAttribute('data-id') ?? null,
+                category: document.getElementById('category-search').getAttribute('data-id') ?? null
             };
 
             sendSearchRequest(searchData);
         });
 
-
         function sendSearchRequest(searchData) {
+            console.log(searchData.type, 'searchData');
+                        
             const queryString = new URLSearchParams(searchData).toString();
-            axios.post(`${BASE_API_URL}/filter`, searchData)
-                .then(response => {
-                    // Redirect to results page with search data in the URL
-                    window.location.href = `/receivers?${queryString}`;  // Pass search data in the query string
-                })
-                .catch(error => {
-                    console.error('Error fetching search results:', error);
-                });
+            if(searchData.type == 'receivers'){
+                window.location.href = `/receivers?${queryString}`;
+            }
+            else{
+                window.location.href = `/donators?${queryString}`;
+            }
+            
         }
 
         if (token) {

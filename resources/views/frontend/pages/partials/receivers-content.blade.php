@@ -109,7 +109,7 @@
                     ပိတ်မည်
                 </button>
                 <button onclick="copyPhoneNumber()"
-                class="px-5 py-2.5  rounded-lg text-white bg-[#44991a] transition font-medium flex items-center justify-center gap-2">
+                    class="px-5 py-2.5  rounded-lg text-white bg-[#44991a] transition font-medium flex items-center justify-center gap-2">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3">
@@ -122,7 +122,7 @@
     </div>
 </div>
 
-<script  src="{{asset('frontend/assets/js/app.js')}}"></script>
+<script src="{{asset('frontend/assets/js/app.js')}}"></script>
 <script>
 
     // API Configuration
@@ -138,16 +138,23 @@
     const paginationContainer = document.getElementById('pagination-container');
     const loadingIndicator = document.getElementById('loading-indicator');
 
+    function cleanUrl() {
+        // Remove query parameters by replacing current URL with pathname only
+        window.history.replaceState({}, document.title, window.location.pathname);
+    }
+
     document.addEventListener('DOMContentLoaded', function () {
         // Extract the search data from the URL
         const queryParams = new URLSearchParams(window.location.search);
         const searchData = {
-            type: queryParams.get('type'),
-            division: queryParams.get('division'),
-            township: queryParams.get('township'),
-            category: queryParams.get('category')
+            type: queryParams.get('type') ?? null,
+            division: queryParams.get('division') ?? null,
+            township: queryParams.get('township') ?? null,
+            category: queryParams.get('category') ?? null
         };
 
+        console.log(searchData, 'searchData');
+        
         if (searchData.type || searchData.division || searchData.township || searchData.category) {
             bindSearchData(searchData);
         } else {
@@ -167,21 +174,13 @@
                 category: searchData.category || '' // Include category if available
             };
 
-            console.log(params, 'params');
-            
-
             const response = await axios.get(`${FILTER_API_URL}/search`, {
                 params: params,
             });
 
-            console.log(response, 'response response');
-            
-
             const data = response.data;
-            console.log(data, 'bindAPI');
-            
             if (data.status && data.data) {
-                currentData = data.data;                
+                currentData = data.data;
                 renderResults(currentData.data);
                 renderPagination(currentData);
             }
@@ -190,6 +189,7 @@
             showErrorToast("Error loading help seekers data");
         } finally {
             loadingIndicator.classList.add('hidden');
+            cleanUrl();
         }
     }
 
@@ -202,12 +202,12 @@
             const response = await fetch(`${HELP_SEEKERS_API_URL}?page=${page}`);
             const data = await response.json();
             console.log(data, 'data');
-            
+
 
             if (data.status && data.data) {
                 currentData = data.data;
                 console.log(currentData, 'currentData');
-                
+
                 renderResults(currentData.data);
                 renderPagination(currentData);
             }

@@ -110,6 +110,8 @@
 <script>
     // API Configuration
     const HELP_SEEKERS_API_URL = BASE_API_URL +"/donator";
+    const FILTER_API_URL = BASE_API_URL+ "/filter";
+
 
     // Global variables
     let currentPage = 1;
@@ -139,6 +141,63 @@
             showErrorToast("Error loading donor data");
         } finally {
             loadingIndicator.classList.add('hidden');
+        }
+    }
+
+    function cleanUrl() {
+        window.history.replaceState({}, document.title, window.location.pathname);
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        // Extract the search data from the URL
+        const queryParams = new URLSearchParams(window.location.search);
+        const searchData = {
+            type: queryParams.get('type') ?? null,
+            division: queryParams.get('division') ?? null,
+            township: queryParams.get('township') ?? null,
+            category: queryParams.get('category') ?? null
+        };
+
+        console.log();
+        
+
+        console.log(searchData, 'searchData');
+        
+        if (searchData.type || searchData.division || searchData.township || searchData.category) {
+            bindSearchData(searchData);
+        } else {
+            fetchHelpSeekers();
+        }
+    });
+
+    async function bindSearchData(searchData = {}, page = 1) {
+        try {
+            loadingIndicator.classList.remove('hidden');
+            resultsContainer.innerHTML = '';
+
+            let params = {
+                type: searchData.type || '', // Include type if available
+                division: searchData.division || '', // Include city if available
+                township: searchData.township || '', // Include township if available
+                category: searchData.category || '' // Include category if available
+            };
+            
+            const response = await axios.get(`${FILTER_API_URL}/search`, {
+                params: params,
+            });
+
+            const data = response.data;
+            if (data.status && data.data) {
+                currentData = data.data;
+                renderResults(currentData.data);
+                renderPagination(currentData);
+            }
+        } catch (error) {
+            console.error('Error fetching help seekers:', error);
+            showErrorToast("Error loading help seekers data");
+        } finally {
+            loadingIndicator.classList.add('hidden');
+            cleanUrl();
         }
     }
 
