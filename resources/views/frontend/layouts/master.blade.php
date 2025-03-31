@@ -31,8 +31,8 @@
 
     @include('frontend.layouts.partials.footer')
 </body>
-<script src="{{ asset('frontend/assets/js/app.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
+<script src="{{ asset('frontend/assets/js/app.js') }}"></script>
 @yield('script')
 
 </html>

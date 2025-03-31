@@ -1,6 +1,6 @@
 @extends('frontend.layouts.master')
 
-@section('title', 'Register')
+@section('title', 'Login')
 
 @section('content')
     <div class="w-full my-5">
@@ -47,9 +47,14 @@
             </div>
         </form>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
     </div>
 @endsection
 @section('script')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
     <script>
         function togglePassword() {
             const passwordField = document.getElementById('password');
@@ -88,7 +93,8 @@
             if (!isValid) return;
 
             // Proceed with API request if validation passes
-            axios.post(BASE_API_URL + "/login", {
+
+            axios.post(BASE_API_URL + "/donator/login", {
                     username: username,
                     password: password
                 })
@@ -97,7 +103,7 @@
                     if (response.data.data.token) {
                         console.log("Login successful!");
                         sessionStorage.setItem("authToken", response.data.data
-                            .token); // Store token in session
+                            .token);
                         window.location.href = "{{ route('donators') }}";
                     } else {
                         alert("Invalid login credentials.");

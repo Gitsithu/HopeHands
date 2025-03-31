@@ -1,1 +1,1 @@
-const BASE_API_URL = "http://localhost:8000/api/admin";
+var BASE_API_URL = "http://localhost:8000/api/admin";
