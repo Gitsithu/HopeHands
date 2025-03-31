@@ -255,7 +255,6 @@
                     });
                 })
                 .catch(error => {
-                    console.log(error);
                     console.error('Error fetching categorys:', error);
                     categorySelect.innerHTML = `
         <option value="">ကူညီရန်အမျိုးအစားများ ရယူရာတွင် အမှားတစ်ခုဖြစ်နေပါသည်</option>
@@ -282,7 +281,6 @@
                     });
                 })
                 .catch(error => {
-                    console.log(error);
                     console.error('Error fetching divisions:', error);
                     divisionSelect.innerHTML = `
         <option value="">တိုင်းဒေသကြီးများ ရယူရာတွင် အမှားတစ်ခုဖြစ်နေပါသည်</option>
@@ -310,7 +308,6 @@
                     });
                 })
                 .catch(error => {
-                    console.log(error);
                     console.error('Error fetching divisions:', error);
                     divisionSelect.innerHTML = `
         <option value="">မြို့နယ်များ ရယူရာတွင် အမှားတစ်ခုဖြစ်နေပါသည်</option>
