@@ -26,6 +26,7 @@ class AuthUserRegisterRequest extends FormRequest
         return [
             'username'         => 'required|unique:users,username',
             'password'         => 'required|min:6',
+            'confirm_password' => 'same:password',
             'front_view'       => 'required|image|mimes:png,jpg,jpeg',
             'back_view'        => 'required|image|mimes:png,jpg,jpeg',
             // 'division_id'      => 'nullable',
