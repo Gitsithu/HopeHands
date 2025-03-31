@@ -159,7 +159,7 @@
                 category: searchData.category || ''
             };
 
-            var response = await axios.get(`${FILTER_API_URL}?page=${page}`, {
+            var response = await axios.get(`${FILTER_API_URL}/changes?page=${page}`, {
                 params: params,
             });
             var data = response.data;
