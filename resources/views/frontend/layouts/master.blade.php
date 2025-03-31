@@ -19,10 +19,22 @@
             transform: translate(-50%, -50%) scale(1);
             transition: all 150ms ease-out;
         } */
+        html, body {
+            height: 100vh;
+            margin: 0;
+        }
+        #app {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .content-wrap {
+            flex: 1;
+        }
     </style>
 </head>
 
-<body class="font-sans bg-white text-black">
+<body class="flex flex-col min-h-screen font-sans bg-white text-black" style="">
     @include('frontend.layouts.partials.navbar') <!-- Include Navbar -->
 
     <main class="container mx-auto p-6">
