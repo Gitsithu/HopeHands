@@ -685,7 +685,7 @@
             let result = getUrl.replace(localUrl, '');
 
             let searchData = {
-                type: donationGet(),
+                type: donationGet() ?? 'donators',
                 division: document.getElementById('city-search').getAttribute('data-id') ?? null,
                 township: document.getElementById('township-search').getAttribute('data-id') ??
                     null,
@@ -700,7 +700,7 @@
             let getUrl = window.location.href;
             let result = getUrl.replace(localUrl, '');
             let searchData = {
-                type: mobileDonationGet(),
+                type: mobileDonationGet() ?? 'donators',
                 division: document.getElementById('mobile-city-search').getAttribute('data-id') ?? null,
                 township: document.getElementById('mobile-township-search').getAttribute('data-id') ??
                     null,
