@@ -107,7 +107,7 @@
                     </div>
                 </div>
 
-                <div class="relative">
+                {{-- <div class="relative">
                     <input type="text" id="mobile-township-search"
                         class="px-4 py-3 w-full bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 rounded-lg text-white placeholder-gray-400"
                         placeholder="မြို့နယ်" onclick="showDropdown('mobile-township-dropdown')" />
@@ -115,7 +115,40 @@
                         class="hidden absolute z-20 mt-1 w-full bg-gray-800 text-white rounded-lg shadow-xl max-h-60 overflow-y-auto border border-gray-700">
                         <!-- Options will be populated by JavaScript -->
                     </div>
+                </div> --}}
+                <div class="relative">
+                    <!-- Input field that will show the selected value -->
+                    <input type="text" id="donator-dropdown-input"
+                        class="px-4 py-3 w-full bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 rounded-lg text-white placeholder-gray-400"
+                        placeholder="ရွေးချယ်ပါ" readonly onclick="toggleDonatorDropdown()" />
+
+                    <!-- Dropdown arrow icon -->
+                    <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                        <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                            fill="currentColor">
+                            <path fill-rule="evenodd"
+                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                clip-rule="evenodd" />
+                        </svg>
+                    </div>
+
+                    <!-- Dropdown options container -->
+                    <div id="donator-dropdown-options"
+                        class="hidden absolute z-20 mt-1 w-full bg-gray-800 text-white rounded-lg shadow-xl max-h-60 overflow-y-auto border border-gray-700">
+                        <div class="px-4 py-2 hover:bg-gray-700 cursor-pointer"
+                            onclick="selectDonatorOption('donator', 'အလှူရှင်')">
+                            အလှူရှင်
+                        </div>
+                        <div class="px-4 py-2 hover:bg-gray-700 cursor-pointer"
+                            onclick="selectDonatorOption('help-seeker', 'အလှူခံပုဂ္ဂိုလ်')">
+                            အလှူခံပုဂ္ဂိုလ်
+                        </div>
+                    </div>
+
+                    <!-- Hidden input to store the actual value -->
+                    <input type="hidden" name="donator-dropdown" id="donator-dropdown-value" value="">
                 </div>
+
 
                 <div class="relative">
                     <input type="text" id="mobile-category-search"
@@ -167,6 +200,26 @@
     const TOWNSHIPS_API_URL = BASE_API_URL + "/division/township-fetch/";
     const CATEGORIES_API_URL = BASE_API_URL + "/category";
 
+    function toggleDonatorDropdown() {
+        const dropdown = document.getElementById('donator-dropdown-options');
+        dropdown.classList.toggle('hidden');
+    }
+
+    function selectDonatorOption(value, text) {
+        document.getElementById('donator-dropdown-input').value = text;
+        document.getElementById('donator-dropdown-value').value = value;
+        document.getElementById('donator-dropdown-options').classList.add('hidden');
+    }
+
+    document.addEventListener('click', function(event) {
+        const dropdown = document.getElementById('donator-dropdown-options');
+        const input = document.getElementById('donator-dropdown-input');
+
+        if (!input.contains(event.target) && !dropdown.contains(event.target)) {
+            dropdown.classList.add('hidden');
+        }
+    });
+
     // Store selected IDs for reference
     const selectedItems = {
         city: null,
@@ -197,6 +250,7 @@
         menuIcon.classList.toggle('hidden');
         closeIcon.classList.toggle('hidden');
     });
+
 
     // Close menu when clicking outside on mobile
     document.addEventListener('click', (e) => {
@@ -605,8 +659,8 @@
                 category: document.getElementById('category-search').getAttribute('data-id') ?? null
             };
 
-            sendSearchRequest(searchData);
-        });
+        sendSearchRequest(searchData);
+    });
 
         function sendSearchRequest(searchData) {
             console.log(searchData.type, 'searchData');
@@ -621,21 +675,21 @@
 
         }
 
-        // if (token) {
-        //     authButtons.forEach((btn) => {
-        //         if (btn) {
-        //             btn.textContent = "အကောင့်ထွက်ရန်";
-        //             btn.href = "#"; // Prevent navigation
+    // if (token) {
+    //     authButtons.forEach((btn) => {
+    //         if (btn) {
+    //             btn.textContent = "အကောင့်ထွက်ရန်";
+    //             btn.href = "#"; // Prevent navigation
 
-        //             btn.addEventListener("click", function(e) {
-        //                 e.preventDefault();
-        //                 sessionStorage.removeItem("authToken");
-        //                 window.alert('User was log out');
-        //                 location.reload(); // Reload page to update UI
-        //             });
-        //         }
-        //     });
-        // }
+    btn.addEventListener("click", function(e) {
+        e.preventDefault();
+        sessionStorage.removeItem("authToken");
+        window.alert('User was log out');
+        location.reload(); // Reload page to update UI
+    });
+    }
+    });
+    }
     });
 </script>
 

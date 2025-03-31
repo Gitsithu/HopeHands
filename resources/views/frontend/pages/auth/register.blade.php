@@ -3,6 +3,65 @@
 @section('title', 'Create')
 
 @section('content')
+    <style>
+        .select2-container {
+            width: 100% !important;
+        }
+
+        .select2-selection {
+            padding: 0.5rem;
+            font-size: 0.875rem;
+            color: #333;
+            border: 1px solid #d1d5db;
+            border-radius: 0.375rem;
+            background-color: white;
+            display: flex;
+            align-items: center;
+            min-height: 2.5rem;
+        }
+
+        .select2-selection__rendered {
+            margin: 0;
+            padding: 0;
+            display: inline-block;
+            white-space: nowrap;
+        }
+
+        /* Add focus styles */
+        .select2-selection--multiple:focus,
+        .select2-selection:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+        }
+
+        .select2-selection__arrow {
+            border-top-color: #333 !important;
+            /* Change arrow color if needed */
+        }
+
+        .select2-search input {
+            padding: 0.5rem;
+            font-size: 0.875rem;
+            color: #333;
+            border: 1px solid #d1d5db;
+            border-radius: 0.375rem;
+            width: 100%;
+        }
+
+        /* Style the dropdown options */
+        .select2-results__option {
+            padding: 0.5rem;
+            font-size: 0.875rem;
+            color: #333;
+        }
+
+        /* Highlight options on hover or select */
+        .select2-results__option--highlighted {
+            background-color: #3b82f6;
+            color: white;
+        }
+    </style>
     <div class="w-full">
         <div class="bg-white shadow-md rounded-lg px-8 pt-6 pb-8 mb-4 border border-gray-200">
             <form id="content-form" method="POST" enctype="multipart/form-data">
@@ -60,8 +119,8 @@
                         class="w-full px-4 py-2.5 text-sm text-gray-800 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                         id="township" name="township_id">
                         <option value="">မြို့နယ် ရွေးချယ်ပါ။</option>
-                        <p class="text-red-500 text-sm mt-1 error-text" id="error-township_id"></p>
                     </select>
+                    <p class="text-red-500 text-sm mt-1 error-text" id="error-township_id"></p>
                 </div>
 
                 <!-- Phone Field -->
@@ -199,27 +258,147 @@
                 }
             });
 
-            // $('#division').select2({
-            //     placeholder: "ကူညီရန်အမျိုးအစား ရွေးချယ်ပါ။",
-            //     allowClear: true,
-            //     width: '100%',
-            //     language: {
-            //         noResults: function() {
-            //             return "ရလဒ်မတွေ့ပါ";
-            //         }
-            //     }
-            // });
+            $('#division').select2({
+                placeholder: "တိုင်းဒေသကြီး ရွေးချယ်ပါ။",
+                allowClear: true
+            });
 
-            // $('#township').select2({
-            //     placeholder: "ကူညီရန်အမျိုးအစား ရွေးချယ်ပါ။",
-            //     allowClear: true,
-            //     width: '100%',
-            //     language: {
-            //         noResults: function() {
-            //             return "ရလဒ်မတွေ့ပါ";
-            //         }
-            //     }
-            // });
+            $('#township').select2({
+                placeholder: "မြို့နယ် ရွေးချယ်ပါ။",
+                allowClear: true,
+                disabled: true // Initially disabled until division is selected
+            });
+
+            // Load divisions from API on page load
+            $.ajax({
+                url: '/api/admin/city',
+                method: 'GET',
+                dataType: 'json',
+                success: function(response) {
+                    try {
+                        // Check if data is nested
+                        const data = response.data || response.results || response;
+
+                        if (!Array.isArray(data)) {
+                            throw new Error('Expected array but got ' + typeof data);
+                        }
+
+                        $('#division').empty().append(
+                            '<option value="">တိုင်းဒေသကြီး ရွေးချယ်ပါ။</option>');
+
+                        $.each(data, function(index, division) {
+                            if (!division.id) {
+                                console.warn('Division missing ID:', division);
+                                return;
+                            }
+
+                            const name = division.name_mm || division.name || 'Unknown';
+                            $('#division').append(
+                                `<option value="${division.id}">${name}</option>`);
+                        });
+
+                    } catch (e) {
+                        console.error('Error processing divisions:', e);
+                        $('#division').html('<option value="">Error loading divisions</option>');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('API request failed:', status, error);
+                    $('#division').html('<option value="">Failed to load divisions</option>');
+                }
+            });
+
+            // When division changes, load related townships
+            $('#division').on('change', function() {
+                const divisionId = $(this).val();
+                const $township = $('#township');
+
+                if (divisionId) {
+                    $township.prop('disabled', false);
+                    $township.empty().append('<option value="">မြို့နယ် ရွေးချယ်ပါ။</option>');
+
+                    // Show loading state
+                    $township.select2({
+                        data: [{
+                            id: '',
+                            text: 'Loading...',
+                            disabled: true
+                        }]
+                    });
+
+                    // Fetch townships for selected division
+                    $.ajax({
+                        url: `${TOWNSHIPS_API_URL}${divisionId}`, // Fixed template literal syntax
+                        method: 'GET',
+                        dataType: 'json',
+                        beforeSend: function() {
+                            // Show loading state
+                            $township.empty().append(
+                                '<option value="">Loading townships...</option>');
+                            $township.prop('disabled', true).select2();
+                        },
+                        success: function(response) {
+                            try {
+                                // Check if data is nested in response property
+                                const townships = response.data || response.results || response;
+
+                                if (!Array.isArray(townships)) {
+                                    throw new Error('Expected array but got ' +
+                                        typeof townships);
+                                }
+
+                                $township.empty().append(
+                                    '<option value="">မြို့နယ် ရွေးချယ်ပါ။</option>'
+                                );
+
+                                $.each(townships, function(index, township) {
+                                    if (!township.id) {
+                                        console.warn('Township missing ID:', township);
+                                        return;
+                                    }
+
+                                    // Use name_mm if available, fallback to name, then "Unknown"
+                                    const name = township.name_mm || township.name ||
+                                        'Unknown Township';
+                                    $township.append(
+                                        `<option value="${township.id}">${name}</option>`
+                                    );
+                                });
+
+                                $township.prop('disabled', false).select2();
+
+                            } catch (e) {
+                                console.error('Error processing townships:', e);
+                                $township.empty().append(
+                                    '<option value="">မြို့နယ်များကိုဖော်ပြနိုင်ခြင်းမရှိပါ။</option>'
+                                );
+                                $township.select2();
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            console.error('Township API Error:', {
+                                status: xhr.status,
+                                statusText: xhr.statusText,
+                                responseText: xhr.responseText
+                            });
+
+                            $township.empty().append(`
+            <option value="">Error loading townships (${xhr.status} ${xhr.statusText})</option>
+        `);
+                            $township.select2();
+                        },
+                        complete: function() {
+                            // Any cleanup operations if needed
+                        }
+                    });
+                } else {
+                    $township.prop('disabled', true);
+                    $township.empty().append('<option value="">မြို့နယ် ရွေးချယ်ပါ။</option>');
+                    $township.select2();
+                }
+            });
+
+
 
             // Optional: If you need to handle errors with Select2
             $('#category').on('change', function() {
@@ -288,17 +467,18 @@
 
         document.addEventListener('DOMContentLoaded', function() {
             fetchCatgory();
-            fetchDivisions();
-            document.getElementById('division').addEventListener('change', function() {
-                const divisionId = this.value;
-                if (divisionId) {
-                    fetchTownships(divisionId);
-                } else {
-                    const townshipSelect = document.getElementById('township');
-                    townshipSelect.innerHTML = '<option value="">မြို့နယ် ရွေးချယ်ပါ။</option>';
-                    townshipSelect.disabled = true;
-                }
-            });
+
+            // fetchDivisions();
+            // document.getElementById('division').addEventListener('change', function() {
+            //     const divisionId = this.value;
+            //     if (divisionId) {
+            //         fetchTownships(divisionId);
+            //     } else {
+            //         const townshipSelect = document.getElementById('township');
+            //         townshipSelect.innerHTML = '<option value="">မြို့နယ် ရွေးချယ်ပါ။</option>';
+            //         townshipSelect.disabled = true;
+            //     }
+            // });
 
             document.getElementById("content-form").addEventListener("submit", function(event) {
                 event.preventDefault();
@@ -332,58 +512,58 @@
                 });
         }
 
-        function fetchDivisions() {
-            const divisionSelect = document.getElementById('division');
+        //     function fetchDivisions() {
+        //         const divisionSelect = document.getElementById('division');
 
-            // Show loading state
-            divisionSelect.innerHTML = '<option value="">လုပ်ဆောင်နေဆဲ...</option>';
+        //         // Show loading state
+        //         divisionSelect.innerHTML = '<option value="">လုပ်ဆောင်နေဆဲ...</option>';
 
-            axios.get(DIVISION_API_URL)
-                .then(response => {
-                    // Clear existing options
-                    divisionSelect.innerHTML = '<option value="">တိုင်းဒေသကြီး ရွေးချယ်ပါ။</option>';
-                    // Add new options from API
-                    response.data.data.forEach(division => {
-                        const option = document.createElement('option');
-                        option.value = division.id;
-                        option.textContent = division.name;
-                        divisionSelect.appendChild(option);
-                    });
-                })
-                .catch(error => {
-                    console.error('Error fetching divisions:', error);
-                    divisionSelect.innerHTML = `
-        <option value="">တိုင်းဒေသကြီးများ ရယူရာတွင် အမှားတစ်ခုဖြစ်နေပါသည်</option>
-      `;
-                });
-        }
+        //         axios.get(DIVISION_API_URL)
+        //             .then(response => {
+        //                 // Clear existing options
+        //                 divisionSelect.innerHTML = '<option value="">တိုင်းဒေသကြီး ရွေးချယ်ပါ။</option>';
+        //                 // Add new options from API
+        //                 response.data.data.forEach(division => {
+        //                     const option = document.createElement('option');
+        //                     option.value = division.id;
+        //                     option.textContent = division.name;
+        //                     divisionSelect.appendChild(option);
+        //                 });
+        //             })
+        //             .catch(error => {
+        //                 console.error('Error fetching divisions:', error);
+        //                 divisionSelect.innerHTML = `
+    //     <option value="">တိုင်းဒေသကြီးများ ရယူရာတွင် အမှားတစ်ခုဖြစ်နေပါသည်</option>
+    //   `;
+        //             });
+        //     }
 
 
-        function fetchTownships(divisionId) {
-            const townshipSelect = document.getElementById('township');
+        //     function fetchTownships(divisionId) {
+        //         const townshipSelect = document.getElementById('township');
 
-            // Show loading state
-            townshipSelect.innerHTML = '<option value="">လုပ်ဆောင်နေဆဲ...</option>';
+        //         // Show loading state
+        //         townshipSelect.innerHTML = '<option value="">လုပ်ဆောင်နေဆဲ...</option>';
 
-            axios.get(`${TOWNSHIPS_API_URL}${divisionId}`)
-                .then(response => {
-                    // Clear existing options
-                    townshipSelect.innerHTML = '<option value="">မြို့နယ် ရွေးချယ်ပါ။</option>';
-                    // Add new options from API
-                    response.data.data.forEach(township => {
-                        const option = document.createElement('option');
-                        option.value = township.id;
-                        option.textContent = township.name;
-                        townshipSelect.appendChild(option);
-                    });
-                })
-                .catch(error => {
-                    console.error('Error fetching divisions:', error);
-                    divisionSelect.innerHTML = `
-        <option value="">မြို့နယ်များ ရယူရာတွင် အမှားတစ်ခုဖြစ်နေပါသည်</option>
-      `;
-                });
-        }
+        //         axios.get(`${TOWNSHIPS_API_URL}${divisionId}`)
+        //             .then(response => {
+        //                 // Clear existing options
+        //                 townshipSelect.innerHTML = '<option value="">မြို့နယ် ရွေးချယ်ပါ။</option>';
+        //                 // Add new options from API
+        //                 response.data.data.forEach(township => {
+        //                     const option = document.createElement('option');
+        //                     option.value = township.id;
+        //                     option.textContent = township.name;
+        //                     townshipSelect.appendChild(option);
+        //                 });
+        //             })
+        //             .catch(error => {
+        //                 console.error('Error fetching divisions:', error);
+        //                 divisionSelect.innerHTML = `
+    //     <option value="">မြို့နယ်များ ရယူရာတွင် အမှားတစ်ခုဖြစ်နေပါသည်</option>
+    //   `;
+        //             });
+        //     }
 
         function clearValidationErrors() {
             document.querySelectorAll(".error-text").forEach(el => el.textContent = "");
