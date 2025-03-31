@@ -697,82 +697,79 @@
     });
 
     document.addEventListener("DOMContentLoaded", function() {
-    const authButtons = document.querySelectorAll("#auth-btn, #auth-btn-mb");
-    const token = sessionStorage.getItem("authToken");
+        const authButtons = document.querySelectorAll("#auth-btn, #auth-btn-mb");
+        const token = sessionStorage.getItem("authToken");
 
-    // document.getElementById('search-button').addEventListener('click', function () {
+        // document.getElementById('search-button').addEventListener('click', function () {
 
-    //     const localUrl = "http://localhost:8000/";
+        //     const localUrl = "http://localhost:8000/";
 
-    //     let getUrl = window.location.href;;
-    //     let result = getUrl.replace(localUrl,'');
+        //     let getUrl = window.location.href;;
+        //     let result = getUrl.replace(localUrl,'');
 
-    //     let searchData = {
-    //         type: result,
-    //         // division: document.getElementById('division-search').value,
-    //         city: document.getElementById('city-search').value,
-    //         township: document.getElementById('township-search').value,
-    //         category: document.getElementById('category-search').value
-    //     };
+        //     let searchData = {
+        //         type: result,
+        //         // division: document.getElementById('division-search').value,
+        //         city: document.getElementById('city-search').value,
+        //         township: document.getElementById('township-search').value,
+        //         category: document.getElementById('category-search').value
+        //     };
 
-    //     sendSearchRequest(searchData);
-    // });
-
-
-    // function sendSearchRequest(searchData) {
-    //     console.log(searchData, 'searchData');
-
-    //     axios.post(`${BASE_API_URL}/filter`, searchData)
-    //         .then(response => {
-    //             // console.log('Search results:', response.data);
-    //         })
-    //         .catch(error => {
-    //             // console.error('Error fetching search results:', error);
-    //         });
-    // }
+        //     sendSearchRequest(searchData);
+        // });
 
 
-    document.getElementById('search-button').addEventListener('click', function() {
+        // function sendSearchRequest(searchData) {
+        //     console.log(searchData, 'searchData');
 
-        let searchData = {
-            type: window.location.href.replace("http://localhost:8000/", ""),
-            division: document.getElementById('city-search').getAttribute('data-id'),
-            township: document.getElementById('township-search').getAttribute('data-id'),
-            category: document.getElementById('category-search').getAttribute('data-id')
-        };
+        //     axios.post(`${BASE_API_URL}/filter`, searchData)
+        //         .then(response => {
+        //             // console.log('Search results:', response.data);
+        //         })
+        //         .catch(error => {
+        //             // console.error('Error fetching search results:', error);
+        //         });
+        // }
 
-        sendSearchRequest(searchData);
-    });
+
+        document.getElementById('search-button').addEventListener('click', function() {
+
+            let searchData = {
+                type: window.location.href.replace("http://localhost:8000/", ""),
+                division: document.getElementById('city-search').getAttribute('data-id'),
+                township: document.getElementById('township-search').getAttribute('data-id'),
+                category: document.getElementById('category-search').getAttribute('data-id')
+            };
+
+            sendSearchRequest(searchData);
+        });
 
 
-    function sendSearchRequest(searchData) {
-        const queryString = new URLSearchParams(searchData).toString();
-        axios.post(`${BASE_API_URL}/filter`, searchData)
-            .then(response => {
-                // Redirect to results page with search data in the URL
-                window.location.href =
-                    `/receivers?${queryString}`; // Pass search data in the query string
-            })
-            .catch(error => {
-                console.error('Error fetching search results:', error);
-            });
-    }
+        function sendSearchRequest(searchData) {
+            const queryString = new URLSearchParams(searchData).toString();
+            axios.post(`${BASE_API_URL}/filter`, searchData)
+                .then(response => {
+                    // Redirect to results page with search data in the URL
+                    window.location.href =
+                        `/receivers?${queryString}`; // Pass search data in the query string
+                })
+                .catch(error => {
+                    console.error('Error fetching search results:', error);
+                });
+        }
 
-    // if (token) {
-    //     authButtons.forEach((btn) => {
-    //         if (btn) {
-    //             btn.textContent = "အကောင့်ထွက်ရန်";
-    //             btn.href = "#"; // Prevent navigation
+        // if (token) {
+        //     authButtons.forEach((btn) => {
+        //         if (btn) {
+        //             btn.textContent = "အကောင့်ထွက်ရန်";
+        //             btn.href = "#"; // Prevent navigation
 
-    btn.addEventListener("click", function(e) {
-        e.preventDefault();
-        sessionStorage.removeItem("authToken");
-        window.alert('User was log out');
-        location.reload(); // Reload page to update UI
-    });
-    }
-    });
-    }
+        btn.addEventListener("click", function(e) {
+            e.preventDefault();
+            sessionStorage.removeItem("authToken");
+            window.alert('User was log out');
+            location.reload(); // Reload page to update UI
+        });
     });
 </script>
 
