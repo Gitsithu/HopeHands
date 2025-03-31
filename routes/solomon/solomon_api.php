@@ -3,6 +3,7 @@
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\CityController;
 use App\Http\Controllers\Backend\DivisionController;
+use App\Http\Controllers\Backend\FetchController;
 use App\Http\Controllers\Backend\HelpSeekerController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -15,8 +16,8 @@ Route::prefix('admin')->group(function () {
 
     Route::prefix('filter')->group(function () {
         // category
-        Route::get('/changes', [FetchController::class, 'filter']);
         Route::get('/search', [FetchController::class, 'fetchFilter']);
+        Route::get('/changes', [FetchController::class, 'filter']);
     });
 
     Route::prefix('division')->group(function () {
