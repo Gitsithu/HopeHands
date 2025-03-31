@@ -66,7 +66,7 @@
         <div class="bg-white shadow-md rounded-lg px-8 pt-6 pb-8 mb-4 border border-gray-200">
             <form id="content-form" method="POST" enctype="multipart/form-data">
                 @csrf
-                <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">စာရင်းသွင်းရန်</h2>
+                <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">အလှူရှင် စာရင်းသွင်းရန်</h2>
                 <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
                         အသုံးပြုသူအမည်
@@ -149,7 +149,7 @@
 
                 <div id="contact-fields-container"></div>
 
-                <div class="mb-4">
+                {{-- <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="image-upload-1">
                         သက်သေခံကတ်/မှတ်ပုံတင် အရှေ့ခြမ်း
                     </label>
@@ -168,7 +168,7 @@
                         type="file" id="image-upload-2" name="back_view" accept="image/*">
                     <p class="text-gray-600 text-xs italic">JPEG, PNG သို့မဟုတ် GIF ဖိုင်များသာ (အများဆုံး 5MB)</p>
                     <p class="text-red-500 text-sm mt-1 error-text" id="error-back_view"></p>
-                </div>
+                </div> --}}
                 <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="remark">
                         မှတ်ချက်
@@ -221,14 +221,6 @@
                     </button>
                 </div>
             </form>
-            <div class="mt-6 text-center">
-                <p class="text-gray-600 text-sm">
-                    အကောင့်ရှိပြီးသားလား?
-                    <a href="{{ route('donator.login') }}" class="text-blue-500 hover:text-blue-700 font-semibold">
-                        အကောင့်ဝင်ရန်
-                    </a>
-                </p>
-            </div>
         </div>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     </div>

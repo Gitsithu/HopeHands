@@ -26,17 +26,17 @@ class AuthUserController extends Controller
             $postData['is_donator'] = 1;
             $postData['name']       = $postData['username'];
 
-            if (isset($postData['front_view'])) {
-                $postData['front_view'] = $this->uploadImage($postData['front_view'], 'KYC');
-            }
+            // if (isset($postData['front_view'])) {
+            //     $postData['front_view'] = $this->uploadImage($postData['front_view'], 'KYC');
+            // }
 
-            if (isset($postData['back_view'])) {
-                $postData['back_view'] = $this->uploadImage($postData['back_view'], 'KYC');
-            }
-            $postData['kyc'] = [
-                'front_view' => $postData['front_view'] ?? null,
-                'back_view'  => $postData['back_view'] ?? null,
-            ];
+            // if (isset($postData['back_view'])) {
+            //     $postData['back_view'] = $this->uploadImage($postData['back_view'], 'KYC');
+            // }
+            // $postData['kyc'] = [
+            //     'front_view' => $postData['front_view'] ?? null,
+            //     'back_view'  => $postData['back_view'] ?? null,
+            // ];
             $user = User::create($postData);
             // $token   = $user->createToken('User Token')->plainTextToken;
             $donator = [

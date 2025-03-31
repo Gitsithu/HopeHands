@@ -3,7 +3,7 @@
         <!-- Mobile Header -->
         <div class="flex justify-between items-center md:hidden p-2">
             <!-- Logo -->
-            <a href="#" class="flex items-center">
+            <a href="{{ route('donators') }}" class="flex items-center">
                 <img src="/frontend/assets/images/logo.png" alt="MyApp Logo" class="w-28">
             </a>
 
@@ -21,7 +21,7 @@
         <!-- Desktop Layout -->
         <div class="hidden md:flex flex-row justify-between items-center">
             <!-- Logo -->
-            <a href="#" class="flex items-center" style="margin-right: 20px !important">
+            <a href="{{ route('donators') }}" class="flex items-center" style="margin-right: 20px !important">
                 <img src="/frontend/assets/images/logo.png" alt="MyApp Logo" class="w-32">
             </a>
 
