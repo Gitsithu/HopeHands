@@ -10,7 +10,7 @@
             အလှူရှင်
         </a>
         <a href="{{ route('receivers') }}" class="px-6 py-3 bg-gray-300 text-black font-semibold rounded-lg hover:bg-gray-400">
-            အလှူခံပုဂ္ဂိုလ်
+            အကူအညီတောင်းခံသူ
         </a>
     </div>
 

@@ -7,9 +7,9 @@ Route::get('test', function () {
 })->name('test');
 
 Route::prefix('donators')->group(function () {
-    Route::get('register', function () {
+    Route::get('create', function () {
         return view('frontend.pages.auth.register');
-    })->name('donator.register');
+    })->name('donator.create');
 
     Route::get('login', function () {
         return view('frontend.pages.auth.login');

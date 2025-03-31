@@ -69,10 +69,12 @@
                         <div id="category-dropdown"
                             class="hidden absolute z-20 mt-1 w-full bg-gray-800 text-white rounded-lg shadow-xl max-h-60 overflow-y-auto border border-gray-700">
                         </div> -->
-                        <select name="donator-dropdown"
+                        <select name="donator-dropdown" onchange="donationGet()" id="selected-value"
                             class="px-2 py-3 w-full bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 rounded-lg text-white placeholder-gray-400">
-                            <option class="px-4 py-2 hover:bg-gray-700" value="donator">အလှူရှင်</option>
-                            <option class="px-4 py-2 hover:bg-gray-700" value="help-seeker">အလှူခံပုဂ္ဂိုလ်</option>
+                            <option class="px-4 py-2 hover:bg-gray-700" value="donators">
+                                အလှူရှင်</option>
+                            <option class="px-4 py-2 hover:bg-gray-700" value="receivers">
+                                အကူအညီတောင်းခံသူ</option>
                         </select>
                     </div>
                 </div>
@@ -83,7 +85,7 @@
                         class="w-50 px-10 py-3 bg-[#66D230] text-white rounded-lg transition-all duration-300 font-medium shadow-md">
                         ရှာဖွေရန်
                     </button>
-                    <a href="{{ route('donator.register') }}" id="auth-btn"
+                    <a href="{{ route('donator.create') }}" id="auth-btn"
                         class="w-50 px-10 py-3 border-2 border-[#66D230] text-[#66D230] rounded-lg hover:bg-[#66D230] hover:text-white transition-all duration-300 font-medium shadow-md hover:shadow-lg transform hover:-translate-y-0.5 text-center">
                         စာရင်းသွင်းရန်
                     </a>
@@ -124,6 +126,11 @@
                         <!-- Options will be populated by JavaScript -->
                     </div>
                 </div>
+                <select name="donator-dropdown"
+                    class="px-2 py-3 w-full bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 rounded-lg text-white placeholder-gray-400">
+                    <option class="px-4 py-2 hover:bg-gray-700" value="donator">အလှူရှင်</option>
+                    <option class="px-4 py-2 hover:bg-gray-700" value="help-seeker">အလှူခံပုဂ္ဂိုလ်</option>
+                </select>
             </div>
 
             <!-- Action Buttons -->
@@ -132,7 +139,7 @@
                     class="px-6 py-3 bg-[#66D230] text-white rounded-lg transition-all duration-300 font-medium shadow-md">
                     ရှာဖွေရန်
                 </button>
-                <a id="auth-btn-mb" href="{{ route('donator.register') }}"
+                <a id="auth-btn-mb" href="{{ route('donator.create') }}"
                     class="px-6 py-3 border-2 border-[#66D230] text-[#66D230] rounded-lg hover:bg-[#66D230] hover:text-white transition-all duration-300 font-medium shadow-md hover:shadow-lg text-center">
                     စာရင်းသွင်းရန်
                 </a>
@@ -143,6 +150,15 @@
 
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="{{ asset('frontend/assets/js/app.js') }}"></script>
+
+<script>
+    function donationGet() {
+        selectElement = document.querySelector('#selected-value');
+        output = selectElement.options[selectElement.selectedIndex].value;
+        return output;
+    }
+</script>
+
 <script>
     // API Configuration
 
@@ -206,24 +222,6 @@
         document.getElementById(dropdownId).classList.toggle('hidden');
     }
 
-    // function selectItem(inputId, value, dropdownId, itemId = null) {
-    //     document.getElementById(inputId).value = value;
-    //     document.getElementById(dropdownId).classList.add('hidden');
-
-    //     // If this is a division selection, fetch cities for that division
-    //     if (inputId.includes('division') && itemId) {
-    //         fetchCities(itemId);
-    //         clearDependentFields(inputId, ['city', 'township']);
-    //     }
-    //     // If this is a city selection, fetch townships for that city
-    //     else if (inputId.includes('city') && itemId) {
-    //         fetchTownships(itemId);
-    //         clearDependentFields(inputId, ['township']);
-    //     }
-
-    //     checkSelections();
-    // }
-
     function selectItem(inputId, value, dropdownId, itemId = null) {
         const inputElement = document.getElementById(inputId);
 
@@ -246,21 +244,12 @@
         checkSelections();
     }
 
-    // function clearDependentFields(inputId, fields) {
-    //     const isMobile = inputId.includes('mobile');
-    //     const prefix = isMobile ? 'mobile-' : '';
-
-    //     fields.forEach(field => {
-    //         document.getElementById(`${prefix}${field}-search`).value = '';
-    //         document.getElementById(`${prefix}${field}-dropdown`).innerHTML = '';
-    //     });
-    // }
 
     function clearDependentFields(fieldIds) {
         fieldIds.forEach(fieldId => {
             const field = document.getElementById(fieldId);
-            field.value = '';        // Clear text
-            field.setAttribute('data-id', '');  // Clear stored ID
+            field.value = ''; // Clear text
+            field.setAttribute('data-id', ''); // Clear stored ID
         });
     }
 
@@ -287,7 +276,7 @@
             return;
         }
 
-        const localUrl = "http://localhost:8000/";
+        const localUrl = WEB_BASE_API_URL;
         let getUrl = window.location.href;
         let result = getUrl.replace(localUrl, '');
 
@@ -603,49 +592,14 @@
     });
 
     document.addEventListener("DOMContentLoaded", function () {
-        const authButtons = document.querySelectorAll("#auth-btn, #auth-btn-mb");
-        const token = sessionStorage.getItem("authToken");
-
-        // document.getElementById('search-button').addEventListener('click', function () {
-
-        //     const localUrl = "http://localhost:8000/";
-
-        //     let getUrl = window.location.href;;
-        //     let result = getUrl.replace(localUrl,'');
-
-        //     let searchData = {
-        //         type: result,
-        //         // division: document.getElementById('division-search').value,
-        //         city: document.getElementById('city-search').value,
-        //         township: document.getElementById('township-search').value,
-        //         category: document.getElementById('category-search').value
-        //     };
-
-        //     sendSearchRequest(searchData);
-        // });
-
-
-        // function sendSearchRequest(searchData) {
-        //     console.log(searchData, 'searchData');
-
-        //     axios.post(`${BASE_API_URL}/filter`, searchData)
-        //         .then(response => {
-        //             // console.log('Search results:', response.data);
-        //         })
-        //         .catch(error => {
-        //             // console.error('Error fetching search results:', error);
-        //         });
-        // }
-
-
         document.getElementById('search-button').addEventListener('click', function () {
 
-            const localUrl = WEB_BASE_API_URL;            
+            const localUrl = WEB_BASE_API_URL;
             let getUrl = window.location.href;
             let result = getUrl.replace(localUrl, '');
 
             let searchData = {
-                type: result,
+                type: donationGet(),
                 division: document.getElementById('city-search').getAttribute('data-id') ?? null,
                 township: document.getElementById('township-search').getAttribute('data-id') ?? null,
                 category: document.getElementById('category-search').getAttribute('data-id') ?? null
@@ -656,32 +610,32 @@
 
         function sendSearchRequest(searchData) {
             console.log(searchData.type, 'searchData');
-                        
+
             const queryString = new URLSearchParams(searchData).toString();
-            if(searchData.type == 'receivers'){
+            if (searchData.type == 'receivers') {
                 window.location.href = `/receivers?${queryString}`;
             }
-            else{
+            else {
                 window.location.href = `/donators?${queryString}`;
             }
-            
+
         }
 
-        if (token) {
-            authButtons.forEach((btn) => {
-                if (btn) {
-                    btn.textContent = "အကောင့်ထွက်ရန်";
-                    btn.href = "#"; // Prevent navigation
+        // if (token) {
+        //     authButtons.forEach((btn) => {
+        //         if (btn) {
+        //             btn.textContent = "အကောင့်ထွက်ရန်";
+        //             btn.href = "#"; // Prevent navigation
 
-                    btn.addEventListener("click", function (e) {
-                        e.preventDefault();
-                        sessionStorage.removeItem("authToken");
-                        window.alert('User was log out');
-                        location.reload(); // Reload page to update UI
-                    });
-                }
-            });
-        }
+        //             btn.addEventListener("click", function(e) {
+        //                 e.preventDefault();
+        //                 sessionStorage.removeItem("authToken");
+        //                 window.alert('User was log out');
+        //                 location.reload(); // Reload page to update UI
+        //             });
+        //         }
+        //     });
+        // }
     });
 </script>
 

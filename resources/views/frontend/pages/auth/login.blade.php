@@ -99,9 +99,7 @@
                     password: password
                 })
                 .then(function(response) {
-                    console.log("Login response:", response.data.data.token);
                     if (response.data.data.token) {
-                        console.log("Login successful!");
                         sessionStorage.setItem("authToken", response.data.data
                             .token);
                         window.location.href = "{{ route('donators') }}";
