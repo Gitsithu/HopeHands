@@ -62,6 +62,7 @@ Route::prefix('admin')->group(function () {
 
     Route::prefix('filter')->group(function () {
         // category
-        Route::get('/', [FetchController::class, 'filter']);
+        Route::post('/', [FetchController::class, 'filter']);
+        Route::get('/search', [FetchController::class, 'fetchFilter']);
     });
 });

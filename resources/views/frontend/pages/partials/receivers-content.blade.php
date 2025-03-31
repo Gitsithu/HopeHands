@@ -173,7 +173,8 @@
                 </div>
                 <button onclick="closeCreateModal()" class="p-1 rounded-full hover:bg-gray-100 transition">
                     <svg class="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M6 18L18 6M6 6l12 12">
                         </path>
                     </svg>
                 </button>
@@ -187,7 +188,8 @@
                 <!-- Basic Information Section -->
                 <div class="bg-gray-50 p-5 rounded-lg">
                     <h4 class="text-base font-semibold text-gray-700 mb-4 flex items-center">
-                        <svg class="w-5 h-5 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-5 h-5 mr-2 text-blue-500" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                         </svg>
@@ -240,7 +242,8 @@
                 <!-- Location Information Section -->
                 <div class="bg-gray-50 p-5 rounded-lg">
                     <h4 class="text-base font-semibold text-gray-700 mb-4 flex items-center">
-                        <svg class="w-5 h-5 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-5 h-5 mr-2 text-blue-500" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -285,7 +288,8 @@
                 <!-- Contact Information Section -->
                 <div class="bg-gray-50 p-5 rounded-lg">
                     <h4 class="text-base font-semibold text-gray-700 mb-4 flex items-center">
-                        <svg class="w-5 h-5 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-5 h-5 mr-2 text-blue-500" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                         </svg>
@@ -339,7 +343,7 @@
     </div>
 </div>
 
-<script src="{{asset('frontend/assets/js/app.js')}}"></script>
+<script src="{{ asset('frontend/assets/js/app.js') }}"></script>
 <script>
     // API Configuration
     const HELP_SEEKERS_API_URL = BASE_API_URL + "/help-seeker";
@@ -354,6 +358,61 @@
     const paginationContainer = document.getElementById('pagination-container');
     const loadingIndicator = document.getElementById('loading-indicator');
 
+    document.addEventListener('DOMContentLoaded', function() {
+        // Extract the search data from the URL
+        const queryParams = new URLSearchParams(window.location.search);
+        const searchData = {
+            type: queryParams.get('type'),
+            division: queryParams.get('division'),
+            township: queryParams.get('township'),
+            category: queryParams.get('category')
+        };
+
+        if (searchData.type || searchData.division || searchData.township || searchData.category) {
+            bindSearchData(searchData);
+        } else {
+            fetchHelpSeekers();
+        }
+    });
+
+    async function bindSearchData(searchData = {}, page = 1) {
+        try {
+            loadingIndicator.classList.remove('hidden');
+            resultsContainer.innerHTML = '';
+
+            let params = {
+                type: searchData.type || '', // Include type if available
+                division: searchData.division || '', // Include city if available
+                township: searchData.township || '', // Include township if available
+                category: searchData.category || '' // Include category if available
+            };
+
+            console.log(params, 'params');
+
+
+            const response = await axios.get(`${FILTER_API_URL}/search`, {
+                params: params,
+            });
+
+            console.log(response, 'response response');
+
+
+            const data = response.data;
+            console.log(data, 'bindAPI');
+
+            if (data.status && data.data) {
+                currentData = data.data;
+                renderResults(currentData.data);
+                renderPagination(currentData);
+            }
+        } catch (error) {
+            console.error('Error fetching help seekers:', error);
+            showErrorToast("Error loading help seekers data");
+        } finally {
+            loadingIndicator.classList.add('hidden');
+        }
+    }
+
     // Fetch help seekers data
     async function fetchHelpSeekers(page = 1) {
         try {
@@ -362,9 +421,13 @@
 
             const response = await fetch(`${HELP_SEEKERS_API_URL}?page=${page}`);
             const data = await response.json();
+            console.log(data, 'data');
+
 
             if (data.status && data.data) {
                 currentData = data.data;
+                console.log(currentData, 'currentData');
+
                 renderResults(currentData.data);
                 renderPagination(currentData);
             }
@@ -397,7 +460,8 @@
 
         data.forEach(item => {
             const card = document.createElement('div');
-            card.className = 'bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-all';
+            card.className =
+                'bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-all';
             card.innerHTML = `
                  <div class="p-5">
                     <div class="flex items-start justify-between">
@@ -407,10 +471,10 @@
                                 <span class="inline-block px-2 py-0.5 text-xs font-medium rounded-full bg-blue-100 text-blue-800">
                                     ${item.category?.name || 'N/A'}
                                 </span>
-                            </div>                            
+                            </div>
                         </div>
                     </div>
-                    
+
                     <div class="mt-4 space-y-4">
     <!-- Township -->
                     <div class="flex items-start">
@@ -425,7 +489,7 @@
                             </p>
                         </div>
                     </div>
-                    
+
                     <!-- Urgent Level -->
                     <div class="flex items-start">
                         <svg class="flex-shrink-0 mt-0.5 mr-3 h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -440,7 +504,7 @@
                             </p>
                         </div>
                     </div>
-                    
+
                     <!-- Phone Number -->
                     <div class="flex items-start">
                         <svg class="flex-shrink-0 mt-0.5 mr-3 h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -455,7 +519,7 @@
                     </div>
                 </div>
 
-                    
+
                     <button onclick="showHelpSeekerDetail(${JSON.stringify(item).replace(/"/g, '&quot;')})"
                         class="mt-4 w-full py-2 text-white bg-[#44991a] rounded-md  transition flex items-center justify-center gap-2">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -472,20 +536,28 @@
 
     function getUrgentLevelClass(level) {
         switch (level) {
-            case 'high': return 'text-red-800';
-            case 'medium': return 'text-yellow-800';
-            case 'low': return 'text-green-800';
-            default: return 'text-gray-800';
+            case 'high':
+                return 'text-red-800';
+            case 'medium':
+                return 'text-yellow-800';
+            case 'low':
+                return 'text-green-800';
+            default:
+                return 'text-gray-800';
         }
     }
 
     // Get Burmese translation for urgent level
     function getUrgentLevelBurmese(level) {
         switch (level) {
-            case 'high': return 'အရေးတကြီး';
-            case 'medium': return 'သာမန်ထက်ပို';
-            case 'low': return 'စောင့်ဆိုင်း၍ရ';
-            default: return 'N/A';
+            case 'high':
+                return 'အရေးတကြီး';
+            case 'medium':
+                return 'သာမန်ထက်ပို';
+            case 'low':
+                return 'စောင့်ဆိုင်း၍ရ';
+            default:
+                return 'N/A';
         }
     }
 
@@ -497,7 +569,8 @@
 
         // Previous button
         const prevButton = document.createElement('button');
-        prevButton.className = `px-3 py-1.5 rounded-md ${data.prev_page_url ? 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300' : 'bg-gray-100 text-gray-400 cursor-not-allowed border border-gray-200'}`;
+        prevButton.className =
+            `px-3 py-1.5 rounded-md ${data.prev_page_url ? 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300' : 'bg-gray-100 text-gray-400 cursor-not-allowed border border-gray-200'}`;
         prevButton.innerHTML = `
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
@@ -523,7 +596,8 @@
 
         if (startPage > 1) {
             const firstPageButton = document.createElement('button');
-            firstPageButton.className = 'px-3.5 py-1.5 rounded-md bg-white text-gray-700 hover:bg-gray-50 border border-gray-300';
+            firstPageButton.className =
+                'px-3.5 py-1.5 rounded-md bg-white text-gray-700 hover:bg-gray-50 border border-gray-300';
             firstPageButton.textContent = '1';
             firstPageButton.onclick = () => {
                 currentPage = 1;
@@ -541,7 +615,8 @@
 
         for (let i = startPage; i <= endPage; i++) {
             const pageButton = document.createElement('button');
-            pageButton.className = `px-3.5 py-1.5 rounded-md ${i === data.current_page ? 'bg-blue-600 text-white border border-blue-600' : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300'}`;
+            pageButton.className =
+                `px-3.5 py-1.5 rounded-md ${i === data.current_page ? 'bg-blue-600 text-white border border-blue-600' : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300'}`;
             pageButton.textContent = i;
             pageButton.onclick = () => {
                 currentPage = i;
@@ -559,7 +634,8 @@
             }
 
             const lastPageButton = document.createElement('button');
-            lastPageButton.className = 'px-3.5 py-1.5 rounded-md bg-white text-gray-700 hover:bg-gray-50 border border-gray-300';
+            lastPageButton.className =
+                'px-3.5 py-1.5 rounded-md bg-white text-gray-700 hover:bg-gray-50 border border-gray-300';
             lastPageButton.textContent = data.last_page;
             lastPageButton.onclick = () => {
                 currentPage = data.last_page;
@@ -570,7 +646,8 @@
 
         // Next button
         const nextButton = document.createElement('button');
-        nextButton.className = `px-3 py-1.5 rounded-md ${data.next_page_url ? 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300' : 'bg-gray-100 text-gray-400 cursor-not-allowed border border-gray-200'}`;
+        nextButton.className =
+            `px-3 py-1.5 rounded-md ${data.next_page_url ? 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300' : 'bg-gray-100 text-gray-400 cursor-not-allowed border border-gray-200'}`;
         nextButton.innerHTML = `
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
@@ -601,7 +678,8 @@
         document.getElementById('modalLocation').textContent = helpSeeker.location || 'မရှိပါ';
         document.getElementById('modalPhone').textContent = helpSeeker.phone || 'မရှိပါ';
         document.getElementById('modalViber').textContent = helpSeeker.contact?.viber || 'မရှိပါ';
-        document.getElementById('modalTelegram').textContent = helpSeeker.contact?.telegram || helpSeeker.contact?.telegram_usename || 'မရှိပါ';
+        document.getElementById('modalTelegram').textContent = helpSeeker.contact?.telegram || helpSeeker.contact
+            ?.telegram_usename || 'မရှိပါ';
         document.getElementById('modalHelpType').textContent = helpSeeker.category?.name || 'မရှိပါ';
         document.getElementById('modalContent').textContent = helpSeeker.content || 'မရှိပါ';
 
@@ -626,7 +704,8 @@
     // Show success toast
     function showSuccessToast(message) {
         const toast = document.createElement('div');
-        toast.className = 'fixed bottom-4 right-4 flex items-center bg-green-500 text-white px-4 py-2 rounded-md shadow-lg z-50 animate-fade-in';
+        toast.className =
+            'fixed bottom-4 right-4 flex items-center bg-green-500 text-white px-4 py-2 rounded-md shadow-lg z-50 animate-fade-in';
         toast.innerHTML = `
             <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
@@ -646,7 +725,8 @@
     // Show error toast
     function showErrorToast(message) {
         const toast = document.createElement('div');
-        toast.className = 'fixed bottom-4 right-4 flex items-center bg-red-500 text-white px-4 py-2 rounded-md shadow-lg z-50 animate-fade-in';
+        toast.className =
+            'fixed bottom-4 right-4 flex items-center bg-red-500 text-white px-4 py-2 rounded-md shadow-lg z-50 animate-fade-in';
         toast.innerHTML = `
             <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
@@ -688,7 +768,7 @@
         document.head.appendChild(style);
     });
 
-    window.addEventListener('DOMContentLoaded', function () {
+    window.addEventListener('DOMContentLoaded', function() {
         // Get the search data from the URL query parameters
         const searchParams = new URLSearchParams(window.location.search);
         const searchData = {
@@ -742,12 +822,13 @@
             }
 
             // Load townships when city is selected
-            document.getElementById('city').addEventListener('change', async function () {
+            document.getElementById('city').addEventListener('change', async function() {
                 const cityId = this.value;
                 const townshipSelect = document.getElementById('township');
 
                 if (cityId) {
-                    const townshipsResponse = await fetch(`${BASE_API_URL}/division/township-fetch/${cityId}`);
+                    const townshipsResponse = await fetch(
+                        `${BASE_API_URL}/division/township-fetch/${cityId}`);
                     const townshipsData = await townshipsResponse.json();
 
                     if (townshipsData.status && townshipsData.data) {
@@ -768,7 +849,7 @@
 
     // Handle form submission
     // Handle form submission
-    document.getElementById('createHelpSeekerForm').addEventListener('submit', async function (e) {
+    document.getElementById('createHelpSeekerForm').addEventListener('submit', async function(e) {
         e.preventDefault();
 
         // Get form data

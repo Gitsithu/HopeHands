@@ -60,6 +60,21 @@
                             <!-- Options will be populated by JavaScript -->
                         </div>
                     </div>
+
+                    <!-- Type Search -->
+                    <div class="relative">
+                        <!-- <input type="text" id="type-search"
+                            class="px-4 py-3 w-full bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 rounded-lg text-white placeholder-gray-400"
+                            placeholder="" readonly/>
+                        <div id="category-dropdown"
+                            class="hidden absolute z-20 mt-1 w-full bg-gray-800 text-white rounded-lg shadow-xl max-h-60 overflow-y-auto border border-gray-700">
+                        </div> -->
+                        <select name="donator-dropdown"
+                            class="px-2 py-3 w-full bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 rounded-lg text-white placeholder-gray-400">
+                            <option class="px-4 py-2 hover:bg-gray-700" value="donator">အလှူရှင်</option>
+                            <option class="px-4 py-2 hover:bg-gray-700" value="help-seeker">အလှူခံပုဂ္ဂိုလ်</option>
+                        </select>
+                    </div>
                 </div>
 
                 <!-- Action Buttons -->
@@ -68,7 +83,7 @@
                         class="w-50 px-10 py-3 bg-[#66D230] text-white rounded-lg transition-all duration-300 font-medium shadow-md">
                         ရှာဖွေရန်
                     </button>
-                    <a href="{{ route('donator.register') }}" id="auth-btn"
+                    <a href="{{ route('donator.create') }}" id="auth-btn"
                         class="w-50 px-10 py-3 border-2 border-[#66D230] text-[#66D230] rounded-lg hover:bg-[#66D230] hover:text-white transition-all duration-300 font-medium shadow-md hover:shadow-lg transform hover:-translate-y-0.5 text-center">
                         စာရင်းသွင်းရန်
                     </a>
@@ -117,7 +132,7 @@
                     class="px-6 py-3 bg-[#66D230] text-white rounded-lg transition-all duration-300 font-medium shadow-md">
                     ရှာဖွေရန်
                 </button>
-                <a id="auth-btn-mb" href="{{ route('donator.register') }}"
+                <a id="auth-btn-mb" href="{{ route('donator.create') }}"
                     class="px-6 py-3 border-2 border-[#66D230] text-[#66D230] rounded-lg hover:bg-[#66D230] hover:text-white transition-all duration-300 font-medium shadow-md hover:shadow-lg text-center">
                     စာရင်းသွင်းရန်
                 </a>
@@ -191,38 +206,61 @@
         document.getElementById(dropdownId).classList.toggle('hidden');
     }
 
+    // function selectItem(inputId, value, dropdownId, itemId = null) {
+    //     document.getElementById(inputId).value = value;
+    //     document.getElementById(dropdownId).classList.add('hidden');
+
+    //     // If this is a division selection, fetch cities for that division
+    //     if (inputId.includes('division') && itemId) {
+    //         fetchCities(itemId);
+    //         clearDependentFields(inputId, ['city', 'township']);
+    //     }
+    //     // If this is a city selection, fetch townships for that city
+    //     else if (inputId.includes('city') && itemId) {
+    //         fetchTownships(itemId);
+    //         clearDependentFields(inputId, ['township']);
+    //     }
+
+    //     checkSelections();
+    // }
+
     function selectItem(inputId, value, dropdownId, itemId = null) {
-        document.getElementById(inputId).value = value;
+        const inputElement = document.getElementById(inputId);
+
+        // Store the selected value and its ID
+        inputElement.value = value;
+        inputElement.setAttribute('data-id', itemId || '');
+
+        // Hide the dropdown
         document.getElementById(dropdownId).classList.add('hidden');
 
-        // Store the selected ID
-        if (itemId) {
-            if (inputId.includes('city')) {
-                selectedItems.city = itemId;
-                fetchTownships(itemId);
-                clearDependentFields(inputId, ['township']);
-            } else if (inputId.includes('township')) {
-                selectedItems.township = itemId;
-            } else if (inputId.includes('category')) {
-                selectedItems.category = itemId;
-            }
+        // Fetch dependent data if applicable
+        if (inputId.includes('division') && itemId) {
+            fetchCities(itemId);
+            clearDependentFields(['city-search', 'township-search']);
+        } else if (inputId.includes('city') && itemId) {
+            fetchTownships(itemId);
+            clearDependentFields(['township-search']);
         }
 
         checkSelections();
     }
 
-    function clearDependentFields(inputId, fields) {
-        const isMobile = inputId.includes('mobile');
-        const prefix = isMobile ? 'mobile-' : '';
+    // function clearDependentFields(inputId, fields) {
+    //     const isMobile = inputId.includes('mobile');
+    //     const prefix = isMobile ? 'mobile-' : '';
 
-        fields.forEach(field => {
-            document.getElementById(`${prefix}${field}-search`).value = '';
-            document.getElementById(`${prefix}${field}-dropdown`).innerHTML = '';
+    //     fields.forEach(field => {
+    //         document.getElementById(`${prefix}${field}-search`).value = '';
+    //         document.getElementById(`${prefix}${field}-dropdown`).innerHTML = '';
+    //     });
+    // }
 
-            // Also clear the selected ID
-            if (field === 'township') {
-                selectedItems.township = null;
-            }
+    function clearDependentFields(fieldIds) {
+        fieldIds.forEach(fieldId => {
+            const field = document.getElementById(fieldId);
+            field.value = ''; // Clear text
+            field.setAttribute('data-id', ''); // Clear stored ID
         });
     }
 
@@ -363,6 +401,7 @@
     // Function to populate a dropdown with options
     function populateDropdown(dropdownId, items, inputId) {
         const dropdown = document.getElementById(dropdownId);
+
         if (!dropdown) return;
 
         dropdown.innerHTML = '';
@@ -566,6 +605,64 @@
     document.addEventListener("DOMContentLoaded", function() {
         const authButtons = document.querySelectorAll("#auth-btn, #auth-btn-mb");
         const token = sessionStorage.getItem("authToken");
+
+        // document.getElementById('search-button').addEventListener('click', function () {
+
+        //     const localUrl = "http://localhost:8000/";
+
+        //     let getUrl = window.location.href;;
+        //     let result = getUrl.replace(localUrl,'');
+
+        //     let searchData = {
+        //         type: result,
+        //         // division: document.getElementById('division-search').value,
+        //         city: document.getElementById('city-search').value,
+        //         township: document.getElementById('township-search').value,
+        //         category: document.getElementById('category-search').value
+        //     };
+
+        //     sendSearchRequest(searchData);
+        // });
+
+
+        // function sendSearchRequest(searchData) {
+        //     console.log(searchData, 'searchData');
+
+        //     axios.post(`${BASE_API_URL}/filter`, searchData)
+        //         .then(response => {
+        //             // console.log('Search results:', response.data);
+        //         })
+        //         .catch(error => {
+        //             // console.error('Error fetching search results:', error);
+        //         });
+        // }
+
+
+        document.getElementById('search-button').addEventListener('click', function() {
+
+            let searchData = {
+                type: window.location.href.replace("http://localhost:8000/", ""),
+                division: document.getElementById('city-search').getAttribute('data-id'),
+                township: document.getElementById('township-search').getAttribute('data-id'),
+                category: document.getElementById('category-search').getAttribute('data-id')
+            };
+
+            sendSearchRequest(searchData);
+        });
+
+
+        function sendSearchRequest(searchData) {
+            const queryString = new URLSearchParams(searchData).toString();
+            axios.post(`${BASE_API_URL}/filter`, searchData)
+                .then(response => {
+                    // Redirect to results page with search data in the URL
+                    window.location.href =
+                        `/receivers?${queryString}`; // Pass search data in the query string
+                })
+                .catch(error => {
+                    console.error('Error fetching search results:', error);
+                });
+        }
 
         if (token) {
             authButtons.forEach((btn) => {
