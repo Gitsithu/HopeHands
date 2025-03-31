@@ -2,6 +2,7 @@
     /* Add this to your existing styles */
     .floating-button {
         animation: float 3s ease-in-out infinite;
+        background: #44991a;
     }
 
     @keyframes float {
@@ -37,7 +38,7 @@
         <p class="mt-2 text-gray-600">Loading help seekers...</p>
     </div>
     <button onclick="openCreateModal()"
-        class="floating-button fixed bottom-6 right-6 flex items-center justify-center w-14 h-14 rounded-full bg-blue-600 text-white hover:bg-blue-700 transition shadow-lg z-40">
+        class="floating-button fixed bottom-6 right-6 flex items-center justify-center w-14 h-14 rounded-full bg-blue-600 text-white bg-[#44991a] hover:bg-blue-700 transition shadow-lg z-40">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
         </svg>
@@ -329,7 +330,7 @@
                         Cancel
                     </button>
                     <button type="submit"
-                        class="px-5 py-2.5 rounded-lg text-white bg-blue-600 hover:bg-blue-700 transition font-medium flex items-center justify-center gap-2">
+                        class="px-5 py-2.5 rounded-lg text-white bg-[#44991a] hover:bg-[#44991a] transition font-medium flex items-center justify-center gap-2">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
@@ -632,7 +633,7 @@
 
         for (let i = startPage; i <= endPage; i++) {
             const pageButton = document.createElement('button');
-            pageButton.className = `px-3.5 py-1.5 rounded-md ${i === data.current_page ? 'bg-blue-600 text-white border border-blue-600' : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300'}`;
+            pageButton.className = `px-3.5 py-1.5 rounded-md ${i === data.current_page ? 'bg-[#44991a] text-white border border-[#44991a]' : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300'}`;
             pageButton.textContent = i;
             pageButton.onclick = () => {
                 currentPage = i;
