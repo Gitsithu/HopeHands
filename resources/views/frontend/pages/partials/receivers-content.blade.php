@@ -229,8 +229,9 @@
                                 <option value="low">Low (စောင့်ဆိုင်း၍ရ)</option>
                             </select>
                         </div>
+                        <div id="contact-fields-container"></div>
                     </div>
-                    <div id="contact-fields-container"></div>
+
 
                     <div class="mt-4 space-y-2">
                         <label for="content" class="block text-sm font-medium text-gray-700">
@@ -318,7 +319,7 @@
                             <option value="telegram">Telegram</option>
                         </select>
                     </div>
-                    <div id="contact-fields-container"></div>
+                    <div id="contact-fields"></div>
                 </div>
 
                 <!-- Form Actions -->
@@ -365,12 +366,10 @@
     const paginationContainer = document.getElementById('pagination-container');
     const loadingIndicator = document.getElementById('loading-indicator');
 
-    function cleanUrl() {
-        window.history.replaceState({}, document.title, window.location.pathname);
-    }
     document.getElementById('contact-method').addEventListener('change', function () {
-        const container = document.getElementById('contact-fields-container');
+        const container = document.getElementById('contact-fields');
         container.innerHTML = ''; // Clear previous fields
+
         if (this.value === 'viber') {
             // Add Viber field
             container.innerHTML = `
@@ -381,7 +380,7 @@
                 <input
                     class="w-full px-4 py-2.5 text-sm text-gray-800 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     type="text" id="viber-number" name="viber" placeholder="+959xxxxxxxx">
-                    <p class="text-red-500 text-sm mt-1 error-text" id="error-viber"></p>
+                <p class="text-red-500 text-sm mt-1 error-text" id="error-viber"></p>
             </div>
         `;
         } else if (this.value === 'telegram') {
@@ -394,7 +393,7 @@
                 <input
                     class="w-full px-4 py-2.5 text-sm text-gray-800 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     type="text" id="telegram-username" name="telegram_username" placeholder="@username">
-                    <p class="text-red-500 text-sm mt-1 error-text" id="error-telegram_username"></p>
+                <p class="text-red-500 text-sm mt-1 error-text" id="error-telegram_username"></p>
             </div>
             <div class="mb-4">
                 <label class="block text-gray-700 text-sm font-bold mb-2" for="telegram-phone">
@@ -403,13 +402,15 @@
                 <input
                     class="w-full px-4 py-2.5 text-sm text-gray-800 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     type="text" id="telegram-phone" name="telegram" placeholder="+959xxxxxxxx">
-                    <p class="text-red-500 text-sm mt-1 error-text" id="error-telegram"></p>
+                <p class="text-red-500 text-sm mt-1 error-text" id="error-telegram"></p>
             </div>
         `;
         }
     });
 
-
+    function cleanUrl() {
+        window.history.replaceState({}, document.title, window.location.pathname);
+    }
 
     document.addEventListener('DOMContentLoaded', function () {
         // Extract the search data from the URL
@@ -422,6 +423,7 @@
         };
 
         bindSearchData(currentSearchData);
+
     });
 
     async function bindSearchData(searchData = {}, page = 1) {
@@ -484,7 +486,7 @@
                 <div class="p-5">
                     <div class="flex items-start justify-between">
                         <div>
-                            <h3 class="text-lg font-semibold text-gray-800">${item.user?.name || 'N/A'}</h3>
+                            <h3 class="text-lg font-semibold text-gray-800">${item.name || 'N/A'}</h3>
                         </div>
                          <span class="inline-block mt-1 px-2 py-2 text-xs font-medium rounded-full bg-blue-100 text-blue-800">
                                 ${item.category?.name || 'Donor'}
@@ -503,6 +505,21 @@
                             <p class="text-sm font-medium text-gray-800">
                                 <span class="text-gray-500">မြို့နယ် - </span>
                                 ${item.township?.name || 'N/A'}
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Urgent Level -->
+                    <div class="flex items-start">
+                        <svg class="flex-shrink-0 mt-0.5 mr-3 h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                        </svg>
+                        <div>
+                            <p class="text-sm font-medium text-gray-800">
+                                <span class="text-gray-500">အရေးပေါ်သတ်မှတ်ချက် - </span>
+                                <span class="${getUrgentLevelClass(item.urgent_level)}">
+                                    ${getUrgentLevelBurmese(item.urgent_level)}
+                                </span>
                             </p>
                         </div>
                     </div>
@@ -534,6 +551,33 @@
             `;
             resultsContainer.appendChild(card);
         });
+    }
+
+    function getUrgentLevelClass(level) {
+        switch (level) {
+            case 'high':
+                return 'text-red-800';
+            case 'medium':
+                return 'text-yellow-800';
+            case 'low':
+                return 'text-green-800';
+            default:
+                return 'text-gray-800';
+        }
+    }
+
+    // Get Burmese translation for urgent level
+    function getUrgentLevelBurmese(level) {
+        switch (level) {
+            case 'high':
+                return 'အရေးတကြီး';
+            case 'medium':
+                return 'သာမန်ထက်ပို';
+            case 'low':
+                return 'စောင့်ဆိုင်း၍ရ';
+            default:
+                return 'မရှိပါ';
+        }
     }
 
     // Render pagination
@@ -634,34 +678,30 @@
     }
 
     // Show donator detail modal
-    function showDonatorDetail(donator) {
-        document.getElementById('modalName').textContent = donator.user?.name || 'မရှိပါ';
-        document.getElementById('modalCategory').textContent = donator.category?.name || 'မရှိပါ';
-        document.getElementById('modalTownship').textContent = donator.township?.name_mm || donator.township?.name || 'မရှိပါ';
-        document.getElementById('modalState').textContent = donator.city?.name_mm || donator.city?.name || 'မရှိပါ';
-        document.getElementById('modalPhone').textContent = donator.phone || 'မရှိပါ';
-        document.getElementById('modalViber').textContent = donator.contact?.viber || 'မရှိပါ';
-        document.getElementById('modalTelegram').textContent = donator.contact?.telegram || donator.contact?.telegram || 'မရှိပါ';
-        document.getElementById('modalTelegramUsername').textContent = donator.contact?.telegram || donator.contact?.telegram_usename || 'မရှိပါ';
-        document.getElementById('modalNotes').textContent = donator.remark || 'မရှိပါ';
+    function showDonatorDetail(helpSeeker) {
 
-        document.getElementById('donatorModal').classList.remove('hidden');
+        document.getElementById('modalName').textContent = helpSeeker.name || 'မရှိပါ';
+        document.getElementById('modalCategory').textContent = helpSeeker.category?.name || 'မရှိပါ';
 
-        const donatorData = {
-            name: donator.user?.name || null,
-            category: donator.category?.name || null,
-            township: donator.township?.name || null,
-            city: donator.city?.name || null,
-            phone: donator.phone || null,
-            viber: donator.contact?.viber || null,
-            telegram: donator.contact?.telegram || donator.contact?.telegram_usename || null,
-            remark: donator.remark || null
-        };
+        const urgentLevelElement = document.getElementById('modalUrgentLevel');
+        urgentLevelElement.textContent = getUrgentLevelBurmese(helpSeeker.urgent_level) || 'မရှိပါ';
+
+        document.getElementById('modalTownship').textContent = helpSeeker.township?.name || 'မရှိပါ';
+        document.getElementById('modalCity').textContent = helpSeeker.city?.name || 'မရှိပါ';
+        document.getElementById('modalLocation').textContent = helpSeeker.location || 'မရှိပါ';
+        document.getElementById('modalPhone').textContent = helpSeeker.phone || 'မရှိပါ';
+        document.getElementById('modalViber').textContent = helpSeeker.contact?.viber || 'မရှိပါ';
+        document.getElementById('modalTelegram').textContent = helpSeeker.contact?.telegram || helpSeeker.contact
+            ?.telegram_username || 'မရှိပါ';
+        document.getElementById('modalHelpType').textContent = helpSeeker.category?.name || 'မရှိပါ';
+        document.getElementById('modalContent').textContent = helpSeeker.content || 'မရှိပါ';
+
+        document.getElementById('helpSeekerModal').classList.remove('hidden');
     }
 
     // Close modal
     function closeModal() {
-        document.getElementById('donatorModal').classList.add('hidden');
+        document.getElementById('helpSeekerModal').classList.add('hidden');
     }
 
     // Copy phone number
@@ -810,82 +850,80 @@
         const formData = new FormData(this);
         const formObject = Object.fromEntries(formData.entries());
 
-        for (let key in formObject) {
-            if (formObject[key] === "" || formObject[key] === undefined) {
-                formObject[key] = null;
+        axios.post(`${BASE_API_URL}/help-seeker/store`, formData, {
+            headers: {
+                "Content-Type": "multipart/form-data"
             }
+        })
+            .then(response => {
+                if (response.data.data) {
 
-            formData.forEach((value, key) => {
-                // Only include fields that have values
-                if (value) {
-                    formObject[key] = value;
+                    window.location.href = "/receivers";
+
+                } else {
+                    alert("⚠️ Error: " + (response.data.message || "Something went wrong!"));
+                }
+            })
+            .catch(error => {
+                if (error.response && error.response.data.errors) {
+                    showValidationErrors(error.response.data.errors);
+                } else {
+                    alert("⚠️ Server error! Please try again later.");
                 }
             });
-            if (contactMethod === 'viber') {
-                formObject.telegram_username = null;
-                formObject.telegram = null;
-            } else if (contactMethod === 'telegram') {
-                formObject.viber = null;
-            } else {
-                formObject.viber = null;
-                formObject.telegram_username = null;
-                formObject.telegram = null;
-            }
-        }
 
         // Add CSRF token if needed (assuming you're using Laravel)
         // formObject._token = document.querySelector('meta[name="csrf-token"]').content;
 
-        try {
-            // Show loading state
-            const submitButton = this.querySelector('button[type="submit"]');
-            const originalButtonText = submitButton.innerHTML;
-            submitButton.innerHTML = `
-            <svg class="animate-spin -ml-1 mr-2 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-            </svg>
-            Processing...
-        `;
-            submitButton.disabled = true;
+        // try {
+        //     const submitButton = this.querySelector('button[type="submit"]');
+        //     const originalButtonText = submitButton.innerHTML;
+        //     submitButton.innerHTML = `
+        //     <svg class="animate-spin -ml-1 mr-2 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+        //         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+        //         <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        //     </svg>
+        //     Processing...
+        // `;
+        //     submitButton.disabled = true;
 
-            // Make the API request
-            const response = await fetch(`${BASE_API_URL}/help-seeker/store`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json',
-                    // Add CSRF token header if needed
-                    // 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-                },
-                body: JSON.stringify(formObject)
-            });
+        //     // Make the API request
+        //     const response = await fetch(`${BASE_API_URL}/help-seeker/store`, {
+        //         method: 'POST',
+        //         headers: {
+        //             'Content-Type': 'application/json',
+        //             'Accept': 'application/json',
+        //             // Add CSRF token header if needed
+        //             // 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+        //         },
+        //         body: JSON.stringify(formObject)
+        //     });
 
-            const data = await response.json();
+        //     const data = await response.json();
 
-            if (response.ok && data.status) {
-                showSuccessToast("Help seeker created successfully!");
-                closeCreateModal();
-                this.reset();
-                bindSearchData(currentPage); // Refresh the list
-            } else {
-                // Handle validation errors or other errors
-                if (data.errors) {
-                    const errorMessages = Object.values(data.errors).join('<br>');
-                    showErrorToast(errorMessages);
-                } else {
-                    showErrorToast(data.message || "Error creating help seeker");
-                }
-            }
-        } catch (error) {
-            console.error('Error creating help seeker:', error);
-            showErrorToast("Network error. Please try again.");
-        } finally {
-            // Reset button state
-            if (submitButton) {
-                submitButton.innerHTML = originalButtonText;
-                submitButton.disabled = false;
-            }
-        }
+        //     if (response.ok && data.status) {
+        //         showSuccessToast("Help seeker created successfully!");
+        //         closeCreateModal();
+        //         this.reset();
+        //         bindSearchData(currentPage); // Refresh the list
+        //     } else {
+        //         // Handle validation errors or other errors
+        //         if (data.errors) {
+        //             const errorMessages = Object.values(data.errors).join('<br>');
+        //             showErrorToast(errorMessages);
+        //         } else {
+        //             showErrorToast(data.message || "Error creating help seeker");
+        //         }
+        //     }
+        // } catch (error) {
+        //     console.error('Error creating help seeker:', error);
+        //     showErrorToast("Network error. Please try again.");
+        // } finally {
+        //     // Reset button state
+        //     if (submitButton) {
+        //         submitButton.innerHTML = originalButtonText;
+        //         submitButton.disabled = false;
+        //     }
+        // }
     });
 </script>
