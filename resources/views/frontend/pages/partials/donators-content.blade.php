@@ -106,9 +106,10 @@
     </div>
 </div>
 
+<script  src="{{asset('frontend/assets/js/app.js')}}"></script>
 <script>
     // API Configuration
-    const HELP_SEEKERS_API_URL = "http://127.0.0.1:8000/api/donator";
+    const HELP_SEEKERS_API_URL = BASE_API_URL +"/donator";
 
     // Global variables
     let currentPage = 1;

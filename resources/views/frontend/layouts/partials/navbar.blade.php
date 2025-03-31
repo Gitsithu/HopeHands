@@ -29,21 +29,11 @@
             <div class="flex flex-row items-center gap-4">
                 <!-- Search Inputs -->
                 <div class="grid grid-cols-4 gap-4">
-                    <!-- Division Search -->
-                    <!-- <div class="relative">
-                        <input type="text" id="division-search"
-                            class="px-4 py-3 w-full bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 rounded-lg text-white placeholder-gray-400"
-                            placeholder="တိုင်းဒေသကြီး/ပြည်နယ်" readonly onclick="showDropdown('division-dropdown')" />
-                        <div id="division-dropdown"
-                            class="hidden absolute z-20 mt-1 w-full bg-gray-800 text-white rounded-lg shadow-xl max-h-60 overflow-y-auto border border-gray-700">
-                        </div>
-                    </div> -->
-
                     <!-- City Search -->
                     <div class="relative">
                         <input type="text" id="city-search"
                             class="px-2 py-3 w-full bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 rounded-lg text-white placeholder-gray-400"
-                            placeholder="တိုင်း/ပြည်နယ်" readonly onclick="showDropdown('city-dropdown')" />
+                            placeholder="တိုင်း/ပြည်နယ်" onclick="showDropdown('city-dropdown')" />
                         <div id="city-dropdown"
                             class="hidden absolute z-20 mt-1 w-full bg-gray-800 text-white rounded-lg shadow-xl max-h-60 overflow-y-auto border border-gray-700">
                         </div>
@@ -53,7 +43,7 @@
                     <div class="relative">
                         <input type="text" id="township-search"
                             class="px-4 py-3 w-full bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 rounded-lg text-white placeholder-gray-400"
-                            placeholder="မြို့နယ်" readonly onclick="showDropdown('township-dropdown')" />
+                            placeholder="မြို့နယ်" onclick="showDropdown('township-dropdown')" />
                         <div id="township-dropdown"
                             class="hidden absolute z-20 mt-1 w-full bg-gray-800 text-white rounded-lg shadow-xl max-h-60 overflow-y-auto border border-gray-700">
                             <!-- Options will be populated by JavaScript -->
@@ -64,7 +54,7 @@
                     <div class="relative">
                         <input type="text" id="category-search"
                             class="px-4 py-3 w-full bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 rounded-lg text-white placeholder-gray-400"
-                            placeholder="အမျိုးအစား" readonly onclick="showDropdown('category-dropdown')" />
+                            placeholder="အမျိုးအစား" onclick="showDropdown('category-dropdown')" />
                         <div id="category-dropdown"
                             class="hidden absolute z-20 mt-1 w-full bg-gray-800 text-white rounded-lg shadow-xl max-h-60 overflow-y-auto border border-gray-700">
                             <!-- Options will be populated by JavaScript -->
@@ -78,10 +68,6 @@
                         class="w-50 px-10 py-3 bg-[#66D230] text-white rounded-lg transition-all duration-300 font-medium shadow-md">
                         ရှာဖွေရန်
                     </button>
-                    {{-- <button
-                        class="w-50 px-10 border-2 border-blue-500 text-white rounded-lg hover:bg-blue-500 transition-all duration-300 font-medium shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
-                        စာရင်းသွင်းရန်
-                    </button> --}}
                     <button id="openModal"
                         class="w-50 px-10 py-3 border-2 border-[#66D230] text-[#66D230] rounded-lg hover:bg-[#66D230] hover:text-white transition-all duration-300 font-medium shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
                         စာရင်းသွင်းရန်
@@ -94,20 +80,10 @@
         <div id="mobile-menu-content" class="hidden md:hidden p-4 space-y-4">
             <!-- Search Inputs -->
             <div class="space-y-4">
-                <!-- <div class="relative">
-                    <input type="text" id="mobile-division-search"
-                        class="px-4 py-3 w-full bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 rounded-lg text-white placeholder-gray-400"
-                        placeholder="တိုင်းဒေသကြီး/ပြည်နယ်" readonly
-                        onclick="showDropdown('mobile-division-dropdown')" />
-                    <div id="mobile-division-dropdown"
-                        class="hidden absolute z-20 mt-1 w-full bg-gray-800 text-white rounded-lg shadow-xl max-h-60 overflow-y-auto border border-gray-700">
-                    </div>
-                </div> -->
-
                 <div class="relative">
                     <input type="text" id="mobile-city-search"
                         class="px-4 py-3 w-full bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 rounded-lg text-white placeholder-gray-400"
-                        placeholder="တိုင်း/ပြည်နယ်" readonly onclick="showDropdown('mobile-city-dropdown')" />
+                        placeholder="တိုင်း/ပြည်နယ်" onclick="showDropdown('mobile-city-dropdown')" />
                     <div id="mobile-city-dropdown"
                         class="hidden absolute z-20 mt-1 w-full bg-gray-800 text-white rounded-lg shadow-xl max-h-60 overflow-y-auto border border-gray-700">
                         <!-- Options will be populated by JavaScript -->
@@ -117,7 +93,7 @@
                 <div class="relative">
                     <input type="text" id="mobile-township-search"
                         class="px-4 py-3 w-full bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 rounded-lg text-white placeholder-gray-400"
-                        placeholder="မြို့နယ်" readonly onclick="showDropdown('mobile-township-dropdown')" />
+                        placeholder="မြို့နယ်" onclick="showDropdown('mobile-township-dropdown')" />
                     <div id="mobile-township-dropdown"
                         class="hidden absolute z-20 mt-1 w-full bg-gray-800 text-white rounded-lg shadow-xl max-h-60 overflow-y-auto border border-gray-700">
                         <!-- Options will be populated by JavaScript -->
@@ -127,7 +103,7 @@
                 <div class="relative">
                     <input type="text" id="mobile-category-search"
                         class="px-4 py-3 w-full bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 rounded-lg text-white placeholder-gray-400"
-                        placeholder="အမျိုးအစား" readonly onclick="showDropdown('mobile-category-dropdown')" />
+                        placeholder="အမျိုးအစား" onclick="showDropdown('mobile-category-dropdown')" />
                     <div id="mobile-category-dropdown"
                         class="hidden absolute z-20 mt-1 w-full bg-gray-800 text-white rounded-lg shadow-xl max-h-60 overflow-y-auto border border-gray-700">
                         <!-- Options will be populated by JavaScript -->
@@ -141,8 +117,8 @@
                     class="px-6 py-3 bg-[#66D230] text-white rounded-lg transition-all duration-300 font-medium shadow-md">
                     ရှာဖွေရန်
                 </button>
-                <button
-                    class="px-6 py-3 border-2 border-blue-500 text-white rounded-lg hover:bg-blue-500 transition-all duration-300 font-medium shadow-md hover:shadow-lg">
+                <button id="mobile-register-button"
+                    class="px-6 py-3 border-2 border-[#66D230] text-[#66D230] rounded-lg hover:bg-[#66D230] hover:text-white transition-all duration-300 font-medium shadow-md hover:shadow-lg">
                     စာရင်းသွင်းရန်
                 </button>
             </div>
@@ -151,13 +127,21 @@
 </nav>
 
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script  src="{{asset('frontend/assets/js/app.js')}}"></script>
 <script>
     // API Configuration
-    const BASE_API_URL = "http://localhost:8000/api/admin";
+    
     const DIVISIONS_API_URL = BASE_API_URL + "/city";
     const CITIES_API_URL = BASE_API_URL + "/division/city-fetch/";
     const TOWNSHIPS_API_URL = BASE_API_URL + "/division/township-fetch/";
     const CATEGORIES_API_URL = BASE_API_URL + "/category";
+
+    // Store selected IDs for reference
+    const selectedItems = {
+        city: null,
+        township: null,
+        category: null
+    };
 
     // Mobile menu toggle
     const mobileMenuButton = document.getElementById('mobile-menu-button');
@@ -211,15 +195,17 @@
         document.getElementById(inputId).value = value;
         document.getElementById(dropdownId).classList.add('hidden');
 
-        // If this is a division selection, fetch cities for that division
-        if (inputId.includes('division') && itemId) {
-            fetchCities(itemId);
-            clearDependentFields(inputId, ['city', 'township']);
-        }
-        // If this is a city selection, fetch townships for that city
-        else if (inputId.includes('city') && itemId) {
-            fetchTownships(itemId);
-            clearDependentFields(inputId, ['township']);
+        // Store the selected ID
+        if (itemId) {
+            if (inputId.includes('city')) {
+                selectedItems.city = itemId;
+                fetchTownships(itemId);
+                clearDependentFields(inputId, ['township']);
+            } else if (inputId.includes('township')) {
+                selectedItems.township = itemId;
+            } else if (inputId.includes('category')) {
+                selectedItems.category = itemId;
+            }
         }
 
         checkSelections();
@@ -232,65 +218,44 @@
         fields.forEach(field => {
             document.getElementById(`${prefix}${field}-search`).value = '';
             document.getElementById(`${prefix}${field}-dropdown`).innerHTML = '';
+            
+            // Also clear the selected ID
+            if (field === 'township') {
+                selectedItems.township = null;
+            }
         });
     }
 
     function checkSelections() {
         // Check desktop inputs
-        const division = document.getElementById('division-search')?.value || document.getElementById(
-            'mobile-division-search')?.value;
-        const township = document.getElementById('township-search')?.value || document.getElementById(
-            'mobile-township-search')?.value;
-        const city = document.getElementById('city-search')?.value || document.getElementById('mobile-city-search')
-            ?.value;
-        const category = document.getElementById('category-search')?.value || document.getElementById(
-            'mobile-category-search')?.value;
-
-        // const searchButton = document.getElementById('search-button');
-        // const mobileSearchButton = document.getElementById('mobile-search-button');
-
-        // // Update button states without hiding them
-        // const isComplete = division && township && city && category;
-
-        // if (searchButton) {
-        //     searchButton.disabled = !isComplete;
-        //     if (isComplete) {
-        //         searchButton.classList.add('hover:bg-blue-700', 'transform', 'hover:-translate-y-0.5',
-        //             'hover:shadow-lg');
-        //         searchButton.classList.remove('opacity-75', 'cursor-not-allowed');
-        //     } else {
-        //         searchButton.classList.remove('hover:bg-blue-700', 'transform', 'hover:-translate-y-0.5',
-        //             'hover:shadow-lg');
-        //         searchButton.classList.add('opacity-75', 'cursor-not-allowed');
-        //     }
-        // }
-
-        // if (mobileSearchButton) {
-        //     mobileSearchButton.disabled = !isComplete;
-        //     if (isComplete) {
-        //         mobileSearchButton.classList.add('hover:bg-blue-700', 'hover:shadow-lg');
-        //         mobileSearchButton.classList.remove('opacity-75', 'cursor-not-allowed');
-        //     } else {
-        //         mobileSearchButton.classList.remove('hover:bg-blue-700', 'hover:shadow-lg');
-        //         mobileSearchButton.classList.add('opacity-75', 'cursor-not-allowed');
-        //     }
-        // }
+        const city = document.getElementById('city-search')?.value || document.getElementById('mobile-city-search')?.value;
+        const township = document.getElementById('township-search')?.value || document.getElementById('mobile-township-search')?.value;
+        const category = document.getElementById('category-search')?.value || document.getElementById('mobile-category-search')?.value;
     }
 
     function performSearch() {
-        const division = document.getElementById('division-search')?.value || document.getElementById(
-            'mobile-division-search')?.value;
-        const township = document.getElementById('township-search')?.value || document.getElementById(
-            'mobile-township-search')?.value;
-        const city = document.getElementById('city-search')?.value || document.getElementById('mobile-city-search')
-            ?.value;
-        const category = document.getElementById('category-search')?.value || document.getElementById(
-            'mobile-category-search')?.value;
+        const city = document.getElementById('city-search')?.value || document.getElementById('mobile-city-search')?.value;
+        const township = document.getElementById('township-search')?.value || document.getElementById('mobile-township-search')?.value;
+        const category = document.getElementById('category-search')?.value || document.getElementById('mobile-category-search')?.value;
 
-        if (!division || !township || !city || !category) {
+        if (!city || !township || !category) {
             showErrorToast("Please fill all search fields");
             return;
         }
+
+        const localUrl = "http://localhost:8000/";
+        let getUrl = window.location.href;
+        let result = getUrl.replace(localUrl, '');
+
+        let searchData = {
+            type: result,
+            city: city,
+            township: township,
+            category: category
+        };
+
+        let queryParams = new URLSearchParams(searchData).toString();
+        window.location.href = `${localUrl}api/admin/fetch?${queryParams}`;
     }
 
     document.addEventListener('click', (e) => {
@@ -335,31 +300,6 @@
         } catch (error) {
             console.error('Error fetching divisions:', error);
             showErrorToast("Error loading divisions");
-            return false;
-        }
-    }
-
-    // Function to fetch cities for a division
-    async function fetchCities(divisionId) {
-        try {
-            const response = await axios.get(CITIES_API_URL + divisionId);
-
-            if (response.data.status && response.data.data) {
-                const cities = response.data.data;
-
-                // Populate both desktop and mobile city dropdowns
-                populateDropdown('city-dropdown', cities, 'city-search');
-                populateDropdown('mobile-city-dropdown', cities, 'mobile-city-search');
-
-                return true;
-            } else {
-                console.error('API returned false status:', response.data.message);
-                showErrorToast("Error loading cities");
-                return false;
-            }
-        } catch (error) {
-            console.error('Error fetching cities:', error);
-            showErrorToast("Error loading cities");
             return false;
         }
     }
@@ -440,6 +380,170 @@
         });
     }
 
+    // Add manual search functionality
+    function setupManualSearch() {
+        // For city search
+        const citySearchElements = ['city-search', 'mobile-city-search'];
+        citySearchElements.forEach(id => {
+            const element = document.getElementById(id);
+            if (element) {
+                element.addEventListener('input', function() {
+                    filterDropdownOptions(id, 'city');
+                });
+            }
+        });
+        
+        // For township search
+        const townshipSearchElements = ['township-search', 'mobile-township-search'];
+        townshipSearchElements.forEach(id => {
+            const element = document.getElementById(id);
+            if (element) {
+                element.addEventListener('input', function() {
+                    filterDropdownOptions(id, 'township');
+                });
+            }
+        });
+        
+        // For category search
+        const categorySearchElements = ['category-search', 'mobile-category-search'];
+        categorySearchElements.forEach(id => {
+            const element = document.getElementById(id);
+            if (element) {
+                element.addEventListener('input', function() {
+                    filterDropdownOptions(id, 'category');
+                });
+            }
+        });
+    }
+
+    // Filter dropdown options based on search term
+    function filterDropdownOptions(inputId, type) {
+        const searchInput = document.getElementById(inputId);
+        const searchTerm = searchInput.value.toLowerCase();
+        const dropdownId = inputId.replace('-search', '-dropdown');
+        const dropdown = document.getElementById(dropdownId);
+        
+        // Show dropdown on typing
+        if (dropdown.classList.contains('hidden')) {
+            showDropdown(dropdownId);
+        }
+        
+        // Store the original options if not already stored
+        if (!dropdown.hasAttribute('data-original')) {
+            const originalOptions = dropdown.innerHTML;
+            dropdown.setAttribute('data-original', originalOptions);
+        }
+        
+        // If search term is empty, restore original dropdown
+        if (searchTerm === '') {
+            dropdown.innerHTML = dropdown.getAttribute('data-original');
+            return;
+        }
+        
+        // Determine which API to call based on type
+        let apiPromise;
+        switch (type) {
+            case 'city':
+                apiPromise = fetchAndFilterCities(searchTerm);
+                break;
+            case 'township':
+                // Need the selected city ID
+                if (selectedItems.city) {
+                    apiPromise = fetchAndFilterTownships(selectedItems.city, searchTerm);
+                } else {
+                    showErrorToast("Please select a city first");
+                    return;
+                }
+                break;
+            case 'category':
+                apiPromise = fetchAndFilterCategories(searchTerm);
+                break;
+            default:
+                return;
+        }
+        
+        // Show loading state
+        dropdown.innerHTML = '<div class="px-4 py-2 text-gray-400">Searching...</div>';
+        
+        // Fetch and filter items
+        apiPromise.then(filteredItems => {
+            populateFilteredDropdown(dropdownId, filteredItems, inputId);
+        }).catch(error => {
+            console.error(`Error filtering ${type}:`, error);
+            dropdown.innerHTML = '<div class="px-4 py-2 text-red-400">Error loading results</div>';
+        });
+    }
+
+    // API functions to fetch and filter data
+    async function fetchAndFilterCities(searchTerm) {
+        try {
+            const response = await axios.get(DIVISIONS_API_URL);
+            if (response.data.status && response.data.data) {
+                return response.data.data.filter(city => 
+                    city.name.toLowerCase().includes(searchTerm)
+                );
+            }
+            return [];
+        } catch (error) {
+            console.error('Error fetching cities:', error);
+            return [];
+        }
+    }
+
+    async function fetchAndFilterTownships(cityId, searchTerm) {
+        try {
+            const response = await axios.get(TOWNSHIPS_API_URL + cityId);
+            if (response.data.status && response.data.data) {
+                return response.data.data.filter(township => 
+                    township.name.toLowerCase().includes(searchTerm)
+                );
+            }
+            return [];
+        } catch (error) {
+            console.error('Error fetching townships:', error);
+            return [];
+        }
+    }
+
+    async function fetchAndFilterCategories(searchTerm) {
+        try {
+            const response = await axios.get(CATEGORIES_API_URL);
+            if (response.data.status && response.data.data) {
+                return response.data.data.filter(category => 
+                    category.name.toLowerCase().includes(searchTerm)
+                );
+            }
+            return [];
+        } catch (error) {
+            console.error('Error fetching categories:', error);
+            return [];
+        }
+    }
+
+    // Populate dropdown with filtered results
+    function populateFilteredDropdown(dropdownId, items, inputId) {
+        const dropdown = document.getElementById(dropdownId);
+        dropdown.innerHTML = '';
+        
+        if (items.length === 0) {
+            const noOption = document.createElement('div');
+            noOption.className = 'px-4 py-2 text-gray-400';
+            noOption.textContent = 'No matches found';
+            dropdown.appendChild(noOption);
+            return;
+        }
+        
+        items.forEach(item => {
+            const option = document.createElement('div');
+            option.className = 'px-4 py-2 hover:bg-gray-700 cursor-pointer';
+            option.textContent = item.name;
+            option.onclick = () => {
+                selectItem(inputId, item.name, dropdownId, item.id);
+            };
+            dropdown.appendChild(option);
+        });
+    }
+
     // Initialize when DOM is loaded
     document.addEventListener('DOMContentLoaded', () => {
         fetchDivisions();
@@ -451,32 +555,10 @@
 
         // Initial check of selections
         checkSelections();
+        
+        // Setup manual search functionality
+        setupManualSearch();
     });
-</script>
-
-<!-- Store API -->
-<script>
-
-    document.getElementById('search-button').addEventListener('click', function () {
-
-        const localUrl = "http://localhost:8000/";
-
-        let getUrl = window.location.href;;
-        let result = getUrl.replace(localUrl, '');
-
-        let searchData = {
-            type: result,
-            // division: document.getElementById('division-search').value,
-            city: document.getElementById('city-search').value,
-            township: document.getElementById('township-search').value,
-            category: document.getElementById('category-search').value
-        };
-
-        let queryParams = new URLSearchParams(searchData).toString();
-
-        window.location.href = `${localUrl}api/admin/fetch?${queryParams}`;
-    });
-
 </script>
 
 <style>

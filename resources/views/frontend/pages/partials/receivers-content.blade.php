@@ -122,9 +122,10 @@
     </div>
 </div>
 
+<script  src="{{asset('frontend/assets/js/app.js')}}"></script>
 <script>
     // API Configuration
-    const HELP_SEEKERS_API_URL = "http://127.0.0.1:8000/api/admin/help-seeker";
+    const HELP_SEEKERS_API_URL = BASE_API_URL + "/help-seeker";
 
     // Global variables
     let currentPage = 1;

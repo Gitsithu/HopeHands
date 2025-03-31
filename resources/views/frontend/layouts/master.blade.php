@@ -15,4 +15,5 @@
 
     @include('frontend.layouts.partials.footer')
 </body>
+<script src="{{asset('frontend/assets/js/app.js')}}"></script>
 </html>
