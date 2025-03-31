@@ -124,6 +124,11 @@
                         <!-- Options will be populated by JavaScript -->
                     </div>
                 </div>
+                <select name="donator-dropdown"
+                            class="px-2 py-3 w-full bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 rounded-lg text-white placeholder-gray-400">
+                            <option class="px-4 py-2 hover:bg-gray-700" value="donator">အလှူရှင်</option>
+                            <option class="px-4 py-2 hover:bg-gray-700" value="help-seeker">အလှူခံပုဂ္ဂိုလ်</option>
+                        </select>
             </div>
 
             <!-- Action Buttons -->

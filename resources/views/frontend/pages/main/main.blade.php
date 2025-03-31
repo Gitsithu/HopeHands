@@ -12,14 +12,10 @@
         </a>
         <a href="{{ route('receivers') }}" 
            class="px-6 py-3 font-semibold rounded-lg transition {{ request()->is('receivers') ? 'bg-[#44991a] text-white' : 'bg-gray-300 text-black hover:bg-gray-400' }}">
-           အလှူခံပုဂ္ဂိုလ်
+           အကူအညီတောင်းခံသူ
         </a>
     </div>
 
     <!-- Default content (can be empty or show instructions) -->
-    <div class="mt-8">
-        <h2 class="text-2xl font-bold text-black">Welcome to MyApp</h2>
-        <p class="mt-2 text-gray-700">Please select a tab above to continue</p>
-    </div>
 </div>
 @endsection

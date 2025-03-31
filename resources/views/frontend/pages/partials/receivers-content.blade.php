@@ -169,7 +169,7 @@
                                 d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
                         </svg>
                     </div>
-                    <h3 class="text-xl font-bold text-gray-800">အလှူခံပုဂ္ဂိုလ်ဖြည့်စွက်ခြင်း</h3>
+                    <h3 class="text-xl font-bold text-gray-800">အကူအညီတောင်းခံသူ ဖြည့်စွက်ရန်</h3>
                 </div>
                 <button onclick="closeCreateModal()" class="p-1 rounded-full hover:bg-gray-100 transition">
                     <svg class="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -386,19 +386,13 @@
                 township: searchData.township || '', // Include township if available
                 category: searchData.category || '' // Include category if available
             };
-
-            console.log(params, 'params');
-
-
             const response = await axios.get(`${FILTER_API_URL}/search`, {
                 params: params,
             });
 
-            console.log(response, 'response response');
 
 
             const data = response.data;
-            console.log(data, 'bindAPI');
 
             if (data.status && data.data) {
                 currentData = data.data;
@@ -421,12 +415,9 @@
 
             const response = await fetch(`${HELP_SEEKERS_API_URL}?page=${page}`);
             const data = await response.json();
-            console.log(data, 'data');
-
 
             if (data.status && data.data) {
                 currentData = data.data;
-                console.log(currentData, 'currentData');
 
                 renderResults(currentData.data);
                 renderPagination(currentData);
@@ -468,7 +459,7 @@
                         <div>
                             <h3 class="text-lg font-semibold text-gray-800">${item.name || 'N/A'}</h3>
                             <div class="flex items-center gap-2 mt-1">
-                                <span class="inline-block px-2 py-0.5 text-xs font-medium rounded-full bg-blue-100 text-blue-800">
+                                <span class="inline-block px-2 py-2 text-xs font-medium rounded-full bg-blue-100 text-blue-800">
                                     ${item.category?.name || 'N/A'}
                                 </span>
                             </div>
@@ -778,7 +769,6 @@
             category: searchParams.get('category') || ''
         };
 
-        console.log(searchData, 'hehehhehehehhehehehehh');
 
 
         // Make an API request to fetch filtered data based on the search parameters
