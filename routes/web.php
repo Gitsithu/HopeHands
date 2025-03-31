@@ -1,5 +1,6 @@
 <?php
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DonatorController;
 
 Route::get('/', function () {
     return view('frontend.pages.main.main'); // Load main.blade.php
@@ -15,7 +16,7 @@ Route::get('/receivers', function () {
     return view('frontend.pages.main.receivers', compact('receivers'));
 })->name('receivers');
 
-Route::get('/donators', [App\Http\Controllers\DonatorController::class, 'donators'])->name('donators');
+Route::get('/donators', [DonatorController::class, 'donators'])->name('donators');
 Route::prefix('admin')->group(function () {
 
     Route::get('login', function () {
