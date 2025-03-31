@@ -97,30 +97,39 @@
         <div id="mobile-menu-content" class="hidden md:hidden p-4 space-y-4">
             <!-- Search Inputs -->
             <div class="space-y-4">
+                <!-- City Search -->
                 <div class="relative">
                     <input type="text" id="mobile-city-search"
                         class="px-4 py-3 w-full bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 rounded-lg text-white placeholder-gray-400"
-                        placeholder="တိုင်း/ပြည်နယ်" onclick="showDropdown('mobile-city-dropdown')" />
+                        placeholder="တိုင်း/ပြည်နယ်" 
+                        onclick="showDropdown('mobile-city-dropdown')" 
+                        data-id=""/>
                     <div id="mobile-city-dropdown"
                         class="hidden absolute z-20 mt-1 w-full bg-gray-800 text-white rounded-lg shadow-xl max-h-60 overflow-y-auto border border-gray-700">
                         <!-- Options will be populated by JavaScript -->
                     </div>
                 </div>
 
+                <!-- Township Search -->
                 <div class="relative">
                     <input type="text" id="mobile-township-search"
                         class="px-4 py-3 w-full bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 rounded-lg text-white placeholder-gray-400"
-                        placeholder="မြို့နယ်" onclick="showDropdown('mobile-township-dropdown')" />
+                        placeholder="မြို့နယ်" 
+                        onclick="showDropdown('mobile-township-dropdown')"
+                        data-id=""/>
                     <div id="mobile-township-dropdown"
                         class="hidden absolute z-20 mt-1 w-full bg-gray-800 text-white rounded-lg shadow-xl max-h-60 overflow-y-auto border border-gray-700">
                         <!-- Options will be populated by JavaScript -->
                     </div>
                 </div>
 
+                <!-- Category Search -->
                 <div class="relative">
                     <input type="text" id="mobile-category-search"
                         class="px-4 py-3 w-full bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 rounded-lg text-white placeholder-gray-400"
-                        placeholder="အမျိုးအစား" onclick="showDropdown('mobile-category-dropdown')" />
+                        placeholder="အမျိုးအစား" 
+                        onclick="showDropdown('mobile-category-dropdown')"
+                        data-id=""/>
                     <div id="mobile-category-dropdown"
                         class="hidden absolute z-20 mt-1 w-full bg-gray-800 text-white rounded-lg shadow-xl max-h-60 overflow-y-auto border border-gray-700">
                         <!-- Options will be populated by JavaScript -->
@@ -179,7 +188,7 @@
                     class="px-6 py-3 bg-[#66D230] text-white rounded-lg transition-all duration-300 font-medium shadow-md">
                     ရှာဖွေရန်
                 </button>
-                <a id="auth-btn-mb" href="{{ route('donator.create') }}"
+                <a href="{{ route('donator.create') }}"
                     class="px-6 py-3 border-2 border-[#66D230] text-[#66D230] rounded-lg hover:bg-[#66D230] hover:text-white transition-all duration-300 font-medium shadow-md hover:shadow-lg text-center">
                     စာရင်းသွင်းရန်
                 </a>
