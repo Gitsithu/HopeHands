@@ -116,6 +116,10 @@
                             <p class="text-xs font-medium text-gray-500 mb-1">Telegram</p>
                             <p id="modalTelegram" class="text-base font-medium text-gray-800"></p>
                         </div>
+                        <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                            <p class="text-xs font-medium text-gray-500 mb-1">Telegram Username</p>
+                            <p id="modalTelegramUsername" class="text-base font-medium text-gray-800"></p>
+                        </div>
                     </div>
                 </div>
 
@@ -309,8 +313,15 @@
                         </div>
 
                         <div class="space-y-2">
-                            <label for="telegram" class="block text-sm font-medium text-gray-700">
+                            <label for="telegram_username" class="block text-sm font-medium text-gray-700">
                                 Telegram Username
+                            </label>
+                            <input type="text" id="telegram_username" name="telegram_username"
+                                class="w-full px-4 py-2.5 text-sm text-gray-800 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        <div class="space-y-2">
+                            <label for="telegram" class="block text-sm font-medium text-gray-700">
+                                Telegram Phone Number
                             </label>
                             <input type="text" id="telegram" name="telegram"
                                 class="w-full px-4 py-2.5 text-sm text-gray-800 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
@@ -589,10 +600,22 @@
         document.getElementById('modalState').textContent = donator.city?.name_mm || donator.city?.name || 'မရှိပါ';
         document.getElementById('modalPhone').textContent = donator.phone || 'မရှိပါ';
         document.getElementById('modalViber').textContent = donator.contact?.viber || 'မရှိပါ';
-        document.getElementById('modalTelegram').textContent = donator.contact?.telegram || donator.contact?.telegram_usename || 'မရှိပါ';
+        document.getElementById('modalTelegram').textContent = donator.contact?.telegram || donator.contact?.telegram || 'မရှိပါ';
+        document.getElementById('modalTelegramUsername').textContent = donator.contact?.telegram || donator.contact?.telegram_usename || 'မရှိပါ';
         document.getElementById('modalNotes').textContent = donator.remark || 'မရှိပါ';
 
         document.getElementById('donatorModal').classList.remove('hidden');
+
+        const donatorData = {
+            name: donator.user?.name || null,
+            category: donator.category?.name || null,
+            township: donator.township?.name || null,
+            city: donator.city?.name || null,
+            phone: donator.phone || null,
+            viber: donator.contact?.viber || null,
+            telegram: donator.contact?.telegram || donator.contact?.telegram_usename || null,
+            remark: donator.remark || null
+        };
     }
 
     // Close modal
@@ -745,6 +768,12 @@
         // Get form data
         const formData = new FormData(this);
         const formObject = Object.fromEntries(formData.entries());
+
+        for (let key in formObject) {
+            if (formObject[key] === "" || formObject[key] === undefined) {
+                formObject[key] = null; 
+            }
+        }
 
         // Add CSRF token if needed (assuming you're using Laravel)
         // formObject._token = document.querySelector('meta[name="csrf-token"]').content;
