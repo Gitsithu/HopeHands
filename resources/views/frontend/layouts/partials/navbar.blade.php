@@ -603,8 +603,8 @@
     });
 
     document.addEventListener("DOMContentLoaded", function() {
-        const authButtons = document.querySelectorAll("#auth-btn, #auth-btn-mb");
-        const token = sessionStorage.getItem("authToken");
+        // const authButtons = document.querySelectorAll("#auth-btn, #auth-btn-mb");
+        // const token = sessionStorage.getItem("authToken");
 
         // document.getElementById('search-button').addEventListener('click', function () {
 
@@ -664,21 +664,21 @@
                 });
         }
 
-        if (token) {
-            authButtons.forEach((btn) => {
-                if (btn) {
-                    btn.textContent = "အကောင့်ထွက်ရန်";
-                    btn.href = "#"; // Prevent navigation
+        // if (token) {
+        //     authButtons.forEach((btn) => {
+        //         if (btn) {
+        //             btn.textContent = "အကောင့်ထွက်ရန်";
+        //             btn.href = "#"; // Prevent navigation
 
-                    btn.addEventListener("click", function(e) {
-                        e.preventDefault();
-                        sessionStorage.removeItem("authToken");
-                        window.alert('User was log out');
-                        location.reload(); // Reload page to update UI
-                    });
-                }
-            });
-        }
+        //             btn.addEventListener("click", function(e) {
+        //                 e.preventDefault();
+        //                 sessionStorage.removeItem("authToken");
+        //                 window.alert('User was log out');
+        //                 location.reload(); // Reload page to update UI
+        //             });
+        //         }
+        //     });
+        // }
     });
 </script>
 
