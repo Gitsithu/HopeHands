@@ -83,7 +83,7 @@
                         class="w-50 px-10 py-3 bg-[#66D230] text-white rounded-lg transition-all duration-300 font-medium shadow-md">
                         ရှာဖွေရန်
                     </button>
-                    <a href="{{ route('donator.register') }}" id="auth-btn"
+                    <a href="{{ route('donator.create') }}" id="auth-btn"
                         class="w-50 px-10 py-3 border-2 border-[#66D230] text-[#66D230] rounded-lg hover:bg-[#66D230] hover:text-white transition-all duration-300 font-medium shadow-md hover:shadow-lg transform hover:-translate-y-0.5 text-center">
                         စာရင်းသွင်းရန်
                     </a>
@@ -132,7 +132,7 @@
                     class="px-6 py-3 bg-[#66D230] text-white rounded-lg transition-all duration-300 font-medium shadow-md">
                     ရှာဖွေရန်
                 </button>
-                <a id="auth-btn-mb" href="{{ route('donator.register') }}"
+                <a id="auth-btn-mb" href="{{ route('donator.create') }}"
                     class="px-6 py-3 border-2 border-[#66D230] text-[#66D230] rounded-lg hover:bg-[#66D230] hover:text-white transition-all duration-300 font-medium shadow-md hover:shadow-lg text-center">
                     စာရင်းသွင်းရန်
                 </a>
