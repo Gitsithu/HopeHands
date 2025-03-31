@@ -475,7 +475,7 @@
         citySearchElements.forEach(id => {
             const element = document.getElementById(id);
             if (element) {
-                element.addEventListener('input', function () {
+                element.addEventListener('input', function() {
                     filterDropdownOptions(id, 'city');
                 });
             }
@@ -486,7 +486,7 @@
         townshipSearchElements.forEach(id => {
             const element = document.getElementById(id);
             if (element) {
-                element.addEventListener('input', function () {
+                element.addEventListener('input', function() {
                     filterDropdownOptions(id, 'township');
                 });
             }
@@ -497,7 +497,7 @@
         categorySearchElements.forEach(id => {
             const element = document.getElementById(id);
             if (element) {
-                element.addEventListener('input', function () {
+                element.addEventListener('input', function() {
                     filterDropdownOptions(id, 'category');
                 });
             }
@@ -645,8 +645,8 @@
         checkSelections();
     });
 
-    document.addEventListener("DOMContentLoaded", function () {
-        document.getElementById('search-button').addEventListener('click', function () {
+    document.addEventListener("DOMContentLoaded", function() {
+        document.getElementById('search-button').addEventListener('click', function() {
 
             const localUrl = WEB_BASE_API_URL;
             let getUrl = window.location.href;
@@ -655,12 +655,13 @@
             let searchData = {
                 type: donationGet(),
                 division: document.getElementById('city-search').getAttribute('data-id') ?? null,
-                township: document.getElementById('township-search').getAttribute('data-id') ?? null,
+                township: document.getElementById('township-search').getAttribute('data-id') ??
+                    null,
                 category: document.getElementById('category-search').getAttribute('data-id') ?? null
             };
 
-        sendSearchRequest(searchData);
-    });
+            sendSearchRequest(searchData);
+        });
 
         function sendSearchRequest(searchData) {
             console.log(searchData.type, 'searchData');
@@ -668,28 +669,24 @@
             const queryString = new URLSearchParams(searchData).toString();
             if (searchData.type == 'receivers') {
                 window.location.href = `/receivers?${queryString}`;
-            }
-            else {
+            } else {
                 window.location.href = `/donators?${queryString}`;
             }
 
         }
 
-    // if (token) {
-    //     authButtons.forEach((btn) => {
-    //         if (btn) {
-    //             btn.textContent = "အကောင့်ထွက်ရန်";
-    //             btn.href = "#"; // Prevent navigation
+        // if (token) {
+        //     authButtons.forEach((btn) => {
+        //         if (btn) {
+        //             btn.textContent = "အကောင့်ထွက်ရန်";
+        //             btn.href = "#"; // Prevent navigation
 
-    btn.addEventListener("click", function(e) {
-        e.preventDefault();
-        sessionStorage.removeItem("authToken");
-        window.alert('User was log out');
-        location.reload(); // Reload page to update UI
-    });
-    }
-    });
-    }
+        btn.addEventListener("click", function(e) {
+            e.preventDefault();
+            sessionStorage.removeItem("authToken");
+            window.alert('User was log out');
+            location.reload(); // Reload page to update UI
+        });
     });
 </script>
 
