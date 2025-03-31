@@ -75,7 +75,7 @@
                 <!-- Action Buttons -->
                 <div class="flex flex-row gap-4">
                     <button id="search-button"
-                        class="w-50 px-10 py-3 bg-blue-600 text-white rounded-lg transition-all duration-300 font-medium shadow-md">
+                        class="w-50 px-10 py-3 bg-[#66D230] text-white rounded-lg transition-all duration-300 font-medium shadow-md">
                         ရှာဖွေရန်
                     </button>
                     {{-- <button
@@ -83,7 +83,7 @@
                         စာရင်းသွင်းရန်
                     </button> --}}
                     <button id="openModal"
-                        class="w-50 px-10 py-3 border-2 border-blue-500 text-blue-500 rounded-lg hover:bg-blue-500 hover:text-white transition-all duration-300 font-medium shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
+                        class="w-50 px-10 py-3 border-2 border-[#66D230] text-[#66D230] rounded-lg hover:bg-[#66D230] hover:text-white transition-all duration-300 font-medium shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
                         စာရင်းသွင်းရန်
                     </button>
                 </div>
@@ -138,7 +138,7 @@
             <!-- Action Buttons -->
             <div class="flex flex-col space-y-4">
                 <button id="mobile-search-button"
-                    class="px-6 py-3 bg-blue-600 text-white rounded-lg transition-all duration-300 font-medium shadow-md">
+                    class="px-6 py-3 bg-[#66D230] text-white rounded-lg transition-all duration-300 font-medium shadow-md">
                     ရှာဖွေရန်
                 </button>
                 <button
