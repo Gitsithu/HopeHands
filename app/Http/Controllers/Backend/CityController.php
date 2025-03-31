@@ -19,7 +19,7 @@ class CityController extends Controller
 
     public function index()
     {
-        $data = City::orderBy('updated_at')->with('division')->get();
+        $data = City::orderBy('updated_at')->with('division')->select('id','name_mm as name')->get();
         return $this->successResponse($data);
     }
 

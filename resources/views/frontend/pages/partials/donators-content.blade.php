@@ -7,7 +7,9 @@
 
     <!-- Loading Indicator -->
     <div id="loading-indicator" class="text-center py-8 hidden">
-        <div class="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-blue-600 border-r-transparent"></div>
+        <div
+            class="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-blue-600 border-r-transparent">
+        </div>
         <p class="mt-2 text-gray-600">Loading donors...</p>
     </div>
 </div>
@@ -88,25 +90,26 @@
             <div class="flex flex-col sm:flex-row justify-end gap-3 mt-8">
                 <button onclick="closeModal()"
                     class="px-5 py-2.5 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition font-medium">
-                    Close
+                    ပိတ်မည်
                 </button>
                 <button onclick="copyPhoneNumber()"
-                    class="px-5 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium flex items-center justify-center gap-2">
+                    class="px-5 py-2.5  rounded-lg text-white bg-[#44991a] transition font-medium flex items-center justify-center gap-2">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3">
                         </path>
                     </svg>
-                    Copy Phone
+                    ဖုန်းနံပါတ်ကူးရန်
                 </button>
             </div>
         </div>
     </div>
 </div>
 
+<script  src="{{asset('frontend/assets/js/app.js')}}"></script>
 <script>
     // API Configuration
-    const HELP_SEEKERS_API_URL = "http://127.0.0.1:8000/api/donator";
+    const HELP_SEEKERS_API_URL = BASE_API_URL +"/donator";
 
     // Global variables
     let currentPage = 1;
@@ -125,7 +128,7 @@
 
             const response = await fetch(`${HELP_SEEKERS_API_URL}?page=${page}`);
             const data = await response.json();
-            
+
             if (data.status && data.data) {
                 currentData = data.data;
                 renderResults(currentData.data);
@@ -173,35 +176,43 @@
                     </div>
                     
                     <div class="mt-4 space-y-3">
-                        <div class="flex items-start">
-                            <svg class="flex-shrink-0 mt-0.5 mr-2 h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                            </svg>
-                            <div>
-                                <p class="text-sm text-gray-500">မြို့နယ်</p>
-                                <p class="text-sm font-medium text-gray-800 mt-2">${item.township?.name_mm || item.township?.name || 'N/A'}</p>
-                            </div>
-                        </div>
-                        
-                        <div class="flex items-start">
-                            <svg class="flex-shrink-0 mt-0.5 mr-2 h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
-                            </svg>
-                            <div>
-                                <p class="text-sm text-gray-500">ဖုန်းနံပါတ်</p>
-                                <p class="text-sm font-medium text-gray-800 mt-2">${item.phone || 'Not provided'}</p>
-                            </div>
+                    </div><div class="mt-4 space-y-4">
+    <!-- Township -->
+                    <div class="flex items-start">
+                        <svg class="flex-shrink-0 mt-0.5 mr-3 h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
+                        <div>
+                            <p class="text-sm font-medium text-gray-800">
+                                <span class="text-gray-500">မြို့နယ် - </span>
+                                ${item.township?.name || 'N/A'}
+                            </p>
                         </div>
                     </div>
+                                       
+                    
+                    <!-- Phone Number -->
+                    <div class="flex items-start">
+                        <svg class="flex-shrink-0 mt-0.5 mr-3 h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+                        </svg>
+                        <div>
+                            <p class="text-sm font-medium text-gray-800">
+                                <span class="text-gray-500">ဖုန်းနံပါတ် - </span>
+                                ${item.phone || 'မရှိပါ'}
+                            </p>
+                        </div>
+                    </div>
+                </div>
                     
                     <button onclick="showDonatorDetail(${JSON.stringify(item).replace(/"/g, '&quot;')})"
-                        class="mt-4 w-full py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition flex items-center justify-center gap-2">
+                        class="mt-4 w-full py-2 text-white bg-[#44991a] rounded-md  transition flex items-center justify-center gap-2">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
                         </svg>
-                        View Details
+                        အသေးစိတ်ကြည့်ရန်
                     </button>
                 </div>
             `;
@@ -308,15 +319,15 @@
 
     // Show donator detail modal
     function showDonatorDetail(donator) {
-        document.getElementById('modalName').textContent = donator.user?.name || 'N/A';
-        document.getElementById('modalCategory').textContent = donator.category?.name || 'Donor';
-        document.getElementById('modalTownship').textContent = donator.township?.name_mm || donator.township?.name || 'N/A';
-        document.getElementById('modalState').textContent = donator.city?.name_mm || donator.city?.name || 'N/A';
-        document.getElementById('modalPhone').textContent = donator.phone || 'Not provided';
-        document.getElementById('modalViber').textContent = donator.contact?.viber || 'Not provided';
-        document.getElementById('modalTelegram').textContent = donator.contact?.telegram || donator.contact?.telegram_usename || 'Not provided';
-        document.getElementById('modalNotes').textContent = donator.remark || 'No additional notes provided';
-        
+        document.getElementById('modalName').textContent = donator.user?.name || 'မရှိပါ';
+        document.getElementById('modalCategory').textContent = donator.category?.name || 'မရှိပါ';
+        document.getElementById('modalTownship').textContent = donator.township?.name_mm || donator.township?.name || 'မရှိပါ';
+        document.getElementById('modalState').textContent = donator.city?.name_mm || donator.city?.name || 'မရှိပါ';
+        document.getElementById('modalPhone').textContent = donator.phone || 'မရှိပါ';
+        document.getElementById('modalViber').textContent = donator.contact?.viber || 'မရှိပါ';
+        document.getElementById('modalTelegram').textContent = donator.contact?.telegram || donator.contact?.telegram_usename || 'မရှိပါ';
+        document.getElementById('modalNotes').textContent = donator.remark || 'မရှိပါ';
+
         document.getElementById('donatorModal').classList.remove('hidden');
     }
 
@@ -330,9 +341,9 @@
         const phoneNumber = document.getElementById('modalPhone').textContent;
         if (phoneNumber && phoneNumber !== 'Not provided') {
             navigator.clipboard.writeText(phoneNumber);
-            showSuccessToast("Phone number copied to clipboard!");
+            showSuccessToast("ဖုန်းနံပါတ်ကူးယူပြီးပါပြီ");
         } else {
-            showErrorToast("No phone number to copy");
+            showErrorToast("ဖုန်းနံပါတ်မရှိပါ");
         }
     }
 
@@ -379,7 +390,7 @@
     // Initialize on page load
     document.addEventListener('DOMContentLoaded', () => {
         fetchHelpSeekers(currentPage);
-        
+
         // Add CSS for animations
         const style = document.createElement('style');
         style.textContent = `
