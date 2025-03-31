@@ -134,11 +134,10 @@
             </div>
             <div class="relative">
                 <!-- Input field that will show the selected value -->
-                <input type="text" id="mobile-donator-dropdown-input"
+                <!-- <input type="text" id="mobile-donator-dropdown-input"
                     class="px-4 py-3 w-full bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 rounded-lg text-white placeholder-gray-400"
                     placeholder="ရွေးချယ်ပါ" readonly onclick="toggleMobileDonatorDropdown()" />
 
-                <!-- Dropdown arrow icon -->
                 <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                     <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
                         fill="currentColor">
@@ -146,20 +145,28 @@
                             d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
                             clip-rule="evenodd" />
                     </svg>
-                </div>
+                </div> -->
 
                 <!-- Dropdown options container -->
-                <div id="mobile-donator-dropdown-options"
+                <!-- <div id="mobile-donator-dropdown-options" id="mobile-selected-value"
                     class="hidden absolute z-20 mt-1 w-full bg-gray-800 text-white rounded-lg shadow-xl max-h-60 overflow-y-auto border border-gray-700">
-                    <div class="px-4 py-2 hover:bg-gray-700 cursor-pointer"
+                    <div class="px-4 py-2 hover:bg-gray-700 cursor-pointer" value="donators" onchange="mobileDonationGet()"
                         onclick="selectMobileDonatorOption('donator', 'အလှူရှင်')">
                         အလှူရှင်
                     </div>
-                    <div class="px-4 py-2 hover:bg-gray-700 cursor-pointer"
+                    <div class="px-4 py-2 hover:bg-gray-700 cursor-pointer" value="receivers"
                         onclick="selectMobileDonatorOption('help-seeker', 'အလှူခံပုဂ္ဂိုလ်')">
-                        အလှူခံပုဂ္ဂိုလ်
+                        အကူအညီတောင်းခံသူ
                     </div>
-                </div>
+                </div> -->
+
+                <select name="donator-dropdown" onchange="mobileDonationGet()" id="mobile-selected-value"
+                    class="px-2 py-3 w-full bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 rounded-lg text-white placeholder-gray-400">
+                    <option class="px-4 py-2 hover:bg-gray-700" value="donators">
+                        အလှူရှင်</option>
+                    <option class="px-4 py-2 hover:bg-gray-700" value="receivers">
+                        အကူအညီတောင်းခံသူ</option>
+                </select>
 
                 <!-- Hidden input to store the actual value -->
                 <input type="hidden" name="mobile-donator-dropdown" id="mobile-donator-dropdown-value" value="">
@@ -189,6 +196,12 @@
         output = selectElement.options[selectElement.selectedIndex].value;
         return output;
     }
+
+    function mobileDonationGet() {
+        selectElement = document.querySelector('#mobile-selected-value');        
+        output = selectElement.options[selectElement.selectedIndex].value;
+        return output;
+    }
 </script>
 
 <script>
@@ -210,7 +223,7 @@
         document.getElementById('donator-dropdown-options').classList.add('hidden');
     }
 
-    document.addEventListener('click', function(event) {
+    document.addEventListener('click', function (event) {
         const dropdown = document.getElementById('donator-dropdown-options');
         const input = document.getElementById('donator-dropdown-input');
 
@@ -361,8 +374,7 @@
             category: category
         };
 
-        let queryParams = new URLSearchParams(searchData).toString();
-        window.location.href = `${localUrl}api/admin/fetch?${queryParams}`;
+        return queryParams = new URLSearchParams(searchData).toString();
     }
 
     document.addEventListener('click', (e) => {
@@ -495,7 +507,7 @@
         citySearchElements.forEach(id => {
             const element = document.getElementById(id);
             if (element) {
-                element.addEventListener('input', function() {
+                element.addEventListener('input', function () {
                     filterDropdownOptions(id, 'city');
                 });
             }
@@ -506,7 +518,7 @@
         townshipSearchElements.forEach(id => {
             const element = document.getElementById(id);
             if (element) {
-                element.addEventListener('input', function() {
+                element.addEventListener('input', function () {
                     filterDropdownOptions(id, 'township');
                 });
             }
@@ -517,7 +529,7 @@
         categorySearchElements.forEach(id => {
             const element = document.getElementById(id);
             if (element) {
-                element.addEventListener('input', function() {
+                element.addEventListener('input', function () {
                     filterDropdownOptions(id, 'category');
                 });
             }
@@ -672,8 +684,6 @@
             let getUrl = window.location.href;
             let result = getUrl.replace(localUrl, '');
 
-            console.log(donationGet(), 'donationGet');
-            
             let searchData = {
                 type: donationGet() ?? 'donators',
                 division: document.getElementById('city-search').getAttribute('data-id') ?? null,
@@ -681,7 +691,21 @@
                     null,
                 category: document.getElementById('category-search').getAttribute('data-id') ?? null
             };
+            sendSearchRequest(searchData);
+        });
 
+        document.getElementById('mobile-search-button').addEventListener('click', function () {
+
+            const localUrl = WEB_BASE_API_URL;
+            let getUrl = window.location.href;
+            let result = getUrl.replace(localUrl, '');
+            let searchData = {
+                type: mobileDonationGet() ?? 'donators',
+                division: document.getElementById('mobile-city-search').getAttribute('data-id') ?? null,
+                township: document.getElementById('mobile-township-search').getAttribute('data-id') ??
+                    null,
+                category: document.getElementById('mobile-category-search').getAttribute('data-id') ?? null
+            };
             sendSearchRequest(searchData);
         });
 
