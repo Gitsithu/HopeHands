@@ -11,13 +11,13 @@
                 အလှူရှင်
             </a>
             <a href="{{ route('receivers') }}" class="px-6 py-3 bg-[#44991a] text-white font-semibold rounded-lg">
-                အလှူခံပုဂ္ဂိုလ်
+                အကူအညီတောင်းခံသူ
             </a>
         </div>
 
         <!-- Receivers Content -->
         <div class="mt-8">
-            <h2 class="text-2xl font-bold text-black">အလှုခံပုဂ္ဂိုလ်များ</h2>
+            <h2 class="text-2xl font-bold text-black">အကူအညီတောင်းခံသူများ</h2>
             <p class="mt-2 text-gray-700">သင်လိုအပ်သောအကူအညီကိုရှာပါ</p>
 
             @include('frontend.pages.partials.receivers-content')

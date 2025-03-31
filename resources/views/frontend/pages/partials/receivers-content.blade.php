@@ -169,7 +169,7 @@
                                 d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
                         </svg>
                     </div>
-                    <h3 class="text-xl font-bold text-gray-800">အလှူခံပုဂ္ဂိုလ်ဖြည့်စွက်ခြင်း</h3>
+                    <h3 class="text-xl font-bold text-gray-800">အကူအညီတောင်းခံသူ ဖြည့်စွက်ရန်</h3>
                 </div>
                 <button onclick="closeCreateModal()" class="p-1 rounded-full hover:bg-gray-100 transition">
                     <svg class="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
