@@ -70,6 +70,20 @@
                             <!-- Options will be populated by JavaScript -->
                         </div>
                     </div>
+
+                    <!-- Type Search -->
+                    <div class="relative">
+                        <!-- <input type="text" id="type-search"
+                            class="px-4 py-3 w-full bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 rounded-lg text-white placeholder-gray-400"
+                            placeholder="" readonly/>
+                        <div id="category-dropdown"
+                            class="hidden absolute z-20 mt-1 w-full bg-gray-800 text-white rounded-lg shadow-xl max-h-60 overflow-y-auto border border-gray-700">
+                        </div> -->
+                        <select name="donator-dropdown" class="px-2 py-3 w-full bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 rounded-lg text-white placeholder-gray-400">
+                            <option class="px-4 py-2 hover:bg-gray-700" value="donator">အလှူရှင်</option>
+                            <option class="px-4 py-2 hover:bg-gray-700" value="help-seeker">အလှူခံပုဂ္ဂိုလ်</option>
+                        </select>
+                    </div>
                 </div>
 
                 <!-- Action Buttons -->
@@ -207,31 +221,61 @@
         document.getElementById(dropdownId).classList.toggle('hidden');
     }
 
+    // function selectItem(inputId, value, dropdownId, itemId = null) {
+    //     document.getElementById(inputId).value = value;
+    //     document.getElementById(dropdownId).classList.add('hidden');
+
+    //     // If this is a division selection, fetch cities for that division
+    //     if (inputId.includes('division') && itemId) {
+    //         fetchCities(itemId);
+    //         clearDependentFields(inputId, ['city', 'township']);
+    //     }
+    //     // If this is a city selection, fetch townships for that city
+    //     else if (inputId.includes('city') && itemId) {
+    //         fetchTownships(itemId);
+    //         clearDependentFields(inputId, ['township']);
+    //     }
+
+    //     checkSelections();
+    // }
+
     function selectItem(inputId, value, dropdownId, itemId = null) {
-        document.getElementById(inputId).value = value;
+        const inputElement = document.getElementById(inputId);
+
+        // Store the selected value and its ID
+        inputElement.value = value;
+        inputElement.setAttribute('data-id', itemId || '');
+
+        // Hide the dropdown
         document.getElementById(dropdownId).classList.add('hidden');
 
-        // If this is a division selection, fetch cities for that division
+        // Fetch dependent data if applicable
         if (inputId.includes('division') && itemId) {
             fetchCities(itemId);
-            clearDependentFields(inputId, ['city', 'township']);
-        }
-        // If this is a city selection, fetch townships for that city
-        else if (inputId.includes('city') && itemId) {
+            clearDependentFields(['city-search', 'township-search']);
+        } else if (inputId.includes('city') && itemId) {
             fetchTownships(itemId);
-            clearDependentFields(inputId, ['township']);
+            clearDependentFields(['township-search']);
         }
 
         checkSelections();
     }
 
-    function clearDependentFields(inputId, fields) {
-        const isMobile = inputId.includes('mobile');
-        const prefix = isMobile ? 'mobile-' : '';
+    // function clearDependentFields(inputId, fields) {
+    //     const isMobile = inputId.includes('mobile');
+    //     const prefix = isMobile ? 'mobile-' : '';
 
-        fields.forEach(field => {
-            document.getElementById(`${prefix}${field}-search`).value = '';
-            document.getElementById(`${prefix}${field}-dropdown`).innerHTML = '';
+    //     fields.forEach(field => {
+    //         document.getElementById(`${prefix}${field}-search`).value = '';
+    //         document.getElementById(`${prefix}${field}-dropdown`).innerHTML = '';
+    //     });
+    // }
+
+    function clearDependentFields(fieldIds) {
+        fieldIds.forEach(fieldId => {
+            const field = document.getElementById(fieldId);
+            field.value = '';        // Clear text
+            field.setAttribute('data-id', '');  // Clear stored ID
         });
     }
 
@@ -417,6 +461,7 @@
     // Function to populate a dropdown with options
     function populateDropdown(dropdownId, items, inputId) {
         const dropdown = document.getElementById(dropdownId);
+
         if (!dropdown) return;
 
         dropdown.innerHTML = '';
@@ -488,40 +533,23 @@
     //         });
     // }
 
-    function getSearchData() {
-        const searchData = {};
-
-        // Loop through all search inputs and get their selected ids
-        ['city', 'township', 'category'].forEach(type => {
-            const input = document.getElementById(`${type}-search`);
-            const id = input.getAttribute('data-id');  // Get selected id
-            if (id) {
-                searchData[`${type}Id`] = id;  // Add it to searchData object
-            }
-        });
-
-        return searchData;
-    }
 
     document.getElementById('search-button').addEventListener('click', function () {
-        const localUrl = "http://localhost:8000/";
-
-        let getUrl = window.location.href;
-        let result = getUrl.replace(localUrl, '');
 
         let searchData = {
-            type: result,
-            division: document.getElementById('city-search').value,
-            township: document.getElementById('township-search').value,
-            category: document.getElementById('category-search').value
+            type: window.location.href.replace("http://localhost:8000/", ""),
+            division: document.getElementById('city-search').getAttribute('data-id'),
+            township: document.getElementById('township-search').getAttribute('data-id'),
+            category: document.getElementById('category-search').getAttribute('data-id')
         };
 
         sendSearchRequest(searchData);
     });
 
+
     function sendSearchRequest(searchData) {
         const queryString = new URLSearchParams(searchData).toString();
-        axios.get(`${BASE_API_URL}/filter`, searchData)
+        axios.post(`${BASE_API_URL}/filter`, searchData)
             .then(response => {
                 // Redirect to results page with search data in the URL
                 window.location.href = `/receivers?${queryString}`;  // Pass search data in the query string

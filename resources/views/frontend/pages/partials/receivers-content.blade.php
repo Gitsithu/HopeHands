@@ -142,12 +142,12 @@
         const queryParams = new URLSearchParams(window.location.search);
         const searchData = {
             type: queryParams.get('type'),
-            city: queryParams.get('city'),
+            division: queryParams.get('division'),
             township: queryParams.get('township'),
             category: queryParams.get('category')
         };
 
-        if (searchData.type || searchData.city || searchData.township || searchData.category) {
+        if (searchData.type || searchData.division || searchData.township || searchData.category) {
             bindSearchData(searchData);
         } else {
             fetchHelpSeekers();
@@ -159,9 +159,6 @@
             loadingIndicator.classList.remove('hidden');
             resultsContainer.innerHTML = '';
 
-            // Build the URL with search parameters
-            let apiUrl = `${FILTER_API_URL}?page=${page}`;
-
             let params = {
                 type: searchData.type || '', // Include type if available
                 division: searchData.division || '', // Include city if available
@@ -169,37 +166,23 @@
                 category: searchData.category || '' // Include category if available
             };
 
-            try {
-                const response = await axios.get(FILTER_API_URL, {
-                    params: params // or just { params } using shorthand
-                });
-                console.log('para',params);
-                console.log('gg:',response.data);
-            } catch (error) {
-                console.error('Error:', error.response);
-            }
+            console.log(params, 'params');
+            
 
+            const response = await axios.get(`${FILTER_API_URL}/search`, {
+                params: params,
+            });
 
-            // Add search parameters to the URL if they exist
-            if (searchData.type) apiUrl += `&type=${encodeURIComponent(searchData.type)}`;
-            if (searchData.city) apiUrl += `&city=${encodeURIComponent(searchData.city)}`;
-            if (searchData.township) apiUrl += `&township=${encodeURIComponent(searchData.township)}`;
-            if (searchData.category) apiUrl += `&category=${encodeURIComponent(searchData.category)}`;
+            console.log(response, 'response response');
+            
 
-            console.log('API URL with search data:', apiUrl); // Log to check the final URL
-
-            const response = await fetch(apiUrl);
-            const data = await response.json();
-
-
-            // Check if the response is valid
+            const data = response.data;
+            console.log(data, 'bindAPI');
+            
             if (data.status && data.data) {
-                currentData = data.data;
-                renderResults(currentData.data); // Render the fetched data
-                renderPagination(currentData);   // Render pagination
-            } else {
-                console.error('Unexpected API response:', data);
-                showErrorToast('No valid data returned');
+                currentData = data.data;                
+                renderResults(currentData.data);
+                renderPagination(currentData);
             }
         } catch (error) {
             console.error('Error fetching help seekers:', error);
@@ -217,9 +200,13 @@
 
             const response = await fetch(`${HELP_SEEKERS_API_URL}?page=${page}`);
             const data = await response.json();
+            console.log(data, 'data');
+            
 
             if (data.status && data.data) {
                 currentData = data.data;
+                console.log(currentData, 'currentData');
+                
                 renderResults(currentData.data);
                 renderPagination(currentData);
             }
