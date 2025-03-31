@@ -3,7 +3,6 @@ use App\Http\Controllers\DonatorController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    // return view('frontend.pages.main.donators'); // Load main.blade.php
     return redirect()->route('donators');
 });
 
