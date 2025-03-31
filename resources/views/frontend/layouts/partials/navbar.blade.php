@@ -657,7 +657,7 @@
                 .then(response => {
                     // Redirect to results page with search data in the URL
                     window.location.href =
-                    `/receivers?${queryString}`; // Pass search data in the query string
+                        `/receivers?${queryString}`; // Pass search data in the query string
                 })
                 .catch(error => {
                     console.error('Error fetching search results:', error);
