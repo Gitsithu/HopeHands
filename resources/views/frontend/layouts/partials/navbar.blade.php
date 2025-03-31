@@ -681,12 +681,12 @@
         //             btn.textContent = "အကောင့်ထွက်ရန်";
         //             btn.href = "#"; // Prevent navigation
 
-        btn.addEventListener("click", function(e) {
-            e.preventDefault();
-            sessionStorage.removeItem("authToken");
-            window.alert('User was log out');
-            location.reload(); // Reload page to update UI
-        });
+        // btn.addEventListener("click", function(e) {
+        //     e.preventDefault();
+        //     sessionStorage.removeItem("authToken");
+        //     window.alert('User was log out');
+        //     location.reload(); // Reload page to update UI
+        // });
     });
 </script>
 
