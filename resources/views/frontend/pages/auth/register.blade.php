@@ -137,7 +137,7 @@
                 <!-- Buttons -->
                 <div class="flex flex-col sm:flex-row items-center justify-center">
                     <button
-                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
+                        class="bg-[#66D230] text-white text-[#66D230] rounded-lg hover:bg-[#66D230] hover:text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
                         type="submit">
                         စာရင်းသွင်းမည်
                     </button>

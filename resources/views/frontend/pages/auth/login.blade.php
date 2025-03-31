@@ -32,7 +32,7 @@
             <!-- Buttons -->
             <div class="flex flex-col sm:flex-row items-center justify-center">
                 <button
-                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
+                    class="bg-[#66D230] text-white text-[#66D230] rounded-lg hover:bg-[#66D230] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
                     type="submit">
                     ဝင်ရောက်ပါမည်
                 </button>
@@ -65,43 +65,51 @@
                 eyeIcon.classList.add('fa-eye');
             }
         }
-        document.getElementById('contact-method').addEventListener('change', function() {
-            const container = document.getElementById('contact-fields-container');
-            container.innerHTML = ''; // Clear previous fields
 
-            if (this.value === 'viber') {
-                // Add Viber field
-                container.innerHTML = `
-            <div class="mb-4">
-                <label class="block text-gray-700 text-sm font-bold mb-2" for="viber-number">
-                    Viber ဖုန်းနံပါတ်
-                </label>
-                <input
-                    class="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    type="text" id="viber-number" name="viber" placeholder="+959xxxxxxxx">
-            </div>
-        `;
-            } else if (this.value === 'telegram') {
-                // Add Telegram fields
-                container.innerHTML = `
-            <div class="mb-4">
-                <label class="block text-gray-700 text-sm font-bold mb-2" for="telegram-username">
-                    Telegram username
-                </label>
-                <input
-                    class="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    type="text" id="telegram-username" name="telegram_username" placeholder="@username">
-            </div>
-            <div class="mb-4">
-                <label class="block text-gray-700 text-sm font-bold mb-2" for="telegram-phone">
-                    Telegram ဖုန်းနံပါတ် (optional)
-                </label>
-                <input
-                    class="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    type="text" id="telegram-phone" name="telegram" placeholder="+959xxxxxxxx">
-            </div>
-        `;
+        $("form").on("submit", function(event) {
+            event.preventDefault();
+
+            let username = $("#username").val().trim();
+            let password = $("#password").val().trim();
+            let isValid = true;
+
+            // Remove any existing error messages
+            $(".error-message").remove();
+
+
+            // Validate password length
+            if (password.length < 6) {
+                $("#password").after(
+                    '<span class="error-message text-danger">Password must be at least 6 characters</span>'
+                );
+                isValid = false;
             }
+
+            if (!isValid) return;
+
+            // Proceed with API request if validation passes
+            axios.post(BASE_API_URL + "/login", {
+                    username: username,
+                    password: password
+                })
+                .then(function(response) {
+                    console.log("Login response:", response.data.data.token);
+                    if (response.data.data.token) {
+                        console.log("Login successful!");
+                        sessionStorage.setItem("authToken", response.data.data
+                            .token); // Store token in session
+                        window.location.href = "{{ route('donators') }}";
+                    } else {
+                        alert("Invalid login credentials.");
+                    }
+                })
+                .catch(function(error) {
+                    $("#password").after(
+                        `<span class="error-message text-danger">${error.response.data.message}</span>`
+                    );
+                    // alert("Login failed. Please check your credentials.");
+                    $("#password").val("");
+                });
         });
     </script>
 @endsection

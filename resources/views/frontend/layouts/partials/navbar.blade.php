@@ -68,14 +68,10 @@
                         class="w-50 px-10 py-3 bg-[#66D230] text-white rounded-lg transition-all duration-300 font-medium shadow-md">
                         ရှာဖွေရန်
                     </button>
-                    {{-- <button
-                        class="w-50 px-10 border-2 border-blue-500 text-white rounded-lg hover:bg-blue-500 transition-all duration-300 font-medium shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
+                    <a href="{{ route('donator.register') }}" id="auth-btn"
+                        class="w-50 px-10 py-3 border-2 border-[#66D230] text-[#66D230] rounded-lg hover:bg-[#66D230] hover:text-white transition-all duration-300 font-medium shadow-md hover:shadow-lg transform hover:-translate-y-0.5 text-center">
                         စာရင်းသွင်းရန်
-                    </button> --}}
-                    <button id="openModal"
-                        class="w-50 px-10 py-3 border-2 border-blue-500 text-blue-500 rounded-lg hover:bg-blue-500 hover:text-white transition-all duration-300 font-medium shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
-                        စာရင်းသွင်းရန်
-                    </button> --}}
+                    </a>
 
 
                     <!-- Modal toggle -->
@@ -254,25 +250,20 @@
                     class="px-6 py-3 bg-[#66D230] text-white rounded-lg transition-all duration-300 font-medium shadow-md">
                     ရှာဖွေရန်
                 </button>
-                <button
-                    class="px-6 py-3 border-2 border-blue-500 text-white rounded-lg hover:bg-blue-500 transition-all duration-300 font-medium shadow-md hover:shadow-lg">
+                <a id="mobile-register-button"
+                    class="px-6 py-3 border-2 border-[#66D230] text-[#66D230] rounded-lg hover:bg-[#66D230] hover:text-white transition-all duration-300 font-medium shadow-md hover:shadow-lg">
                     စာရင်းသွင်းရန်
-                </button> --}}
-                <button data-modal-target="authentication-modal" data-modal-toggle="authentication-modal"
-                    class="px-6 py-3 border-2 border-blue-500 text-white rounded-lg hover:bg-blue-500 transition-all duration-300 font-medium shadow-md hover:shadow-lg"
-                    type="button">
-                    စာရင်းသွင်းရန်
-                </button>
+                </a>
             </div>
         </div>
     </div>
 </nav>
 
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<script  src="{{asset('frontend/assets/js/app.js')}}"></script>
+<script src="{{ asset('frontend/assets/js/app.js') }}"></script>
 <script>
     // API Configuration
-    
+
     const DIVISIONS_API_URL = BASE_API_URL + "/city";
     const CITIES_API_URL = BASE_API_URL + "/division/city-fetch/";
     const TOWNSHIPS_API_URL = BASE_API_URL + "/division/township-fetch/";
@@ -360,7 +351,7 @@
         fields.forEach(field => {
             document.getElementById(`${prefix}${field}-search`).value = '';
             document.getElementById(`${prefix}${field}-dropdown`).innerHTML = '';
-            
+
             // Also clear the selected ID
             if (field === 'township') {
                 selectedItems.township = null;
@@ -370,15 +361,21 @@
 
     function checkSelections() {
         // Check desktop inputs
-        const city = document.getElementById('city-search')?.value || document.getElementById('mobile-city-search')?.value;
-        const township = document.getElementById('township-search')?.value || document.getElementById('mobile-township-search')?.value;
-        const category = document.getElementById('category-search')?.value || document.getElementById('mobile-category-search')?.value;
+        const city = document.getElementById('city-search')?.value || document.getElementById('mobile-city-search')
+            ?.value;
+        const township = document.getElementById('township-search')?.value || document.getElementById(
+            'mobile-township-search')?.value;
+        const category = document.getElementById('category-search')?.value || document.getElementById(
+            'mobile-category-search')?.value;
     }
 
     function performSearch() {
-        const city = document.getElementById('city-search')?.value || document.getElementById('mobile-city-search')?.value;
-        const township = document.getElementById('township-search')?.value || document.getElementById('mobile-township-search')?.value;
-        const category = document.getElementById('category-search')?.value || document.getElementById('mobile-category-search')?.value;
+        const city = document.getElementById('city-search')?.value || document.getElementById('mobile-city-search')
+            ?.value;
+        const township = document.getElementById('township-search')?.value || document.getElementById(
+            'mobile-township-search')?.value;
+        const category = document.getElementById('category-search')?.value || document.getElementById(
+            'mobile-category-search')?.value;
 
         if (!city || !township || !category) {
             showErrorToast("Please fill all search fields");
@@ -534,7 +531,7 @@
                 });
             }
         });
-        
+
         // For township search
         const townshipSearchElements = ['township-search', 'mobile-township-search'];
         townshipSearchElements.forEach(id => {
@@ -545,7 +542,7 @@
                 });
             }
         });
-        
+
         // For category search
         const categorySearchElements = ['category-search', 'mobile-category-search'];
         categorySearchElements.forEach(id => {
@@ -564,24 +561,24 @@
         const searchTerm = searchInput.value.toLowerCase();
         const dropdownId = inputId.replace('-search', '-dropdown');
         const dropdown = document.getElementById(dropdownId);
-        
+
         // Show dropdown on typing
         if (dropdown.classList.contains('hidden')) {
             showDropdown(dropdownId);
         }
-        
+
         // Store the original options if not already stored
         if (!dropdown.hasAttribute('data-original')) {
             const originalOptions = dropdown.innerHTML;
             dropdown.setAttribute('data-original', originalOptions);
         }
-        
+
         // If search term is empty, restore original dropdown
         if (searchTerm === '') {
             dropdown.innerHTML = dropdown.getAttribute('data-original');
             return;
         }
-        
+
         // Determine which API to call based on type
         let apiPromise;
         switch (type) {
@@ -603,10 +600,10 @@
             default:
                 return;
         }
-        
+
         // Show loading state
         dropdown.innerHTML = '<div class="px-4 py-2 text-gray-400">Searching...</div>';
-        
+
         // Fetch and filter items
         apiPromise.then(filteredItems => {
             populateFilteredDropdown(dropdownId, filteredItems, inputId);
@@ -621,7 +618,7 @@
         try {
             const response = await axios.get(DIVISIONS_API_URL);
             if (response.data.status && response.data.data) {
-                return response.data.data.filter(city => 
+                return response.data.data.filter(city =>
                     city.name.toLowerCase().includes(searchTerm)
                 );
             }
@@ -636,7 +633,7 @@
         try {
             const response = await axios.get(TOWNSHIPS_API_URL + cityId);
             if (response.data.status && response.data.data) {
-                return response.data.data.filter(township => 
+                return response.data.data.filter(township =>
                     township.name.toLowerCase().includes(searchTerm)
                 );
             }
@@ -651,7 +648,7 @@
         try {
             const response = await axios.get(CATEGORIES_API_URL);
             if (response.data.status && response.data.data) {
-                return response.data.data.filter(category => 
+                return response.data.data.filter(category =>
                     category.name.toLowerCase().includes(searchTerm)
                 );
             }
@@ -666,7 +663,7 @@
     function populateFilteredDropdown(dropdownId, items, inputId) {
         const dropdown = document.getElementById(dropdownId);
         dropdown.innerHTML = '';
-        
+
         if (items.length === 0) {
             const noOption = document.createElement('div');
             noOption.className = 'px-4 py-2 text-gray-400';
@@ -674,7 +671,7 @@
             dropdown.appendChild(noOption);
             return;
         }
-        
+
         items.forEach(item => {
             const option = document.createElement('div');
             option.className = 'px-4 py-2 hover:bg-gray-700 cursor-pointer';
@@ -697,9 +694,6 @@
 
         // Initial check of selections
         checkSelections();
-        
-        // Setup manual search functionality
-        setupManualSearch();
     });
 
     document.addEventListener("DOMContentLoaded", function() {
@@ -708,7 +702,7 @@
 
         if (token) {
             // If token exists, show logout button
-            authBtn.textContent = "ထွက်ရန်"; // Logout in Myanmar
+            authBtn.textContent = "အကောင့်ထွက်ရန်"; // Logout in Myanmar
             authBtn.href = "#"; // Prevent navigation
             authBtn.addEventListener("click", function(e) {
                 e.preventDefault();
