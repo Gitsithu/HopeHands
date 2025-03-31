@@ -123,33 +123,12 @@
     // Global variables
     let currentPage = 1;
     let currentData = null;
+    let currentSearchData = {}; // Add this to store current search parameters
 
     // DOM elements
     const resultsContainer = document.getElementById('results-container');
     const paginationContainer = document.getElementById('pagination-container');
     const loadingIndicator = document.getElementById('loading-indicator');
-
-    // Fetch help seekers data
-    async function fetchHelpSeekers(page = 1) {
-        try {
-            loadingIndicator.classList.remove('hidden');
-            resultsContainer.innerHTML = '';
-
-            const response = await fetch(`${HELP_SEEKERS_API_URL}?page=${page}`);
-            const data = await response.json();
-
-            if (data.status && data.data) {
-                currentData = data.data;
-                renderResults(currentData.data);
-                renderPagination(currentData);
-            }
-        } catch (error) {
-            console.error('Error fetching help seekers:', error);
-            showErrorToast("Error loading donor data");
-        } finally {
-            loadingIndicator.classList.add('hidden');
-        }
-    }
 
     function cleanUrl() {
         window.history.replaceState({}, document.title, window.location.pathname);
@@ -158,14 +137,14 @@
     document.addEventListener('DOMContentLoaded', function () {
         // Extract the search data from the URL
         const queryParams = new URLSearchParams(window.location.search);
-        const searchData = {
+        currentSearchData = {
             type: queryParams.get('type') ?? null,
             division: queryParams.get('division') ?? null,
             township: queryParams.get('township') ?? null,
             category: queryParams.get('category') ?? null
         };
 
-        bindSearchData(searchData);
+        bindSearchData(currentSearchData);
     });
 
     async function bindSearchData(searchData = {}, page = 1) {
@@ -174,22 +153,22 @@
             resultsContainer.innerHTML = '';
 
             let params = {
-                type: searchData.type || '', // Include type if available
-                division: searchData.division || '', // Include city if available
-                township: searchData.township || '', // Include township if available
-                category: searchData.category || '' // Include category if available
+                type: searchData.type || '',
+                division: searchData.division || '',
+                township: searchData.township || '',
+                category: searchData.category || ''
             };
 
-            const response = await axios.get(`${FILTER_API_URL}/search`, {
+            var response = await axios.get(`${FILTER_API_URL}?page=${page}`, {
                 params: params,
             });
-
-            const data = response.data;
+            var data = response.data;
             if (data.status && data.data) {
                 currentData = data.data;
                 renderResults(currentData.data);
                 renderPagination(currentData);
             }
+
         } catch (error) {
             console.error('Error fetching help seekers:', error);
             showErrorToast("Error loading help seekers data");
@@ -198,6 +177,8 @@
             cleanUrl();
         }
     }
+
+
 
     // Render results
     function renderResults(data) {
@@ -218,11 +199,6 @@
             return;
         }
 
-        // if(data.length < 9 ){
-        //     footerAdjust.style.height = window.innerHeight + "px";
-        // } else {
-        //     footerAdjust.style.height = window.innerHeight + "px";
-        // }
 
         data.forEach(item => {
             const card = document.createElement('div');
@@ -301,7 +277,7 @@
         prevButton.onclick = () => {
             if (data.prev_page_url) {
                 currentPage--;
-                fetchHelpSeekers(currentPage);
+                bindSearchData(currentSearchData, currentPage);
             }
         };
         paginationContainer.appendChild(prevButton);
@@ -321,7 +297,7 @@
             firstPageButton.textContent = '1';
             firstPageButton.onclick = () => {
                 currentPage = 1;
-                fetchHelpSeekers(currentPage);
+                bindSearchData(currentSearchData, currentPage);
             };
             paginationContainer.appendChild(firstPageButton);
 
@@ -339,7 +315,7 @@
             pageButton.textContent = i;
             pageButton.onclick = () => {
                 currentPage = i;
-                fetchHelpSeekers(currentPage);
+                bindSearchData(currentSearchData, currentPage);
             };
             paginationContainer.appendChild(pageButton);
         }
@@ -357,7 +333,7 @@
             lastPageButton.textContent = data.last_page;
             lastPageButton.onclick = () => {
                 currentPage = data.last_page;
-                fetchHelpSeekers(currentPage);
+                bindSearchData(currentSearchData, currentPage);
             };
             paginationContainer.appendChild(lastPageButton);
         }
@@ -374,7 +350,7 @@
         nextButton.onclick = () => {
             if (data.next_page_url) {
                 currentPage++;
-                fetchHelpSeekers(currentPage);
+                bindSearchData(currentSearchData, currentPage);
             }
         };
         paginationContainer.appendChild(nextButton);
@@ -452,7 +428,7 @@
 
     // Initialize on page load
     document.addEventListener('DOMContentLoaded', () => {
-        fetchHelpSeekers(currentPage);
+        // bindSearchData(currentPage);
 
         // Add CSS for animations
         const style = document.createElement('style');

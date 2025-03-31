@@ -116,6 +116,10 @@
                             <p class="text-xs font-medium text-gray-500 mb-1">Telegram</p>
                             <p id="modalTelegram" class="text-base font-medium text-gray-800"></p>
                         </div>
+                        <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                            <p class="text-xs font-medium text-gray-500 mb-1">Telegram Username</p>
+                            <p id="modalTelegramUsername" class="text-base font-medium text-gray-800"></p>
+                        </div>
                     </div>
                 </div>
 
@@ -225,7 +229,9 @@
                                 <option value="low">Low (စောင့်ဆိုင်း၍ရ)</option>
                             </select>
                         </div>
+                        <div id="contact-fields-container"></div>
                     </div>
+
 
                     <div class="mt-4 space-y-2">
                         <label for="content" class="block text-sm font-medium text-gray-700">
@@ -286,36 +292,34 @@
                     <h4 class="text-base font-semibold text-gray-700 mb-4 flex items-center">
                         <svg class="w-5 h-5 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                                d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z">
+                            </path>
                         </svg>
                         ဆက်သွယ်ရန်နံပါတ်များ
                     </h4>
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                        <div class="space-y-2">
-                            <label for="phone" class="block text-sm font-medium text-gray-700">
-                                Primary Phone <span class="text-red-500">*</span>
-                            </label>
-                            <input type="tel" id="phone" name="phone" required
-                                class="w-full px-4 py-2.5 text-sm text-gray-800 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                        </div>
-
-                        <div class="space-y-2">
-                            <label for="viber" class="block text-sm font-medium text-gray-700">
-                                Viber Number
-                            </label>
-                            <input type="text" id="viber" name="viber"
-                                class="w-full px-4 py-2.5 text-sm text-gray-800 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                        </div>
-
-                        <div class="space-y-2">
-                            <label for="telegram" class="block text-sm font-medium text-gray-700">
-                                Telegram Username
-                            </label>
-                            <input type="text" id="telegram" name="telegram"
-                                class="w-full px-4 py-2.5 text-sm text-gray-800 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                        </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="phone">
+                            ဖုန်းနံပါတ်
+                        </label>
+                        <input
+                            class="w-full px-4 py-2.5 text-sm text-gray-800 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                            id="phone" type="text" name="phone" placeholder="ဖုန်းနံပါတ်...">
+                        <p class="text-red-500 text-sm mt-1 error-text" id="error-phone"></p>
                     </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="contact-method">
+                            ဆက်သွယ်ရန်
+                        </label>
+                        <select
+                            class="w-full px-4 py-2.5 text-sm text-gray-800 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                            id="contact-method" name="contact_method">
+                            <option value="">ဆက်သွယ်ရန် ရွေးချယ်ပါ။</option>
+                            <option value="viber">Viber</option>
+                            <option value="telegram">Telegram</option>
+                        </select>
+                    </div>
+                    <div id="contact-fields"></div>
                 </div>
 
                 <!-- Form Actions -->
@@ -339,19 +343,70 @@
 </div>
 
 <script src="{{ asset('frontend/assets/js/app.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+    integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+<!-- Include Select2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script>
     // API Configuration
-    const HELP_SEEKERS_API_URL = BASE_API_URL + "/help-seeker";
+    const HELP_SEEKERS_API_URL = BASE_API_URL + "/donator";
     const FILTER_API_URL = BASE_API_URL + "/filter";
+
 
     // Global variables
     let currentPage = 1;
     let currentData = null;
+    let currentSearchData = {}; // Add this to store current search parameters
 
     // DOM elements
     const resultsContainer = document.getElementById('results-container');
     const paginationContainer = document.getElementById('pagination-container');
     const loadingIndicator = document.getElementById('loading-indicator');
+
+    document.getElementById('contact-method').addEventListener('change', function () {
+        const container = document.getElementById('contact-fields');
+        container.innerHTML = ''; // Clear previous fields
+
+        if (this.value === 'viber') {
+            // Add Viber field
+            container.innerHTML = `
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="viber-number">
+                    Viber ဖုန်းနံပါတ်
+                </label>
+                <input
+                    class="w-full px-4 py-2.5 text-sm text-gray-800 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    type="text" id="viber-number" name="viber" placeholder="+959xxxxxxxx">
+                <p class="text-red-500 text-sm mt-1 error-text" id="error-viber"></p>
+            </div>
+        `;
+        } else if (this.value === 'telegram') {
+            // Add Telegram fields
+            container.innerHTML = `
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="telegram-username">
+                    Telegram username
+                </label>
+                <input
+                    class="w-full px-4 py-2.5 text-sm text-gray-800 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    type="text" id="telegram-username" name="telegram_username" placeholder="@username">
+                <p class="text-red-500 text-sm mt-1 error-text" id="error-telegram_username"></p>
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="telegram-phone">
+                    Telegram ဖုန်းနံပါတ် (optional)
+                </label>
+                <input
+                    class="w-full px-4 py-2.5 text-sm text-gray-800 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    type="text" id="telegram-phone" name="telegram" placeholder="+959xxxxxxxx">
+                <p class="text-red-500 text-sm mt-1 error-text" id="error-telegram"></p>
+            </div>
+        `;
+        }
+    });
 
     function cleanUrl() {
         window.history.replaceState({}, document.title, window.location.pathname);
@@ -360,14 +415,15 @@
     document.addEventListener('DOMContentLoaded', function () {
         // Extract the search data from the URL
         const queryParams = new URLSearchParams(window.location.search);
-        const searchData = {
+        currentSearchData = {
             type: queryParams.get('type') ?? null,
             division: queryParams.get('division') ?? null,
             township: queryParams.get('township') ?? null,
             category: queryParams.get('category') ?? null
         };
 
-        bindSearchData(searchData);
+        bindSearchData(currentSearchData);
+
     });
 
     async function bindSearchData(searchData = {}, page = 1) {
@@ -376,24 +432,22 @@
             resultsContainer.innerHTML = '';
 
             let params = {
-                type: searchData.type || '', // Include type if available
-                division: searchData.division || '', // Include city if available
-                township: searchData.township || '', // Include township if available
-                category: searchData.category || '' // Include category if available
+                type: searchData.type || '',
+                division: searchData.division || '',
+                township: searchData.township || '',
+                category: searchData.category || ''
             };
 
-            const response = await axios.get(`${FILTER_API_URL}/search`, {
+            var response = await axios.get(`${FILTER_API_URL}/search?page=${page}`, {
                 params: params,
             });
-
-            const data = response.data;
-            console.log(data, 'data');
-
+            var data = response.data;
             if (data.status && data.data) {
                 currentData = data.data;
                 renderResults(currentData.data);
                 renderPagination(currentData);
             }
+
         } catch (error) {
             console.error('Error fetching help seekers:', error);
             showErrorToast("Error loading help seekers data");
@@ -403,66 +457,44 @@
         }
     }
 
-    // Fetch help seekers data
-    async function fetchHelpSeekers(page = 1) {
-        // try {
-        //     loadingIndicator.classList.remove('hidden');
-        //     resultsContainer.innerHTML = '';
 
-        //     const response = await fetch(`${HELP_SEEKERS_API_URL}?page=${page}`);
-        //     const data = await response.json();
-
-        //     if (data.status && data.data) {
-        //         currentData = data.data;
-
-        //         renderResults(currentData.data);
-        //         renderPagination(currentData);
-        //     }
-        // } catch (error) {
-        //     console.error('Error fetching help seekers:', error);
-        //     showErrorToast("Error loading help seekers data");
-        // } finally {
-        //     loadingIndicator.classList.add('hidden');
-        // }
-    }
 
     // Render results
     function renderResults(data) {
         resultsContainer.innerHTML = '';
+        let footerAdjust = document.getElementById('heightAdjust');
 
         if (data.length === 0) {
             resultsContainer.innerHTML = `
-                <div class="col-span-full text-center py-12">
-                    <div class="inline-flex items-center justify-center w-16 h-16 bg-gray-100 rounded-full mb-4">
-                        <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-lg font-medium text-gray-900">No help seekers found</h3>
-                    <p class="mt-1 text-gray-500">There are currently no help seekers available.</p>
-                </div>
-            `;
+        <div class="col-span-full text-center py-12 flex-1 h-500"> <!-- Added flex-1 here -->
+            <div class="inline-flex items-center justify-center w-16 h-16 bg-gray-100 rounded-full mb-4">
+                <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+            </div>
+            <h3 class="text-lg font-medium text-gray-900">အလှူရှင်များမရှိသေးပါ</h3>
+        </div>
+    `;
             return;
         }
 
+
         data.forEach(item => {
             const card = document.createElement('div');
-            card.className =
-                'bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-all';
+            card.className = 'bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-all';
             card.innerHTML = `
-                 <div class="p-5">
+                <div class="p-5">
                     <div class="flex items-start justify-between">
                         <div>
-                            <h3 class="text-lg font-semibold text-gray-800">${item.name || 'မရှိပါ'}</h3>
-                            <div class="flex items-center gap-2 mt-1">
-                                <span class="inline-block px-2 py-2 text-xs font-medium rounded-full bg-blue-100 text-blue-800">
-                                    ${item.category?.name || 'မရှိပါ'}
-                                </span>
-                            </div>
+                            <h3 class="text-lg font-semibold text-gray-800">${item.name || 'N/A'}</h3>
                         </div>
+                         <span class="inline-block mt-1 px-2 py-2 text-xs font-medium rounded-full bg-blue-100 text-blue-800">
+                                ${item.category?.name || 'Donor'}
+                            </span>
                     </div>
-
-                    <div class="mt-4 space-y-4">
+                    
+                    <div class="mt-4 space-y-3">
+                    </div><div class="mt-4 space-y-4">
     <!-- Township -->
                     <div class="flex items-start">
                         <svg class="flex-shrink-0 mt-0.5 mr-3 h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -472,7 +504,7 @@
                         <div>
                             <p class="text-sm font-medium text-gray-800">
                                 <span class="text-gray-500">မြို့နယ် - </span>
-                                ${item.township?.name || 'မရှိပါ'}
+                                ${item.township?.name || 'N/A'}
                             </p>
                         </div>
                     </div>
@@ -491,7 +523,8 @@
                             </p>
                         </div>
                     </div>
-
+                                       
+                    
                     <!-- Phone Number -->
                     <div class="flex items-start">
                         <svg class="flex-shrink-0 mt-0.5 mr-3 h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -505,9 +538,8 @@
                         </div>
                     </div>
                 </div>
-
-
-                    <button onclick="showHelpSeekerDetail(${JSON.stringify(item).replace(/"/g, '&quot;')})"
+                    
+                    <button onclick="showDonatorDetail(${JSON.stringify(item).replace(/"/g, '&quot;')})"
                         class="mt-4 w-full py-2 text-white bg-[#44991a] rounded-md  transition flex items-center justify-center gap-2">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
@@ -556,8 +588,7 @@
 
         // Previous button
         const prevButton = document.createElement('button');
-        prevButton.className =
-            `px-3 py-1.5 rounded-md ${data.prev_page_url ? 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300' : 'bg-gray-100 text-gray-400 cursor-not-allowed border border-gray-200'}`;
+        prevButton.className = `px-3 py-1.5 rounded-md ${data.prev_page_url ? 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300' : 'bg-gray-100 text-gray-400 cursor-not-allowed border border-gray-200'}`;
         prevButton.innerHTML = `
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
@@ -567,7 +598,7 @@
         prevButton.onclick = () => {
             if (data.prev_page_url) {
                 currentPage--;
-                fetchHelpSeekers(currentPage);
+                bindSearchData(currentSearchData, currentPage);
             }
         };
         paginationContainer.appendChild(prevButton);
@@ -583,12 +614,11 @@
 
         if (startPage > 1) {
             const firstPageButton = document.createElement('button');
-            firstPageButton.className =
-                'px-3.5 py-1.5 rounded-md bg-white text-gray-700 hover:bg-gray-50 border border-gray-300';
+            firstPageButton.className = 'px-3.5 py-1.5 rounded-md bg-white text-gray-700 hover:bg-gray-50 border border-gray-300';
             firstPageButton.textContent = '1';
             firstPageButton.onclick = () => {
                 currentPage = 1;
-                fetchHelpSeekers(currentPage);
+                bindSearchData(currentSearchData, currentPage);
             };
             paginationContainer.appendChild(firstPageButton);
 
@@ -602,12 +632,11 @@
 
         for (let i = startPage; i <= endPage; i++) {
             const pageButton = document.createElement('button');
-            pageButton.className =
-                `px-3.5 py-1.5 rounded-md ${i === data.current_page ? 'bg-blue-600 text-white border border-blue-600' : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300'}`;
+            pageButton.className = `px-3.5 py-1.5 rounded-md ${i === data.current_page ? 'bg-blue-600 text-white border border-blue-600' : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300'}`;
             pageButton.textContent = i;
             pageButton.onclick = () => {
                 currentPage = i;
-                fetchHelpSeekers(currentPage);
+                bindSearchData(currentSearchData, currentPage);
             };
             paginationContainer.appendChild(pageButton);
         }
@@ -621,20 +650,18 @@
             }
 
             const lastPageButton = document.createElement('button');
-            lastPageButton.className =
-                'px-3.5 py-1.5 rounded-md bg-white text-gray-700 hover:bg-gray-50 border border-gray-300';
+            lastPageButton.className = 'px-3.5 py-1.5 rounded-md bg-white text-gray-700 hover:bg-gray-50 border border-gray-300';
             lastPageButton.textContent = data.last_page;
             lastPageButton.onclick = () => {
                 currentPage = data.last_page;
-                fetchHelpSeekers(currentPage);
+                bindSearchData(currentSearchData, currentPage);
             };
             paginationContainer.appendChild(lastPageButton);
         }
 
         // Next button
         const nextButton = document.createElement('button');
-        nextButton.className =
-            `px-3 py-1.5 rounded-md ${data.next_page_url ? 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300' : 'bg-gray-100 text-gray-400 cursor-not-allowed border border-gray-200'}`;
+        nextButton.className = `px-3 py-1.5 rounded-md ${data.next_page_url ? 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300' : 'bg-gray-100 text-gray-400 cursor-not-allowed border border-gray-200'}`;
         nextButton.innerHTML = `
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
@@ -644,21 +671,20 @@
         nextButton.onclick = () => {
             if (data.next_page_url) {
                 currentPage++;
-                fetchHelpSeekers(currentPage);
+                bindSearchData(currentSearchData, currentPage);
             }
         };
         paginationContainer.appendChild(nextButton);
     }
 
-    // Show help seeker detail modal
-    function showHelpSeekerDetail(helpSeeker) {
+    // Show donator detail modal
+    function showDonatorDetail(helpSeeker) {
+
         document.getElementById('modalName').textContent = helpSeeker.name || 'မရှိပါ';
         document.getElementById('modalCategory').textContent = helpSeeker.category?.name || 'မရှိပါ';
 
-        // Update urgent level display in its own section
         const urgentLevelElement = document.getElementById('modalUrgentLevel');
         urgentLevelElement.textContent = getUrgentLevelBurmese(helpSeeker.urgent_level) || 'မရှိပါ';
-        urgentLevelElement.className = `text-base font-medium ${getUrgentLevelClass(helpSeeker.urgent_level)}`;
 
         document.getElementById('modalTownship').textContent = helpSeeker.township?.name || 'မရှိပါ';
         document.getElementById('modalCity').textContent = helpSeeker.city?.name || 'မရှိပါ';
@@ -666,12 +692,13 @@
         document.getElementById('modalPhone').textContent = helpSeeker.phone || 'မရှိပါ';
         document.getElementById('modalViber').textContent = helpSeeker.contact?.viber || 'မရှိပါ';
         document.getElementById('modalTelegram').textContent = helpSeeker.contact?.telegram || helpSeeker.contact
-            ?.telegram_usename || 'မရှိပါ';
+            ?.telegram_username || 'မရှိပါ';
         document.getElementById('modalHelpType').textContent = helpSeeker.category?.name || 'မရှိပါ';
         document.getElementById('modalContent').textContent = helpSeeker.content || 'မရှိပါ';
 
         document.getElementById('helpSeekerModal').classList.remove('hidden');
     }
+
     // Close modal
     function closeModal() {
         document.getElementById('helpSeekerModal').classList.add('hidden');
@@ -691,8 +718,7 @@
     // Show success toast
     function showSuccessToast(message) {
         const toast = document.createElement('div');
-        toast.className =
-            'fixed bottom-4 right-4 flex items-center bg-green-500 text-white px-4 py-2 rounded-md shadow-lg z-50 animate-fade-in';
+        toast.className = 'fixed bottom-4 right-4 flex items-center bg-green-500 text-white px-4 py-2 rounded-md shadow-lg z-50 animate-fade-in';
         toast.innerHTML = `
             <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
@@ -712,8 +738,7 @@
     // Show error toast
     function showErrorToast(message) {
         const toast = document.createElement('div');
-        toast.className =
-            'fixed bottom-4 right-4 flex items-center bg-red-500 text-white px-4 py-2 rounded-md shadow-lg z-50 animate-fade-in';
+        toast.className = 'fixed bottom-4 right-4 flex items-center bg-red-500 text-white px-4 py-2 rounded-md shadow-lg z-50 animate-fade-in';
         toast.innerHTML = `
             <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
@@ -732,7 +757,7 @@
 
     // Initialize on page load
     document.addEventListener('DOMContentLoaded', () => {
-        fetchHelpSeekers(currentPage);
+        // bindSearchData(currentPage);
 
         // Add CSS for animations
         const style = document.createElement('style');
@@ -755,22 +780,6 @@
         document.head.appendChild(style);
     });
 
-    window.addEventListener('DOMContentLoaded', function () {
-        // Get the search data from the URL query parameters
-        const searchParams = new URLSearchParams(window.location.search);
-        const searchData = {
-            type: searchParams.get('type') || '',
-            city: searchParams.get('city') || '',
-            township: searchParams.get('township') || '',
-            category: searchParams.get('category') || ''
-        };
-
-
-
-        // Make an API request to fetch filtered data based on the search parameters
-        // fetchHelpSeekers(1, searchData);
-    });
-    // Modal control functions
     function openCreateModal() {
         document.getElementById('createHelpSeekerModal').classList.remove('hidden');
         loadFormSelectOptions();
@@ -780,7 +789,6 @@
         document.getElementById('createHelpSeekerModal').classList.add('hidden');
     }
 
-    // Load select options for the form
     async function loadFormSelectOptions() {
         try {
             // Load categories
@@ -842,59 +850,80 @@
         const formData = new FormData(this);
         const formObject = Object.fromEntries(formData.entries());
 
+        axios.post(`${BASE_API_URL}/help-seeker/store`, formData, {
+            headers: {
+                "Content-Type": "multipart/form-data"
+            }
+        })
+            .then(response => {
+                if (response.data.data) {
+
+                    window.location.href = "/receivers";
+
+                } else {
+                    alert("⚠️ Error: " + (response.data.message || "Something went wrong!"));
+                }
+            })
+            .catch(error => {
+                if (error.response && error.response.data.errors) {
+                    showValidationErrors(error.response.data.errors);
+                } else {
+                    alert("⚠️ Server error! Please try again later.");
+                }
+            });
+
         // Add CSRF token if needed (assuming you're using Laravel)
         // formObject._token = document.querySelector('meta[name="csrf-token"]').content;
 
-        try {
-            // Show loading state
-            const submitButton = this.querySelector('button[type="submit"]');
-            const originalButtonText = submitButton.innerHTML;
-            submitButton.innerHTML = `
-            <svg class="animate-spin -ml-1 mr-2 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-            </svg>
-            Processing...
-        `;
-            submitButton.disabled = true;
+        // try {
+        //     const submitButton = this.querySelector('button[type="submit"]');
+        //     const originalButtonText = submitButton.innerHTML;
+        //     submitButton.innerHTML = `
+        //     <svg class="animate-spin -ml-1 mr-2 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+        //         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+        //         <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        //     </svg>
+        //     Processing...
+        // `;
+        //     submitButton.disabled = true;
 
-            // Make the API request
-            const response = await fetch(`${BASE_API_URL}/help-seeker/store`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json',
-                    // Add CSRF token header if needed
-                    // 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-                },
-                body: JSON.stringify(formObject)
-            });
+        //     // Make the API request
+        //     const response = await fetch(`${BASE_API_URL}/help-seeker/store`, {
+        //         method: 'POST',
+        //         headers: {
+        //             'Content-Type': 'application/json',
+        //             'Accept': 'application/json',
+        //             // Add CSRF token header if needed
+        //             // 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+        //         },
+        //         body: JSON.stringify(formObject)
+        //     });
 
-            const data = await response.json();
+        //     const data = await response.json();
 
-            if (response.ok && data.status) {
-                showSuccessToast("Help seeker created successfully!");
-                closeCreateModal();
-                this.reset();
-                fetchHelpSeekers(currentPage); // Refresh the list
-            } else {
-                // Handle validation errors or other errors
-                if (data.errors) {
-                    const errorMessages = Object.values(data.errors).join('<br>');
-                    showErrorToast(errorMessages);
-                } else {
-                    showErrorToast(data.message || "Error creating help seeker");
-                }
-            }
-        } catch (error) {
-            console.error('Error creating help seeker:', error);
-            showErrorToast("Network error. Please try again.");
-        } finally {
-            // Reset button state
-            if (submitButton) {
-                submitButton.innerHTML = originalButtonText;
-                submitButton.disabled = false;
-            }
-        }
+        //     if (response.ok && data.status) {
+        //         showSuccessToast("Help seeker created successfully!");
+        //         closeCreateModal();
+        //         this.reset();
+        //         bindSearchData(currentPage); // Refresh the list
+        //     } else {
+        //         // Handle validation errors or other errors
+        //         if (data.errors) {
+        //             const errorMessages = Object.values(data.errors).join('<br>');
+        //             showErrorToast(errorMessages);
+        //         } else {
+        //             showErrorToast(data.message || "Error creating help seeker");
+        //         }
+        //     }
+        // } catch (error) {
+        //     console.error('Error creating help seeker:', error);
+        //     showErrorToast("Network error. Please try again.");
+        // } finally {
+        //     // Reset button state
+        //     if (submitButton) {
+        //         submitButton.innerHTML = originalButtonText;
+        //         submitButton.disabled = false;
+        //     }
+        // }
     });
 </script>
