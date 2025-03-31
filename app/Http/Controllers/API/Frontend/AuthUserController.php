@@ -96,7 +96,6 @@ class AuthUserController extends Controller
             $user = auth()->guard('api')->user();
 
             if (! $user) {
-                return false;
                 return $this->errorResponse('Fail', 500);
             }
 

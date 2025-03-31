@@ -652,19 +652,19 @@
             let getUrl = window.location.href;
             let result = getUrl.replace(localUrl, '');
 
+            console.log(donationGet(), 'donationGet');
+            
             let searchData = {
-                type: donationGet(),
+                type: donationGet() ?? 'donators',
                 division: document.getElementById('city-search').getAttribute('data-id') ?? null,
                 township: document.getElementById('township-search').getAttribute('data-id') ?? null,
                 category: document.getElementById('category-search').getAttribute('data-id') ?? null
             };
 
-        sendSearchRequest(searchData);
-    });
+            sendSearchRequest(searchData);
+        });
 
         function sendSearchRequest(searchData) {
-            console.log(searchData.type, 'searchData');
-
             const queryString = new URLSearchParams(searchData).toString();
             if (searchData.type == 'receivers') {
                 window.location.href = `/receivers?${queryString}`;
@@ -675,21 +675,18 @@
 
         }
 
-    // if (token) {
-    //     authButtons.forEach((btn) => {
-    //         if (btn) {
-    //             btn.textContent = "အကောင့်ထွက်ရန်";
-    //             btn.href = "#"; // Prevent navigation
+        // if (token) {
+        //     authButtons.forEach((btn) => {
+        //         if (btn) {
+        //             btn.textContent = "အကောင့်ထွက်ရန်";
+        //             btn.href = "#"; // Prevent navigation
 
-    btn.addEventListener("click", function(e) {
-        e.preventDefault();
-        sessionStorage.removeItem("authToken");
-        window.alert('User was log out');
-        location.reload(); // Reload page to update UI
-    });
-    }
-    });
-    }
+        // btn.addEventListener("click", function(e) {
+        //     e.preventDefault();
+        //     sessionStorage.removeItem("authToken");
+        //     window.alert('User was log out');
+        //     location.reload(); // Reload page to update UI
+        // });
     });
 </script>
 
