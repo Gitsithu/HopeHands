@@ -250,7 +250,7 @@
         // const mobileSearchButton = document.getElementById('mobile-search-button');
 
         // // Update button states without hiding them
-        // const isComplete = division && township && city && category;
+        // const isComplete = city;
 
         // if (searchButton) {
         //     searchButton.disabled = !isComplete;
@@ -457,25 +457,79 @@
 <!-- Store API -->
 <script>
 
-    document.getElementById('search-button').addEventListener('click', function () {
+    // document.getElementById('search-button').addEventListener('click', function () {
 
+    //     const localUrl = "http://localhost:8000/";
+
+    //     let getUrl = window.location.href;;
+    //     let result = getUrl.replace(localUrl,'');
+
+    //     let searchData = {
+    //         type: result,
+    //         // division: document.getElementById('division-search').value,
+    //         city: document.getElementById('city-search').value,
+    //         township: document.getElementById('township-search').value,
+    //         category: document.getElementById('category-search').value
+    //     };
+
+    //     sendSearchRequest(searchData);
+    // });
+
+
+    // function sendSearchRequest(searchData) {
+    //     console.log(searchData, 'searchData');
+
+    //     axios.post(`${BASE_API_URL}/filter`, searchData)
+    //         .then(response => {
+    //             // console.log('Search results:', response.data);
+    //         })
+    //         .catch(error => {
+    //             // console.error('Error fetching search results:', error);
+    //         });
+    // }
+
+    function getSearchData() {
+        const searchData = {};
+
+        // Loop through all search inputs and get their selected ids
+        ['city', 'township', 'category'].forEach(type => {
+            const input = document.getElementById(`${type}-search`);
+            const id = input.getAttribute('data-id');  // Get selected id
+            if (id) {
+                searchData[`${type}Id`] = id;  // Add it to searchData object
+            }
+        });
+
+        return searchData;
+    }
+
+    document.getElementById('search-button').addEventListener('click', function () {
         const localUrl = "http://localhost:8000/";
 
-        let getUrl = window.location.href;;
+        let getUrl = window.location.href;
         let result = getUrl.replace(localUrl, '');
 
         let searchData = {
             type: result,
-            // division: document.getElementById('division-search').value,
-            city: document.getElementById('city-search').value,
+            division: document.getElementById('city-search').value,
             township: document.getElementById('township-search').value,
             category: document.getElementById('category-search').value
         };
 
-        let queryParams = new URLSearchParams(searchData).toString();
-
-        window.location.href = `${localUrl}api/admin/fetch?${queryParams}`;
+        sendSearchRequest(searchData);
     });
+
+    function sendSearchRequest(searchData) {
+        const queryString = new URLSearchParams(searchData).toString();
+        axios.get(`${BASE_API_URL}/filter`, searchData)
+            .then(response => {
+                // Redirect to results page with search data in the URL
+                window.location.href = `/receivers?${queryString}`;  // Pass search data in the query string
+            })
+            .catch(error => {
+                console.error('Error fetching search results:', error);
+            });
+    }
 
 </script>
 

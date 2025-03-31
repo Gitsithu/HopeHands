@@ -14,10 +14,9 @@ class FetchController extends Controller
 
     public function filter(Request $request)
     {
-        
         $type = $request->input('type');
         // $division = $request->input('division');
-        $city = $request->input('city');
+        $city = $request->input('division');
         $township = $request->input('township');
         $category = $request->input('category');
 

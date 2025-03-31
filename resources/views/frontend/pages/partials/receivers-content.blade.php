@@ -123,8 +123,10 @@
 </div>
 
 <script>
+
     // API Configuration
     const HELP_SEEKERS_API_URL = "http://127.0.0.1:8000/api/admin/help-seeker";
+    const FILTER_API_URL = "http://127.0.0.1:8000/api/admin/filter";
 
     // Global variables
     let currentPage = 1;
@@ -134,6 +136,78 @@
     const resultsContainer = document.getElementById('results-container');
     const paginationContainer = document.getElementById('pagination-container');
     const loadingIndicator = document.getElementById('loading-indicator');
+
+    document.addEventListener('DOMContentLoaded', function () {
+        // Extract the search data from the URL
+        const queryParams = new URLSearchParams(window.location.search);
+        const searchData = {
+            type: queryParams.get('type'),
+            city: queryParams.get('city'),
+            township: queryParams.get('township'),
+            category: queryParams.get('category')
+        };
+
+        if (searchData.type || searchData.city || searchData.township || searchData.category) {
+            bindSearchData(searchData);
+        } else {
+            fetchHelpSeekers();
+        }
+    });
+
+    async function bindSearchData(searchData = {}, page = 1) {
+        try {
+            loadingIndicator.classList.remove('hidden');
+            resultsContainer.innerHTML = '';
+
+            // Build the URL with search parameters
+            let apiUrl = `${FILTER_API_URL}?page=${page}`;
+
+            let params = {
+                type: searchData.type || '', // Include type if available
+                division: searchData.division || '', // Include city if available
+                township: searchData.township || '', // Include township if available
+                category: searchData.category || '' // Include category if available
+            };
+
+            try {
+                const response = await axios.get(FILTER_API_URL, {
+                    params: params // or just { params } using shorthand
+                });
+                console.log('para',params);
+                console.log('gg:',response.data);
+            } catch (error) {
+                console.error('Error:', error.response);
+            }
+
+
+            // Add search parameters to the URL if they exist
+            if (searchData.type) apiUrl += `&type=${encodeURIComponent(searchData.type)}`;
+            if (searchData.city) apiUrl += `&city=${encodeURIComponent(searchData.city)}`;
+            if (searchData.township) apiUrl += `&township=${encodeURIComponent(searchData.township)}`;
+            if (searchData.category) apiUrl += `&category=${encodeURIComponent(searchData.category)}`;
+
+            console.log('API URL with search data:', apiUrl); // Log to check the final URL
+
+            const response = await fetch(apiUrl);
+            const data = await response.json();
+
+
+            // Check if the response is valid
+            if (data.status && data.data) {
+                currentData = data.data;
+                renderResults(currentData.data); // Render the fetched data
+                renderPagination(currentData);   // Render pagination
+            } else {
+                console.error('Unexpected API response:', data);
+                showErrorToast('No valid data returned');
+            }
+        } catch (error) {
+            console.error('Error fetching help seekers:', error);
+            showErrorToast("Error loading help seekers data");
+        } finally {
+            loadingIndicator.classList.add('hidden');
+        }
+    }
 
     // Fetch help seekers data
     async function fetchHelpSeekers(page = 1) {
@@ -467,22 +541,5 @@
             }
         `;
         document.head.appendChild(style);
-    });
-
-    window.addEventListener('DOMContentLoaded', function () {
-        // Get the search data from the URL query parameters
-        const searchParams = new URLSearchParams(window.location.search);
-        const searchData = {
-            type: searchParams.get('type') || '',
-            city: searchParams.get('city') || '',
-            township: searchParams.get('township') || '',
-            category: searchParams.get('category') || ''
-        };
-
-        console.log(searchData, 'hehehhehehehhehehehehh');
-        
-
-        // Make an API request to fetch filtered data based on the search parameters
-        // fetchHelpSeekers(1, searchData);
     });
 </script>
