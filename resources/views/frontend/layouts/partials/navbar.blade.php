@@ -178,7 +178,8 @@
                 </select>
 
                 <!-- Hidden input to store the actual value -->
-                <input type="hidden" name="mobile-donator-dropdown" id="mobile-donator-dropdown-value" value="">
+                <input type="hidden" name="mobile-donator-dropdown" id="mobile-donator-dropdown-value"
+                    value="">
             </div>
 
             <!-- Action Buttons -->
@@ -207,7 +208,7 @@
     }
 
     function mobileDonationGet() {
-        selectElement = document.querySelector('#mobile-selected-value');        
+        selectElement = document.querySelector('#mobile-selected-value');
         output = selectElement.options[selectElement.selectedIndex].value;
         return output;
     }
@@ -232,7 +233,7 @@
         document.getElementById('donator-dropdown-options').classList.add('hidden');
     }
 
-    document.addEventListener('click', function (event) {
+    document.addEventListener('click', function(event) {
         const dropdown = document.getElementById('donator-dropdown-options');
         const input = document.getElementById('donator-dropdown-input');
 
@@ -253,11 +254,12 @@
     }
 
     // Also add this to your existing document click handler
-    document.addEventListener('click', function (event) {
+    document.addEventListener('click', function(event) {
         const mobileDropdown = document.getElementById('mobile-donator-dropdown-options');
         const mobileInput = document.getElementById('mobile-donator-dropdown-input');
 
-        if (mobileDropdown && mobileInput && !mobileInput.contains(event.target) && !mobileDropdown.contains(event.target)) {
+        if (mobileDropdown && mobileInput && !mobileInput.contains(event.target) && !mobileDropdown.contains(
+                event.target)) {
             mobileDropdown.classList.add('hidden');
         }
     });
@@ -367,10 +369,10 @@
         const category = document.getElementById('category-search')?.value || document.getElementById(
             'mobile-category-search')?.value;
 
-        if (!city || !township || !category) {
-            showErrorToast("Please fill all search fields");
-            return;
-        }
+        // if (!city || !township || !category) {
+        //     showErrorToast("Please fill all search fields");
+        //     return;
+        // }
 
         const localUrl = WEB_BASE_API_URL;
         let getUrl = window.location.href;
@@ -516,7 +518,7 @@
         citySearchElements.forEach(id => {
             const element = document.getElementById(id);
             if (element) {
-                element.addEventListener('input', function () {
+                element.addEventListener('input', function() {
                     filterDropdownOptions(id, 'city');
                 });
             }
@@ -527,7 +529,7 @@
         townshipSearchElements.forEach(id => {
             const element = document.getElementById(id);
             if (element) {
-                element.addEventListener('input', function () {
+                element.addEventListener('input', function() {
                     filterDropdownOptions(id, 'township');
                 });
             }
@@ -538,7 +540,7 @@
         categorySearchElements.forEach(id => {
             const element = document.getElementById(id);
             if (element) {
-                element.addEventListener('input', function () {
+                element.addEventListener('input', function() {
                     filterDropdownOptions(id, 'category');
                 });
             }
@@ -686,8 +688,8 @@
         checkSelections();
     });
 
-    document.addEventListener("DOMContentLoaded", function () {
-        document.getElementById('search-button').addEventListener('click', function () {
+    document.addEventListener("DOMContentLoaded", function() {
+        document.getElementById('search-button').addEventListener('click', function() {
 
             const localUrl = WEB_BASE_API_URL;
             let getUrl = window.location.href;
@@ -703,17 +705,20 @@
             sendSearchRequest(searchData);
         });
 
-        document.getElementById('mobile-search-button').addEventListener('click', function () {
+        document.getElementById('mobile-search-button').addEventListener('click', function() {
 
             const localUrl = WEB_BASE_API_URL;
             let getUrl = window.location.href;
             let result = getUrl.replace(localUrl, '');
             let searchData = {
                 type: mobileDonationGet() ?? 'donators',
-                division: document.getElementById('mobile-city-search').getAttribute('data-id') ?? null,
-                township: document.getElementById('mobile-township-search').getAttribute('data-id') ??
+                division: document.getElementById('mobile-city-search').getAttribute('data-id') ??
                     null,
-                category: document.getElementById('mobile-category-search').getAttribute('data-id') ?? null
+                township: document.getElementById('mobile-township-search').getAttribute(
+                    'data-id') ??
+                    null,
+                category: document.getElementById('mobile-category-search').getAttribute(
+                    'data-id') ?? null
             };
             sendSearchRequest(searchData);
         });
