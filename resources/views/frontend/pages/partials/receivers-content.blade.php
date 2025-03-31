@@ -468,4 +468,21 @@
         `;
         document.head.appendChild(style);
     });
+
+    window.addEventListener('DOMContentLoaded', function () {
+        // Get the search data from the URL query parameters
+        const searchParams = new URLSearchParams(window.location.search);
+        const searchData = {
+            type: searchParams.get('type') || '',
+            city: searchParams.get('city') || '',
+            township: searchParams.get('township') || '',
+            category: searchParams.get('category') || ''
+        };
+
+        console.log(searchData, 'hehehhehehehhehehehehh');
+        
+
+        // Make an API request to fetch filtered data based on the search parameters
+        // fetchHelpSeekers(1, searchData);
+    });
 </script>

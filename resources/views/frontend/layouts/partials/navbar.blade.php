@@ -21,7 +21,7 @@
         <!-- Desktop Layout -->
         <div class="hidden md:flex flex-row justify-between items-center">
             <!-- Logo -->
-            <a href="#" class="flex items-center">
+            <a href="#" class="flex items-center" style="margin-right: 20px !important">
                 <img src="/frontend/assets/images/logo.png" alt="MyApp Logo" class="w-32">
             </a>
 
@@ -42,8 +42,8 @@
                     <!-- City Search -->
                     <div class="relative">
                         <input type="text" id="city-search"
-                            class="px-4 py-3 w-full bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 rounded-lg text-white placeholder-gray-400"
-                            placeholder="တိုင်းဒေသကြီး/ပြည်နယ်" readonly onclick="showDropdown('city-dropdown')" />
+                            class="px-2 py-3 w-full bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 rounded-lg text-white placeholder-gray-400"
+                            placeholder="တိုင်း/ပြည်နယ်" readonly onclick="showDropdown('city-dropdown')" />
                         <div id="city-dropdown"
                             class="hidden absolute z-20 mt-1 w-full bg-gray-800 text-white rounded-lg shadow-xl max-h-60 overflow-y-auto border border-gray-700">
                         </div>
@@ -107,7 +107,7 @@
                 <div class="relative">
                     <input type="text" id="mobile-city-search"
                         class="px-4 py-3 w-full bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 rounded-lg text-white placeholder-gray-400"
-                        placeholder="တိုင်းဒေသကြီး/ပြည်နယ်" readonly onclick="showDropdown('mobile-city-dropdown')" />
+                        placeholder="တိုင်း/ပြည်နယ်" readonly onclick="showDropdown('mobile-city-dropdown')" />
                     <div id="mobile-city-dropdown"
                         class="hidden absolute z-20 mt-1 w-full bg-gray-800 text-white rounded-lg shadow-xl max-h-60 overflow-y-auto border border-gray-700">
                         <!-- Options will be populated by JavaScript -->
@@ -154,7 +154,7 @@
 <script>
     // API Configuration
     const BASE_API_URL = "http://localhost:8000/api/admin";
-    const DIVISIONS_API_URL = BASE_API_URL + "/division";
+    const DIVISIONS_API_URL = BASE_API_URL + "/city";
     const CITIES_API_URL = BASE_API_URL + "/division/city-fetch/";
     const TOWNSHIPS_API_URL = BASE_API_URL + "/division/township-fetch/";
     const CATEGORIES_API_URL = BASE_API_URL + "/category";
@@ -246,35 +246,35 @@
         const category = document.getElementById('category-search')?.value || document.getElementById(
             'mobile-category-search')?.value;
 
-        const searchButton = document.getElementById('search-button');
-        const mobileSearchButton = document.getElementById('mobile-search-button');
+        // const searchButton = document.getElementById('search-button');
+        // const mobileSearchButton = document.getElementById('mobile-search-button');
 
-        // Update button states without hiding them
-        const isComplete = division && township && city && category;
+        // // Update button states without hiding them
+        // const isComplete = division && township && city && category;
 
-        if (searchButton) {
-            searchButton.disabled = !isComplete;
-            if (isComplete) {
-                searchButton.classList.add('hover:bg-blue-700', 'transform', 'hover:-translate-y-0.5',
-                    'hover:shadow-lg');
-                searchButton.classList.remove('opacity-75', 'cursor-not-allowed');
-            } else {
-                searchButton.classList.remove('hover:bg-blue-700', 'transform', 'hover:-translate-y-0.5',
-                    'hover:shadow-lg');
-                searchButton.classList.add('opacity-75', 'cursor-not-allowed');
-            }
-        }
+        // if (searchButton) {
+        //     searchButton.disabled = !isComplete;
+        //     if (isComplete) {
+        //         searchButton.classList.add('hover:bg-blue-700', 'transform', 'hover:-translate-y-0.5',
+        //             'hover:shadow-lg');
+        //         searchButton.classList.remove('opacity-75', 'cursor-not-allowed');
+        //     } else {
+        //         searchButton.classList.remove('hover:bg-blue-700', 'transform', 'hover:-translate-y-0.5',
+        //             'hover:shadow-lg');
+        //         searchButton.classList.add('opacity-75', 'cursor-not-allowed');
+        //     }
+        // }
 
-        if (mobileSearchButton) {
-            mobileSearchButton.disabled = !isComplete;
-            if (isComplete) {
-                mobileSearchButton.classList.add('hover:bg-blue-700', 'hover:shadow-lg');
-                mobileSearchButton.classList.remove('opacity-75', 'cursor-not-allowed');
-            } else {
-                mobileSearchButton.classList.remove('hover:bg-blue-700', 'hover:shadow-lg');
-                mobileSearchButton.classList.add('opacity-75', 'cursor-not-allowed');
-            }
-        }
+        // if (mobileSearchButton) {
+        //     mobileSearchButton.disabled = !isComplete;
+        //     if (isComplete) {
+        //         mobileSearchButton.classList.add('hover:bg-blue-700', 'hover:shadow-lg');
+        //         mobileSearchButton.classList.remove('opacity-75', 'cursor-not-allowed');
+        //     } else {
+        //         mobileSearchButton.classList.remove('hover:bg-blue-700', 'hover:shadow-lg');
+        //         mobileSearchButton.classList.add('opacity-75', 'cursor-not-allowed');
+        //     }
+        // }
     }
 
     function performSearch() {
@@ -462,31 +462,20 @@
         const localUrl = "http://localhost:8000/";
 
         let getUrl = window.location.href;;
-        let result = getUrl.replace(localUrl,'');
+        let result = getUrl.replace(localUrl, '');
 
         let searchData = {
             type: result,
-            division: document.getElementById('division-search').value,
+            // division: document.getElementById('division-search').value,
             city: document.getElementById('city-search').value,
             township: document.getElementById('township-search').value,
             category: document.getElementById('category-search').value
         };
 
-        sendSearchRequest(searchData, 'hehe');
+        let queryParams = new URLSearchParams(searchData).toString();
+
+        window.location.href = `${localUrl}api/admin/fetch?${queryParams}`;
     });
-
-
-    function sendSearchRequest(searchData) {
-        console.log(searchData, 'searchData');
-
-        axios.post(`${BASE_API_URL}/filter`, searchData)
-            .then(response => {
-                console.log('Search results:', response.data);
-            })
-            .catch(error => {
-                console.error('Error fetching search results:', error);
-            });
-    }
 
 </script>
 
