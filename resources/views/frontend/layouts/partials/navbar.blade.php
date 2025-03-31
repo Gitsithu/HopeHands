@@ -259,8 +259,8 @@
     function clearDependentFields(fieldIds) {
         fieldIds.forEach(fieldId => {
             const field = document.getElementById(fieldId);
-            field.value = '';        // Clear text
-            field.setAttribute('data-id', '');  // Clear stored ID
+            field.value = ''; // Clear text
+            field.setAttribute('data-id', ''); // Clear stored ID
         });
     }
 
@@ -432,7 +432,7 @@
         citySearchElements.forEach(id => {
             const element = document.getElementById(id);
             if (element) {
-                element.addEventListener('input', function () {
+                element.addEventListener('input', function() {
                     filterDropdownOptions(id, 'city');
                 });
             }
@@ -443,7 +443,7 @@
         townshipSearchElements.forEach(id => {
             const element = document.getElementById(id);
             if (element) {
-                element.addEventListener('input', function () {
+                element.addEventListener('input', function() {
                     filterDropdownOptions(id, 'township');
                 });
             }
@@ -454,7 +454,7 @@
         categorySearchElements.forEach(id => {
             const element = document.getElementById(id);
             if (element) {
-                element.addEventListener('input', function () {
+                element.addEventListener('input', function() {
                     filterDropdownOptions(id, 'category');
                 });
             }
@@ -602,7 +602,7 @@
         checkSelections();
     });
 
-    document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("DOMContentLoaded", function() {
         const authButtons = document.querySelectorAll("#auth-btn, #auth-btn-mb");
         const token = sessionStorage.getItem("authToken");
 
@@ -638,7 +638,7 @@
         // }
 
 
-        document.getElementById('search-button').addEventListener('click', function () {
+        document.getElementById('search-button').addEventListener('click', function() {
 
             let searchData = {
                 type: window.location.href.replace("http://localhost:8000/", ""),
@@ -656,7 +656,8 @@
             axios.post(`${BASE_API_URL}/filter`, searchData)
                 .then(response => {
                     // Redirect to results page with search data in the URL
-                    window.location.href = `/receivers?${queryString}`;  // Pass search data in the query string
+                    window.location.href =
+                    `/receivers?${queryString}`; // Pass search data in the query string
                 })
                 .catch(error => {
                     console.error('Error fetching search results:', error);
@@ -669,7 +670,7 @@
                     btn.textContent = "အကောင့်ထွက်ရန်";
                     btn.href = "#"; // Prevent navigation
 
-                    btn.addEventListener("click", function (e) {
+                    btn.addEventListener("click", function(e) {
                         e.preventDefault();
                         sessionStorage.removeItem("authToken");
                         window.alert('User was log out');

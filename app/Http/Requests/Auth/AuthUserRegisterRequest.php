@@ -29,7 +29,7 @@ class AuthUserRegisterRequest extends FormRequest
             'confirm_password' => 'same:password',
             'front_view'       => 'required|image|mimes:png,jpg,jpeg',
             'back_view'        => 'required|image|mimes:png,jpg,jpeg',
-            'division_id'      => 'nullable',
+            // 'division_id'      => 'nullable',
             'city_id'          => 'required|exists:cities,id',
             'township_id'      => 'required|exists:townships,id',
             'category_id'      => 'required|exists:categories,id',
