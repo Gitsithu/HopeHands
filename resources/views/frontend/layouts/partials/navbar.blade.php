@@ -97,72 +97,53 @@
         <div id="mobile-menu-content" class="hidden md:hidden p-4 space-y-4">
             <!-- Search Inputs -->
             <div class="space-y-4">
+                <!-- City Search -->
                 <div class="relative">
                     <input type="text" id="mobile-city-search"
                         class="px-4 py-3 w-full bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 rounded-lg text-white placeholder-gray-400"
-                        placeholder="တိုင်း/ပြည်နယ်" onclick="showDropdown('mobile-city-dropdown')" />
+                        placeholder="တိုင်း/ပြည်နယ်" 
+                        onclick="showDropdown('mobile-city-dropdown')" 
+                        data-id=""/>
                     <div id="mobile-city-dropdown"
                         class="hidden absolute z-20 mt-1 w-full bg-gray-800 text-white rounded-lg shadow-xl max-h-60 overflow-y-auto border border-gray-700">
                         <!-- Options will be populated by JavaScript -->
                     </div>
                 </div>
 
+                <!-- Township Search -->
                 <div class="relative">
                     <input type="text" id="mobile-township-search"
                         class="px-4 py-3 w-full bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 rounded-lg text-white placeholder-gray-400"
-                        placeholder="မြို့နယ်" onclick="showDropdown('mobile-township-dropdown')" />
+                        placeholder="မြို့နယ်" 
+                        onclick="showDropdown('mobile-township-dropdown')"
+                        data-id=""/>
                     <div id="mobile-township-dropdown"
                         class="hidden absolute z-20 mt-1 w-full bg-gray-800 text-white rounded-lg shadow-xl max-h-60 overflow-y-auto border border-gray-700">
                         <!-- Options will be populated by JavaScript -->
                     </div>
                 </div>
 
+                <!-- Category Search -->
                 <div class="relative">
                     <input type="text" id="mobile-category-search"
                         class="px-4 py-3 w-full bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 rounded-lg text-white placeholder-gray-400"
-                        placeholder="အမျိုးအစား" onclick="showDropdown('mobile-category-dropdown')" />
+                        placeholder="အမျိုးအစား" 
+                        onclick="showDropdown('mobile-category-dropdown')"
+                        data-id=""/>
                     <div id="mobile-category-dropdown"
                         class="hidden absolute z-20 mt-1 w-full bg-gray-800 text-white rounded-lg shadow-xl max-h-60 overflow-y-auto border border-gray-700">
                         <!-- Options will be populated by JavaScript -->
                     </div>
                 </div>
-                {{-- <select name="donator-dropdown"
-                    class="px-2 py-3 w-full bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 rounded-lg text-white placeholder-gray-400">
-                    <option class="px-4 py-2 hover:bg-gray-700" value="donator">အလှူရှင်</option>
-                    <option class="px-4 py-2 hover:bg-gray-700" value="help-seeker">အလှူခံပုဂ္ဂိုလ်</option>
-                </select> --}}
-            </div>
-            <div class="relative">
-                <!-- Input field that will show the selected value -->
-                <input type="text" id="mobile-donator-dropdown-input"
-                    class="px-4 py-3 w-full bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 rounded-lg text-white placeholder-gray-400"
-                    placeholder="ရွေးချယ်ပါ" readonly onclick="toggleMobileDonatorDropdown()" />
 
-                <!-- Dropdown arrow icon -->
-                <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                    <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                        fill="currentColor">
-                        <path fill-rule="evenodd"
-                            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                            clip-rule="evenodd" />
-                    </svg>
+                <!-- Type Selector -->
+                <div class="relative">
+                    <select id="mobile-selected-value"
+                        class="px-4 py-3 w-full bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 rounded-lg text-white">
+                        <option value="donators">အလှူရှင်</option>
+                        <option value="receivers">အကူအညီတောင်းခံသူ</option>
+                    </select>
                 </div>
-
-                <!-- Dropdown options container -->
-                <div id="mobile-donator-dropdown-options"
-                    class="hidden absolute z-20 mt-1 w-full bg-gray-800 text-white rounded-lg shadow-xl max-h-60 overflow-y-auto border border-gray-700">
-                    <div class="px-4 py-2 hover:bg-gray-700 cursor-pointer"
-                        onclick="selectMobileDonatorOption('donator', 'အလှူရှင်')">
-                        အလှူရှင်
-                    </div>
-                    <div class="px-4 py-2 hover:bg-gray-700 cursor-pointer"
-                        onclick="selectMobileDonatorOption('help-seeker', 'အလှူခံပုဂ္ဂိုလ်')">
-                        အလှူခံပုဂ္ဂိုလ်
-                    </div>
-                </div>
-
-                <!-- Hidden input to store the actual value -->
-                <input type="hidden" name="mobile-donator-dropdown" id="mobile-donator-dropdown-value" value="">
             </div>
 
             <!-- Action Buttons -->
@@ -171,7 +152,7 @@
                     class="px-6 py-3 bg-[#66D230] text-white rounded-lg transition-all duration-300 font-medium shadow-md">
                     ရှာဖွေရန်
                 </button>
-                <a id="auth-btn-mb" href="{{ route('donator.create') }}"
+                <a href="{{ route('donator.create') }}"
                     class="px-6 py-3 border-2 border-[#66D230] text-[#66D230] rounded-lg hover:bg-[#66D230] hover:text-white transition-all duration-300 font-medium shadow-md hover:shadow-lg text-center">
                     စာရင်းသွင်းရန်
                 </a>

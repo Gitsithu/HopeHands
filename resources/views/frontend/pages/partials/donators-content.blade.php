@@ -363,8 +363,19 @@
         document.getElementById('modalTownship').textContent = donator.township?.name_mm || donator.township?.name || 'မရှိပါ';
         document.getElementById('modalState').textContent = donator.city?.name_mm || donator.city?.name || 'မရှိပါ';
         document.getElementById('modalPhone').textContent = donator.phone || 'မရှိပါ';
-        document.getElementById('modalViber').textContent = donator.contact?.viber || 'မရှိပါ';
-        document.getElementById('modalTelegram').textContent = donator.contact?.telegram || donator.contact?.telegram_usename || 'မရှိပါ';
+        
+        // Handle Viber contact
+        const viberValue = donator.viber || donator.contact?.viber || 'မရှိပါ';
+        document.getElementById('modalViber').textContent = viberValue;
+        
+        // Handle Telegram contact
+        const telegramValue = donator.telegram || 
+                            donator.contact?.telegram || 
+                            donator.contact?.telegram_username || 
+                            donator.telegram_username || 
+                            'မရှိပါ';
+        document.getElementById('modalTelegram').textContent = telegramValue;
+        
         document.getElementById('modalNotes').textContent = donator.remark || 'မရှိပါ';
 
         document.getElementById('donatorModal').classList.remove('hidden');

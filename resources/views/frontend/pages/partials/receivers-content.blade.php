@@ -409,8 +409,6 @@
         }
     });
 
-
-
     document.addEventListener('DOMContentLoaded', function () {
         // Extract the search data from the URL
         const queryParams = new URLSearchParams(window.location.search);
@@ -422,6 +420,41 @@
         };
 
         bindSearchData(currentSearchData);
+
+        document.getElementById('contact-method').addEventListener('change', function () {
+            var container = document.getElementById('contact-fields-container');
+            container.innerHTML = ''; // Clear previous content
+
+            // Add the appropriate field based on the selected option
+            if (this.value === 'viber') {
+                var viberInput = `
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="viber-number">
+                        Viber ဖုန်းနံပါတ်
+                    </label>
+                    <input
+                        class="w-full px-4 py-2.5 text-sm text-gray-800 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        type="text" id="viber-number" name="viber" placeholder="+959xxxxxxxx">
+                    <p class="text-red-500 text-sm mt-1 error-text" id="error-viber"></p>
+                </div>
+            `;
+                container.innerHTML = viberInput;
+            } else if (this.value === 'telegram') {
+                // Add a similar block for Telegram, if needed
+                var telegramInput = `
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="telegram-number">
+                        Telegram ဖုန်းနံပါတ်
+                    </label>
+                    <input
+                        class="w-full px-4 py-2.5 text-sm text-gray-800 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        type="text" id="telegram-number" name="telegram" placeholder="+959xxxxxxxx">
+                    <p class="text-red-500 text-sm mt-1 error-text" id="error-telegram"></p>
+                </div>
+            `;
+                container.innerHTML = telegramInput;
+            }
+        });
     });
 
     async function bindSearchData(searchData = {}, page = 1) {
@@ -634,34 +667,29 @@
     }
 
     // Show donator detail modal
-    function showDonatorDetail(donator) {
-        document.getElementById('modalName').textContent = donator.user?.name || 'မရှိပါ';
-        document.getElementById('modalCategory').textContent = donator.category?.name || 'မရှိပါ';
-        document.getElementById('modalTownship').textContent = donator.township?.name_mm || donator.township?.name || 'မရှိပါ';
-        document.getElementById('modalState').textContent = donator.city?.name_mm || donator.city?.name || 'မရှိပါ';
-        document.getElementById('modalPhone').textContent = donator.phone || 'မရှိပါ';
-        document.getElementById('modalViber').textContent = donator.contact?.viber || 'မရှိပါ';
-        document.getElementById('modalTelegram').textContent = donator.contact?.telegram || donator.contact?.telegram || 'မရှိပါ';
-        document.getElementById('modalTelegramUsername').textContent = donator.contact?.telegram || donator.contact?.telegram_usename || 'မရှိပါ';
-        document.getElementById('modalNotes').textContent = donator.remark || 'မရှိပါ';
+    function showDonatorDetail(helpSeeker) {
 
-        document.getElementById('donatorModal').classList.remove('hidden');
+        document.getElementById('modalName').textContent = helpSeeker.name || 'မရှိပါ';
+        document.getElementById('modalCategory').textContent = helpSeeker.category?.name || 'မရှိပါ';
 
-        const donatorData = {
-            name: donator.user?.name || null,
-            category: donator.category?.name || null,
-            township: donator.township?.name || null,
-            city: donator.city?.name || null,
-            phone: donator.phone || null,
-            viber: donator.contact?.viber || null,
-            telegram: donator.contact?.telegram || donator.contact?.telegram_usename || null,
-            remark: donator.remark || null
-        };
+        const urgentLevelElement = document.getElementById('modalUrgentLevel');
+
+        document.getElementById('modalTownship').textContent = helpSeeker.township?.name || 'မရှိပါ';
+        document.getElementById('modalCity').textContent = helpSeeker.city?.name || 'မရှိပါ';
+        document.getElementById('modalLocation').textContent = helpSeeker.location || 'မရှိပါ';
+        document.getElementById('modalPhone').textContent = helpSeeker.phone || 'မရှိပါ';
+        document.getElementById('modalViber').textContent = helpSeeker.contact?.viber || 'မရှိပါ';
+        document.getElementById('modalTelegram').textContent = helpSeeker.contact?.telegram || helpSeeker.contact
+            ?.telegram_username || 'မရှိပါ';
+        document.getElementById('modalHelpType').textContent = helpSeeker.category?.name || 'မရှိပါ';
+        document.getElementById('modalContent').textContent = helpSeeker.content || 'မရှိပါ';
+
+        document.getElementById('helpSeekerModal').classList.remove('hidden');
     }
 
     // Close modal
     function closeModal() {
-        document.getElementById('donatorModal').classList.add('hidden');
+        document.getElementById('helpSeekerModal').classList.add('hidden');
     }
 
     // Copy phone number
