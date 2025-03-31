@@ -199,8 +199,6 @@
 
 
         data.forEach(item => {
-            console.log(item, 'item');
-            
             const card = document.createElement('div');
             card.className = 'bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-all';
             card.innerHTML = `
