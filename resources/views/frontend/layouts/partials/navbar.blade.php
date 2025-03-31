@@ -475,7 +475,7 @@
         citySearchElements.forEach(id => {
             const element = document.getElementById(id);
             if (element) {
-                element.addEventListener('input', function () {
+                element.addEventListener('input', function() {
                     filterDropdownOptions(id, 'city');
                 });
             }
@@ -486,7 +486,7 @@
         townshipSearchElements.forEach(id => {
             const element = document.getElementById(id);
             if (element) {
-                element.addEventListener('input', function () {
+                element.addEventListener('input', function() {
                     filterDropdownOptions(id, 'township');
                 });
             }
@@ -497,7 +497,7 @@
         categorySearchElements.forEach(id => {
             const element = document.getElementById(id);
             if (element) {
-                element.addEventListener('input', function () {
+                element.addEventListener('input', function() {
                     filterDropdownOptions(id, 'category');
                 });
             }
@@ -657,7 +657,8 @@
             let searchData = {
                 type: donationGet() ?? 'donators',
                 division: document.getElementById('city-search').getAttribute('data-id') ?? null,
-                township: document.getElementById('township-search').getAttribute('data-id') ?? null,
+                township: document.getElementById('township-search').getAttribute('data-id') ??
+                    null,
                 category: document.getElementById('category-search').getAttribute('data-id') ?? null
             };
 
@@ -668,8 +669,7 @@
             const queryString = new URLSearchParams(searchData).toString();
             if (searchData.type == 'receivers') {
                 window.location.href = `/receivers?${queryString}`;
-            }
-            else {
+            } else {
                 window.location.href = `/donators?${queryString}`;
             }
 
