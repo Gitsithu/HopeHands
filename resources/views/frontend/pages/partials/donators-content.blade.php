@@ -199,13 +199,15 @@
 
 
         data.forEach(item => {
+            console.log(item, 'item');
+            
             const card = document.createElement('div');
             card.className = 'bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-all';
             card.innerHTML = `
                 <div class="p-5">
                     <div class="flex items-start justify-between">
                         <div>
-                            <h3 class="text-lg font-semibold text-gray-800">${item.user?.name || 'N/A'}</h3>
+                            <h3 class="text-lg font-semibold text-gray-800">${item.user?.name || 'မရှိပါ'}</h3>
                         </div>
                          <span class="inline-block mt-1 px-2 py-2 text-xs font-medium rounded-full bg-blue-100 text-blue-800">
                                 ${item.category?.name || 'Donor'}
@@ -223,7 +225,7 @@
                         <div>
                             <p class="text-sm font-medium text-gray-800">
                                 <span class="text-gray-500">မြို့နယ် - </span>
-                                ${item.township?.name || 'N/A'}
+                                ${item.township?.name || 'မရှိပါ'}
                             </p>
                         </div>
                     </div>

@@ -17,11 +17,11 @@ class FetchController extends Controller
     {
         $type = $request->type;
         if ($type == 'donators') {
-            $query = Donator::with('city', 'township', 'category');
+            $query = Donator::with('city', 'township', 'category', 'user');
         } elseif ($type == 'receivers') {
             $query = HelpSeeker::with('city', 'township', 'category');
         } else {
-            $data = Donator::with('city', 'township', 'category')->orderBy('updated_at')->paginate(9);
+            $data = Donator::with('city', 'township', 'category', 'user')->orderBy('updated_at')->paginate(9);
             return $this->successResponse($data);
         }
 
@@ -44,7 +44,7 @@ class FetchController extends Controller
     {
         $type = $request->type;
         if ($type == 'donators') {
-            $query = Donator::with('city', 'township', 'category');
+            $query = Donator::with('city', 'township', 'category', 'user');
         } elseif ($type == 'receivers') {
             $query = HelpSeeker::with('city', 'township', 'category');
         } else {
