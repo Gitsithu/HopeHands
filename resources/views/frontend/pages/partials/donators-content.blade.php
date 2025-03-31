@@ -178,8 +178,6 @@
         }
     }
 
-
-
     // Render results
     function renderResults(data) {
         resultsContainer.innerHTML = '';
