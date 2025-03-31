@@ -246,35 +246,35 @@
         const category = document.getElementById('category-search')?.value || document.getElementById(
             'mobile-category-search')?.value;
 
-        const searchButton = document.getElementById('search-button');
-        const mobileSearchButton = document.getElementById('mobile-search-button');
+        // const searchButton = document.getElementById('search-button');
+        // const mobileSearchButton = document.getElementById('mobile-search-button');
 
-        // Update button states without hiding them
-        const isComplete = division && township && city && category;
+        // // Update button states without hiding them
+        // const isComplete = division && township && city && category;
 
-        if (searchButton) {
-            searchButton.disabled = !isComplete;
-            if (isComplete) {
-                searchButton.classList.add('hover:bg-blue-700', 'transform', 'hover:-translate-y-0.5',
-                    'hover:shadow-lg');
-                searchButton.classList.remove('opacity-75', 'cursor-not-allowed');
-            } else {
-                searchButton.classList.remove('hover:bg-blue-700', 'transform', 'hover:-translate-y-0.5',
-                    'hover:shadow-lg');
-                searchButton.classList.add('opacity-75', 'cursor-not-allowed');
-            }
-        }
+        // if (searchButton) {
+        //     searchButton.disabled = !isComplete;
+        //     if (isComplete) {
+        //         searchButton.classList.add('hover:bg-blue-700', 'transform', 'hover:-translate-y-0.5',
+        //             'hover:shadow-lg');
+        //         searchButton.classList.remove('opacity-75', 'cursor-not-allowed');
+        //     } else {
+        //         searchButton.classList.remove('hover:bg-blue-700', 'transform', 'hover:-translate-y-0.5',
+        //             'hover:shadow-lg');
+        //         searchButton.classList.add('opacity-75', 'cursor-not-allowed');
+        //     }
+        // }
 
-        if (mobileSearchButton) {
-            mobileSearchButton.disabled = !isComplete;
-            if (isComplete) {
-                mobileSearchButton.classList.add('hover:bg-blue-700', 'hover:shadow-lg');
-                mobileSearchButton.classList.remove('opacity-75', 'cursor-not-allowed');
-            } else {
-                mobileSearchButton.classList.remove('hover:bg-blue-700', 'hover:shadow-lg');
-                mobileSearchButton.classList.add('opacity-75', 'cursor-not-allowed');
-            }
-        }
+        // if (mobileSearchButton) {
+        //     mobileSearchButton.disabled = !isComplete;
+        //     if (isComplete) {
+        //         mobileSearchButton.classList.add('hover:bg-blue-700', 'hover:shadow-lg');
+        //         mobileSearchButton.classList.remove('opacity-75', 'cursor-not-allowed');
+        //     } else {
+        //         mobileSearchButton.classList.remove('hover:bg-blue-700', 'hover:shadow-lg');
+        //         mobileSearchButton.classList.add('opacity-75', 'cursor-not-allowed');
+        //     }
+        // }
     }
 
     function performSearch() {
@@ -472,29 +472,10 @@
             category: document.getElementById('category-search').value
         };
 
-        // sendSearchRequest(searchData);
-
-        // Convert search data to URL query parameters
         let queryParams = new URLSearchParams(searchData).toString();
 
-        // Redirect to the receivers page with the search data as query parameters
-        window.location.href = `${localUrl}/fetch?${queryParams}`;
+        window.location.href = `${localUrl}api/admin/fetch?${queryParams}`;
     });
-
-
-    function sendSearchRequest(searchData) {
-        axios.post(`${BASE_API_URL}/filter`, searchData)
-            .then(response => {
-                if (response.data.status && response.data.data) {
-                    // renderResults(response.data.data.data);
-                    // renderPagination(response.data.data);
-                }
-            })
-            .catch(error => {
-                console.error('Error fetching search results:', error);
-                showErrorToast("Error loading search results");
-            });
-    }
 
 </script>
 
