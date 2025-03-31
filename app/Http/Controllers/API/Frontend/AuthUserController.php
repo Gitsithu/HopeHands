@@ -11,7 +11,6 @@ use App\Traits\ImageUploadTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 
 class AuthUserController extends Controller
 {
@@ -24,7 +23,6 @@ class AuthUserController extends Controller
         DB::beginTransaction();
         try {
             $postData               = $request->validated();
-            $postData['password']   = Hash::make($postData['password']);
             $postData['is_donator'] = 1;
             $postData['name']       = $postData['username'];
 
@@ -39,8 +37,8 @@ class AuthUserController extends Controller
                 'front_view' => $postData['front_view'] ?? null,
                 'back_view'  => $postData['back_view'] ?? null,
             ];
-            $user    = User::create($postData);
-            $token   = $user->createToken('User Token')->plainTextToken;
+            $user = User::create($postData);
+            // $token   = $user->createToken('User Token')->plainTextToken;
             $donator = [
                 'category_id' => $postData['category_id'],
                 'city_id'     => $postData['city_id'],
@@ -54,7 +52,7 @@ class AuthUserController extends Controller
                 'remark'      => $postData['remark'] ?? null,
                 'user_id'     => $user->id,
             ];
-            $user['token'] = $token;
+            // $user['token'] = $token;
             Donator::create($donator);
             DB::commit();
             return $this->successResponse($user, 'User registered successfully', 201);
@@ -98,7 +96,6 @@ class AuthUserController extends Controller
             $user = auth()->guard('api')->user();
 
             if (! $user) {
-                return false;
                 return $this->errorResponse('Fail', 500);
             }
 

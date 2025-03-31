@@ -3,11 +3,11 @@
     <div id="heightAdjust">
         <div id="results-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
     </div>
-    
+
 
     <!-- Pagination -->
-        <div id="pagination-container" class="mt-10 flex justify-center items-center gap-2"></div>
-    
+    <div id="pagination-container" class="mt-10 flex justify-center items-center gap-2"></div>
+
     <!-- Loading Indicator -->
     <div id="loading-indicator" class="text-center py-8 hidden">
         <div
@@ -117,37 +117,68 @@
 <script>
     // API Configuration
     const HELP_SEEKERS_API_URL = BASE_API_URL + "/donator";
+    const FILTER_API_URL = BASE_API_URL + "/filter";
+
 
     // Global variables
     let currentPage = 1;
     let currentData = null;
+    let currentSearchData = {}; // Add this to store current search parameters
 
     // DOM elements
     const resultsContainer = document.getElementById('results-container');
     const paginationContainer = document.getElementById('pagination-container');
     const loadingIndicator = document.getElementById('loading-indicator');
 
-    // Fetch help seekers data
-    async function fetchHelpSeekers(page = 1) {
+    function cleanUrl() {
+        window.history.replaceState({}, document.title, window.location.pathname);
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        // Extract the search data from the URL
+        const queryParams = new URLSearchParams(window.location.search);
+        currentSearchData = {
+            type: queryParams.get('type') ?? null,
+            division: queryParams.get('division') ?? null,
+            township: queryParams.get('township') ?? null,
+            category: queryParams.get('category') ?? null
+        };
+
+        bindSearchData(currentSearchData);
+    });
+
+    async function bindSearchData(searchData = {}, page = 1) {
         try {
             loadingIndicator.classList.remove('hidden');
             resultsContainer.innerHTML = '';
 
-            const response = await fetch(`${HELP_SEEKERS_API_URL}?page=${page}`);
-            const data = await response.json();
+            let params = {
+                type: searchData.type || '',
+                division: searchData.division || '',
+                township: searchData.township || '',
+                category: searchData.category || ''
+            };
 
+            var response = await axios.get(`${FILTER_API_URL}?page=${page}`, {
+                params: params,
+            });
+            var data = response.data;
             if (data.status && data.data) {
                 currentData = data.data;
                 renderResults(currentData.data);
                 renderPagination(currentData);
             }
+
         } catch (error) {
             console.error('Error fetching help seekers:', error);
-            showErrorToast("Error loading donor data");
+            showErrorToast("Error loading help seekers data");
         } finally {
             loadingIndicator.classList.add('hidden');
+            cleanUrl();
         }
     }
+
+
 
     // Render results
     function renderResults(data) {
@@ -167,12 +198,7 @@
     `;
             return;
         }
-        
-        // if(data.length < 9 ){
-        //     footerAdjust.style.height = window.innerHeight + "px";
-        // } else {
-        //     footerAdjust.style.height = window.innerHeight + "px";
-        // }
+
 
         data.forEach(item => {
             const card = document.createElement('div');
@@ -251,7 +277,7 @@
         prevButton.onclick = () => {
             if (data.prev_page_url) {
                 currentPage--;
-                fetchHelpSeekers(currentPage);
+                bindSearchData(currentSearchData, currentPage);
             }
         };
         paginationContainer.appendChild(prevButton);
@@ -271,7 +297,7 @@
             firstPageButton.textContent = '1';
             firstPageButton.onclick = () => {
                 currentPage = 1;
-                fetchHelpSeekers(currentPage);
+                bindSearchData(currentSearchData, currentPage);
             };
             paginationContainer.appendChild(firstPageButton);
 
@@ -289,7 +315,7 @@
             pageButton.textContent = i;
             pageButton.onclick = () => {
                 currentPage = i;
-                fetchHelpSeekers(currentPage);
+                bindSearchData(currentSearchData, currentPage);
             };
             paginationContainer.appendChild(pageButton);
         }
@@ -307,7 +333,7 @@
             lastPageButton.textContent = data.last_page;
             lastPageButton.onclick = () => {
                 currentPage = data.last_page;
-                fetchHelpSeekers(currentPage);
+                bindSearchData(currentSearchData, currentPage);
             };
             paginationContainer.appendChild(lastPageButton);
         }
@@ -324,7 +350,7 @@
         nextButton.onclick = () => {
             if (data.next_page_url) {
                 currentPage++;
-                fetchHelpSeekers(currentPage);
+                bindSearchData(currentSearchData, currentPage);
             }
         };
         paginationContainer.appendChild(nextButton);
@@ -402,7 +428,7 @@
 
     // Initialize on page load
     document.addEventListener('DOMContentLoaded', () => {
-        fetchHelpSeekers(currentPage);
+        // bindSearchData(currentPage);
 
         // Add CSS for animations
         const style = document.createElement('style');

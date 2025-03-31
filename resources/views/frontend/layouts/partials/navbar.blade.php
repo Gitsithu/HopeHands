@@ -69,45 +69,13 @@
                         <div id="category-dropdown"
                             class="hidden absolute z-20 mt-1 w-full bg-gray-800 text-white rounded-lg shadow-xl max-h-60 overflow-y-auto border border-gray-700">
                         </div> -->
-                        {{-- <select name="donator-dropdown"
+                        <select name="donator-dropdown" onchange="donationGet()" id="selected-value"
                             class="px-2 py-3 w-full bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 rounded-lg text-white placeholder-gray-400">
-                            <option value="" disabled selected hidden class="text-gray-400">ရွေးချယ်ပါ</option>
-                            <option class="px-4 py-2 hover:bg-gray-700" value="donator">အလှူရှင်</option>
-                            <option class="px-4 py-2 hover:bg-gray-700" value="help-seeker">အလှူခံပုဂ္ဂိုလ်</option>
-                        </select> --}}
-                        <div class="relative">
-                            <!-- Input field that will show the selected value -->
-                            <input type="text" id="donator-dropdown-input"
-                                class="px-4 py-3 w-full bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 rounded-lg text-white placeholder-gray-400"
-                                placeholder="ရွေးချယ်ပါ" readonly onclick="toggleDonatorDropdown()" />
-
-                            <!-- Dropdown arrow icon -->
-                            <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                                <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 20 20" fill="currentColor">
-                                    <path fill-rule="evenodd"
-                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                        clip-rule="evenodd" />
-                                </svg>
-                            </div>
-
-                            <!-- Dropdown options container -->
-                            <div id="donator-dropdown-options"
-                                class="hidden absolute z-20 mt-1 w-full bg-gray-800 text-white rounded-lg shadow-xl max-h-60 overflow-y-auto border border-gray-700">
-                                <div class="px-4 py-2 hover:bg-gray-700 cursor-pointer"
-                                    onclick="selectDonatorOption('donator', 'အလှူရှင်')">
-                                    အလှူရှင်
-                                </div>
-                                <div class="px-4 py-2 hover:bg-gray-700 cursor-pointer"
-                                    onclick="selectDonatorOption('help-seeker', 'အလှူခံပုဂ္ဂိုလ်')">
-                                    အလှူခံပုဂ္ဂိုလ်
-                                </div>
-                            </div>
-
-                            <!-- Hidden input to store the actual value -->
-                            <input type="hidden" name="donator-dropdown" id="donator-dropdown-value" value="">
-                        </div>
-
+                            <option class="px-4 py-2 hover:bg-gray-700" value="donators">
+                                အလှူရှင်</option>
+                            <option class="px-4 py-2 hover:bg-gray-700" value="receivers">
+                                အကူအညီတောင်းခံသူ</option>
+                        </select>
                     </div>
                 </div>
 
@@ -160,7 +128,6 @@
                 </div>
                 {{-- <select name="donator-dropdown"
                     class="px-2 py-3 w-full bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 rounded-lg text-white placeholder-gray-400">
-                    <option value="" disabled selected hidden class="text-gray-200">ရွေးချယ်ပါ</option>
                     <option class="px-4 py-2 hover:bg-gray-700" value="donator">အလှူရှင်</option>
                     <option class="px-4 py-2 hover:bg-gray-700" value="help-seeker">အလှူခံပုဂ္ဂိုလ်</option>
                 </select> --}}
@@ -215,6 +182,15 @@
 
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="{{ asset('frontend/assets/js/app.js') }}"></script>
+
+<script>
+    function donationGet() {
+        selectElement = document.querySelector('#selected-value');
+        output = selectElement.options[selectElement.selectedIndex].value;
+        return output;
+    }
+</script>
+
 <script>
     // API Configuration
 
@@ -234,7 +210,7 @@
         document.getElementById('donator-dropdown-options').classList.add('hidden');
     }
 
-    document.addEventListener('click', function (event) {
+    document.addEventListener('click', function(event) {
         const dropdown = document.getElementById('donator-dropdown-options');
         const input = document.getElementById('donator-dropdown-input');
 
@@ -320,24 +296,6 @@
         document.getElementById(dropdownId).classList.toggle('hidden');
     }
 
-    // function selectItem(inputId, value, dropdownId, itemId = null) {
-    //     document.getElementById(inputId).value = value;
-    //     document.getElementById(dropdownId).classList.add('hidden');
-
-    //     // If this is a division selection, fetch cities for that division
-    //     if (inputId.includes('division') && itemId) {
-    //         fetchCities(itemId);
-    //         clearDependentFields(inputId, ['city', 'township']);
-    //     }
-    //     // If this is a city selection, fetch townships for that city
-    //     else if (inputId.includes('city') && itemId) {
-    //         fetchTownships(itemId);
-    //         clearDependentFields(inputId, ['township']);
-    //     }
-
-    //     checkSelections();
-    // }
-
     function selectItem(inputId, value, dropdownId, itemId = null) {
         const inputElement = document.getElementById(inputId);
 
@@ -360,15 +318,6 @@
         checkSelections();
     }
 
-    // function clearDependentFields(inputId, fields) {
-    //     const isMobile = inputId.includes('mobile');
-    //     const prefix = isMobile ? 'mobile-' : '';
-
-    //     fields.forEach(field => {
-    //         document.getElementById(`${prefix}${field}-search`).value = '';
-    //         document.getElementById(`${prefix}${field}-dropdown`).innerHTML = '';
-    //     });
-    // }
 
     function clearDependentFields(fieldIds) {
         fieldIds.forEach(fieldId => {
@@ -401,7 +350,7 @@
             return;
         }
 
-        const localUrl = "http://localhost:8000/";
+        const localUrl = WEB_BASE_API_URL;
         let getUrl = window.location.href;
         let result = getUrl.replace(localUrl, '');
 
@@ -546,7 +495,7 @@
         citySearchElements.forEach(id => {
             const element = document.getElementById(id);
             if (element) {
-                element.addEventListener('input', function () {
+                element.addEventListener('input', function() {
                     filterDropdownOptions(id, 'city');
                 });
             }
@@ -557,7 +506,7 @@
         townshipSearchElements.forEach(id => {
             const element = document.getElementById(id);
             if (element) {
-                element.addEventListener('input', function () {
+                element.addEventListener('input', function() {
                     filterDropdownOptions(id, 'township');
                 });
             }
@@ -568,7 +517,7 @@
         categorySearchElements.forEach(id => {
             const element = document.getElementById(id);
             if (element) {
-                element.addEventListener('input', function () {
+                element.addEventListener('input', function() {
                     filterDropdownOptions(id, 'category');
                 });
             }
@@ -717,82 +666,47 @@
     });
 
     document.addEventListener("DOMContentLoaded", function () {
-        const authButtons = document.querySelectorAll("#auth-btn, #auth-btn-mb");
-        const token = sessionStorage.getItem("authToken");
-
-        // document.getElementById('search-button').addEventListener('click', function () {
-
-        //     const localUrl = "http://localhost:8000/";
-
-        //     let getUrl = window.location.href;;
-        //     let result = getUrl.replace(localUrl,'');
-
-        //     let searchData = {
-        //         type: result,
-        //         // division: document.getElementById('division-search').value,
-        //         city: document.getElementById('city-search').value,
-        //         township: document.getElementById('township-search').value,
-        //         category: document.getElementById('category-search').value
-        //     };
-
-        //     sendSearchRequest(searchData);
-        // });
-
-
-        // function sendSearchRequest(searchData) {
-        //     console.log(searchData, 'searchData');
-
-        //     axios.post(`${BASE_API_URL}/filter`, searchData)
-        //         .then(response => {
-        //             // console.log('Search results:', response.data);
-        //         })
-        //         .catch(error => {
-        //             // console.error('Error fetching search results:', error);
-        //         });
-        // }
-
-
         document.getElementById('search-button').addEventListener('click', function () {
 
+            const localUrl = WEB_BASE_API_URL;
+            let getUrl = window.location.href;
+            let result = getUrl.replace(localUrl, '');
+
+            console.log(donationGet(), 'donationGet');
+            
             let searchData = {
-                type: window.location.href.replace("http://localhost:8000/", ""),
-                division: document.getElementById('city-search').getAttribute('data-id'),
-                township: document.getElementById('township-search').getAttribute('data-id'),
-                category: document.getElementById('category-search').getAttribute('data-id')
+                type: donationGet() ?? 'donators',
+                division: document.getElementById('city-search').getAttribute('data-id') ?? null,
+                township: document.getElementById('township-search').getAttribute('data-id') ??
+                    null,
+                category: document.getElementById('category-search').getAttribute('data-id') ?? null
             };
 
             sendSearchRequest(searchData);
         });
 
-
         function sendSearchRequest(searchData) {
             const queryString = new URLSearchParams(searchData).toString();
-            axios.post(`${BASE_API_URL}/filter`, searchData)
-                .then(response => {
-                    // Redirect to results page with search data in the URL
-                    window.location.href =
-                        `/receivers?${queryString}`; // Pass search data in the query string
-                })
-                .catch(error => {
-                    console.error('Error fetching search results:', error);
-                });
+            if (searchData.type == 'receivers') {
+                window.location.href = `/receivers?${queryString}`;
+            } else {
+                window.location.href = `/donators?${queryString}`;
+            }
+
         }
 
-        if (token) {
-            authButtons.forEach((btn) => {
-                if (btn) {
-                    btn.textContent = "အကောင့်ထွက်ရန်";
-                    btn.href = "#"; // Prevent navigation
+        // if (token) {
+        //     authButtons.forEach((btn) => {
+        //         if (btn) {
+        //             btn.textContent = "အကောင့်ထွက်ရန်";
+        //             btn.href = "#"; // Prevent navigation
 
-                    btn.addEventListener("click", function (e) {
-                        e.preventDefault();
-                        sessionStorage.removeItem("authToken");
-                        window.alert('User was log out');
-                        location.reload(); // Reload page to update UI
-                    });
-                }
-            });
-        }
+        // btn.addEventListener("click", function(e) {
+        //     e.preventDefault();
+        //     sessionStorage.removeItem("authToken");
+        //     window.alert('User was log out');
+        //     location.reload(); // Reload page to update UI
+        // });
     });
 </script>
 

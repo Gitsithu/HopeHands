@@ -37,7 +37,7 @@
         <p class="mt-2 text-gray-600">Loading help seekers...</p>
     </div>
     <button onclick="openCreateModal()"
-        class="floating-button fixed bottom-6 right-6 flex items-center justify-center w-14 h-14 rounded-full bg-blue-600 text-white hover:bg-blue-700 transition shadow-lg z-40">
+        class="floating-button fixed bottom-12 right-6 flex items-center justify-center w-14 h-14 rounded-full bg-blue-600 text-white hover:bg-blue-700 transition shadow-lg z-40">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
         </svg>
@@ -116,6 +116,10 @@
                             <p class="text-xs font-medium text-gray-500 mb-1">Telegram</p>
                             <p id="modalTelegram" class="text-base font-medium text-gray-800"></p>
                         </div>
+                        <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                            <p class="text-xs font-medium text-gray-500 mb-1">Telegram Username</p>
+                            <p id="modalTelegramUsername" class="text-base font-medium text-gray-800"></p>
+                        </div>
                     </div>
                 </div>
 
@@ -154,7 +158,6 @@
 </div>
 
 <!-- Create Help Seeker Modal -->
-<!-- Create Help Seeker Modal -->
 <div id="createHelpSeekerModal" class="fixed inset-0 z-50 flex items-center justify-center hidden">
     <div class="absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity" onclick="closeCreateModal()"></div>
 
@@ -173,8 +176,7 @@
                 </div>
                 <button onclick="closeCreateModal()" class="p-1 rounded-full hover:bg-gray-100 transition">
                     <svg class="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M6 18L18 6M6 6l12 12">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
                         </path>
                     </svg>
                 </button>
@@ -188,8 +190,7 @@
                 <!-- Basic Information Section -->
                 <div class="bg-gray-50 p-5 rounded-lg">
                     <h4 class="text-base font-semibold text-gray-700 mb-4 flex items-center">
-                        <svg class="w-5 h-5 mr-2 text-blue-500" fill="none" stroke="currentColor"
-                            viewBox="0 0 24 24">
+                        <svg class="w-5 h-5 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                         </svg>
@@ -242,8 +243,7 @@
                 <!-- Location Information Section -->
                 <div class="bg-gray-50 p-5 rounded-lg">
                     <h4 class="text-base font-semibold text-gray-700 mb-4 flex items-center">
-                        <svg class="w-5 h-5 mr-2 text-blue-500" fill="none" stroke="currentColor"
-                            viewBox="0 0 24 24">
+                        <svg class="w-5 h-5 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -288,8 +288,7 @@
                 <!-- Contact Information Section -->
                 <div class="bg-gray-50 p-5 rounded-lg">
                     <h4 class="text-base font-semibold text-gray-700 mb-4 flex items-center">
-                        <svg class="w-5 h-5 mr-2 text-blue-500" fill="none" stroke="currentColor"
-                            viewBox="0 0 24 24">
+                        <svg class="w-5 h-5 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                         </svg>
@@ -314,8 +313,15 @@
                         </div>
 
                         <div class="space-y-2">
-                            <label for="telegram" class="block text-sm font-medium text-gray-700">
+                            <label for="telegram_username" class="block text-sm font-medium text-gray-700">
                                 Telegram Username
+                            </label>
+                            <input type="text" id="telegram_username" name="telegram_username"
+                                class="w-full px-4 py-2.5 text-sm text-gray-800 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        <div class="space-y-2">
+                            <label for="telegram" class="block text-sm font-medium text-gray-700">
+                                Telegram Phone Number
                             </label>
                             <input type="text" id="telegram" name="telegram"
                                 class="w-full px-4 py-2.5 text-sm text-gray-800 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
@@ -346,33 +352,35 @@
 <script src="{{ asset('frontend/assets/js/app.js') }}"></script>
 <script>
     // API Configuration
-    const HELP_SEEKERS_API_URL = BASE_API_URL + "/help-seeker";
+    const HELP_SEEKERS_API_URL = BASE_API_URL + "/donator";
+    const FILTER_API_URL = BASE_API_URL + "/filter";
 
 
     // Global variables
     let currentPage = 1;
     let currentData = null;
+    let currentSearchData = {}; // Add this to store current search parameters
 
     // DOM elements
     const resultsContainer = document.getElementById('results-container');
     const paginationContainer = document.getElementById('pagination-container');
     const loadingIndicator = document.getElementById('loading-indicator');
 
-    document.addEventListener('DOMContentLoaded', function() {
+    function cleanUrl() {
+        window.history.replaceState({}, document.title, window.location.pathname);
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
         // Extract the search data from the URL
         const queryParams = new URLSearchParams(window.location.search);
-        const searchData = {
-            type: queryParams.get('type'),
-            division: queryParams.get('division'),
-            township: queryParams.get('township'),
-            category: queryParams.get('category')
+        currentSearchData = {
+            type: queryParams.get('type') ?? null,
+            division: queryParams.get('division') ?? null,
+            township: queryParams.get('township') ?? null,
+            category: queryParams.get('category') ?? null
         };
 
-        if (searchData.type || searchData.division || searchData.township || searchData.category) {
-            bindSearchData(searchData);
-        } else {
-            fetchHelpSeekers();
-        }
+        bindSearchData(currentSearchData);
     });
 
     async function bindSearchData(searchData = {}, page = 1) {
@@ -381,92 +389,69 @@
             resultsContainer.innerHTML = '';
 
             let params = {
-                type: searchData.type || '', // Include type if available
-                division: searchData.division || '', // Include city if available
-                township: searchData.township || '', // Include township if available
-                category: searchData.category || '' // Include category if available
+                type: searchData.type || '',
+                division: searchData.division || '',
+                township: searchData.township || '',
+                category: searchData.category || ''
             };
-            const response = await axios.get(`${FILTER_API_URL}/search`, {
+
+            var response = await axios.get(`${FILTER_API_URL}/search?page=${page}`, {
                 params: params,
             });
-
-
-
-            const data = response.data;
-
+            var data = response.data;
             if (data.status && data.data) {
                 currentData = data.data;
                 renderResults(currentData.data);
                 renderPagination(currentData);
             }
+
         } catch (error) {
             console.error('Error fetching help seekers:', error);
             showErrorToast("Error loading help seekers data");
         } finally {
             loadingIndicator.classList.add('hidden');
+            cleanUrl();
         }
     }
 
-    // Fetch help seekers data
-    async function fetchHelpSeekers(page = 1) {
-        try {
-            loadingIndicator.classList.remove('hidden');
-            resultsContainer.innerHTML = '';
 
-            const response = await fetch(`${HELP_SEEKERS_API_URL}?page=${page}`);
-            const data = await response.json();
-
-            if (data.status && data.data) {
-                currentData = data.data;
-
-                renderResults(currentData.data);
-                renderPagination(currentData);
-            }
-        } catch (error) {
-            console.error('Error fetching help seekers:', error);
-            showErrorToast("Error loading help seekers data");
-        } finally {
-            loadingIndicator.classList.add('hidden');
-        }
-    }
 
     // Render results
     function renderResults(data) {
         resultsContainer.innerHTML = '';
+        let footerAdjust = document.getElementById('heightAdjust');
 
         if (data.length === 0) {
             resultsContainer.innerHTML = `
-                <div class="col-span-full text-center py-12">
-                    <div class="inline-flex items-center justify-center w-16 h-16 bg-gray-100 rounded-full mb-4">
-                        <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-lg font-medium text-gray-900">No help seekers found</h3>
-                    <p class="mt-1 text-gray-500">There are currently no help seekers available.</p>
-                </div>
-            `;
+        <div class="col-span-full text-center py-12 flex-1 h-500"> <!-- Added flex-1 here -->
+            <div class="inline-flex items-center justify-center w-16 h-16 bg-gray-100 rounded-full mb-4">
+                <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+            </div>
+            <h3 class="text-lg font-medium text-gray-900">အလှူရှင်များမရှိသေးပါ</h3>
+        </div>
+    `;
             return;
         }
 
+
         data.forEach(item => {
             const card = document.createElement('div');
-            card.className =
-                'bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-all';
+            card.className = 'bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-all';
             card.innerHTML = `
-                 <div class="p-5">
+                <div class="p-5">
                     <div class="flex items-start justify-between">
                         <div>
-                            <h3 class="text-lg font-semibold text-gray-800">${item.name || 'N/A'}</h3>
-                            <div class="flex items-center gap-2 mt-1">
-                                <span class="inline-block px-2 py-2 text-xs font-medium rounded-full bg-blue-100 text-blue-800">
-                                    ${item.category?.name || 'N/A'}
-                                </span>
-                            </div>
+                            <h3 class="text-lg font-semibold text-gray-800">${item.user?.name || 'N/A'}</h3>
                         </div>
+                         <span class="inline-block mt-1 px-2 py-2 text-xs font-medium rounded-full bg-blue-100 text-blue-800">
+                                ${item.category?.name || 'Donor'}
+                            </span>
                     </div>
-
-                    <div class="mt-4 space-y-4">
+                    
+                    <div class="mt-4 space-y-3">
+                    </div><div class="mt-4 space-y-4">
     <!-- Township -->
                     <div class="flex items-start">
                         <svg class="flex-shrink-0 mt-0.5 mr-3 h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -480,22 +465,8 @@
                             </p>
                         </div>
                     </div>
-
-                    <!-- Urgent Level -->
-                    <div class="flex items-start">
-                        <svg class="flex-shrink-0 mt-0.5 mr-3 h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                        </svg>
-                        <div>
-                            <p class="text-sm font-medium text-gray-800">
-                                <span class="text-gray-500">အရေးပေါ်သတ်မှတ်ချက် - </span>
-                                <span class="${getUrgentLevelClass(item.urgent_level)}">
-                                    ${getUrgentLevelBurmese(item.urgent_level)}
-                                </span>
-                            </p>
-                        </div>
-                    </div>
-
+                                       
+                    
                     <!-- Phone Number -->
                     <div class="flex items-start">
                         <svg class="flex-shrink-0 mt-0.5 mr-3 h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -509,9 +480,8 @@
                         </div>
                     </div>
                 </div>
-
-
-                    <button onclick="showHelpSeekerDetail(${JSON.stringify(item).replace(/"/g, '&quot;')})"
+                    
+                    <button onclick="showDonatorDetail(${JSON.stringify(item).replace(/"/g, '&quot;')})"
                         class="mt-4 w-full py-2 text-white bg-[#44991a] rounded-md  transition flex items-center justify-center gap-2">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
@@ -525,33 +495,6 @@
         });
     }
 
-    function getUrgentLevelClass(level) {
-        switch (level) {
-            case 'high':
-                return 'text-red-800';
-            case 'medium':
-                return 'text-yellow-800';
-            case 'low':
-                return 'text-green-800';
-            default:
-                return 'text-gray-800';
-        }
-    }
-
-    // Get Burmese translation for urgent level
-    function getUrgentLevelBurmese(level) {
-        switch (level) {
-            case 'high':
-                return 'အရေးတကြီး';
-            case 'medium':
-                return 'သာမန်ထက်ပို';
-            case 'low':
-                return 'စောင့်ဆိုင်း၍ရ';
-            default:
-                return 'N/A';
-        }
-    }
-
     // Render pagination
     function renderPagination(data) {
         paginationContainer.innerHTML = '';
@@ -560,8 +503,7 @@
 
         // Previous button
         const prevButton = document.createElement('button');
-        prevButton.className =
-            `px-3 py-1.5 rounded-md ${data.prev_page_url ? 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300' : 'bg-gray-100 text-gray-400 cursor-not-allowed border border-gray-200'}`;
+        prevButton.className = `px-3 py-1.5 rounded-md ${data.prev_page_url ? 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300' : 'bg-gray-100 text-gray-400 cursor-not-allowed border border-gray-200'}`;
         prevButton.innerHTML = `
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
@@ -571,7 +513,7 @@
         prevButton.onclick = () => {
             if (data.prev_page_url) {
                 currentPage--;
-                fetchHelpSeekers(currentPage);
+                bindSearchData(currentSearchData, currentPage);
             }
         };
         paginationContainer.appendChild(prevButton);
@@ -587,12 +529,11 @@
 
         if (startPage > 1) {
             const firstPageButton = document.createElement('button');
-            firstPageButton.className =
-                'px-3.5 py-1.5 rounded-md bg-white text-gray-700 hover:bg-gray-50 border border-gray-300';
+            firstPageButton.className = 'px-3.5 py-1.5 rounded-md bg-white text-gray-700 hover:bg-gray-50 border border-gray-300';
             firstPageButton.textContent = '1';
             firstPageButton.onclick = () => {
                 currentPage = 1;
-                fetchHelpSeekers(currentPage);
+                bindSearchData(currentSearchData, currentPage);
             };
             paginationContainer.appendChild(firstPageButton);
 
@@ -606,12 +547,11 @@
 
         for (let i = startPage; i <= endPage; i++) {
             const pageButton = document.createElement('button');
-            pageButton.className =
-                `px-3.5 py-1.5 rounded-md ${i === data.current_page ? 'bg-blue-600 text-white border border-blue-600' : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300'}`;
+            pageButton.className = `px-3.5 py-1.5 rounded-md ${i === data.current_page ? 'bg-blue-600 text-white border border-blue-600' : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300'}`;
             pageButton.textContent = i;
             pageButton.onclick = () => {
                 currentPage = i;
-                fetchHelpSeekers(currentPage);
+                bindSearchData(currentSearchData, currentPage);
             };
             paginationContainer.appendChild(pageButton);
         }
@@ -625,20 +565,18 @@
             }
 
             const lastPageButton = document.createElement('button');
-            lastPageButton.className =
-                'px-3.5 py-1.5 rounded-md bg-white text-gray-700 hover:bg-gray-50 border border-gray-300';
+            lastPageButton.className = 'px-3.5 py-1.5 rounded-md bg-white text-gray-700 hover:bg-gray-50 border border-gray-300';
             lastPageButton.textContent = data.last_page;
             lastPageButton.onclick = () => {
                 currentPage = data.last_page;
-                fetchHelpSeekers(currentPage);
+                bindSearchData(currentSearchData, currentPage);
             };
             paginationContainer.appendChild(lastPageButton);
         }
 
         // Next button
         const nextButton = document.createElement('button');
-        nextButton.className =
-            `px-3 py-1.5 rounded-md ${data.next_page_url ? 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300' : 'bg-gray-100 text-gray-400 cursor-not-allowed border border-gray-200'}`;
+        nextButton.className = `px-3 py-1.5 rounded-md ${data.next_page_url ? 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300' : 'bg-gray-100 text-gray-400 cursor-not-allowed border border-gray-200'}`;
         nextButton.innerHTML = `
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
@@ -648,37 +586,41 @@
         nextButton.onclick = () => {
             if (data.next_page_url) {
                 currentPage++;
-                fetchHelpSeekers(currentPage);
+                bindSearchData(currentSearchData, currentPage);
             }
         };
         paginationContainer.appendChild(nextButton);
     }
 
-    // Show help seeker detail modal
-    function showHelpSeekerDetail(helpSeeker) {
-        document.getElementById('modalName').textContent = helpSeeker.name || 'မရှိပါ';
-        document.getElementById('modalCategory').textContent = helpSeeker.category?.name || 'မရှိပါ';
+    // Show donator detail modal
+    function showDonatorDetail(donator) {
+        document.getElementById('modalName').textContent = donator.user?.name || 'မရှိပါ';
+        document.getElementById('modalCategory').textContent = donator.category?.name || 'မရှိပါ';
+        document.getElementById('modalTownship').textContent = donator.township?.name_mm || donator.township?.name || 'မရှိပါ';
+        document.getElementById('modalState').textContent = donator.city?.name_mm || donator.city?.name || 'မရှိပါ';
+        document.getElementById('modalPhone').textContent = donator.phone || 'မရှိပါ';
+        document.getElementById('modalViber').textContent = donator.contact?.viber || 'မရှိပါ';
+        document.getElementById('modalTelegram').textContent = donator.contact?.telegram || donator.contact?.telegram || 'မရှိပါ';
+        document.getElementById('modalTelegramUsername').textContent = donator.contact?.telegram || donator.contact?.telegram_usename || 'မရှိပါ';
+        document.getElementById('modalNotes').textContent = donator.remark || 'မရှိပါ';
 
-        // Update urgent level display in its own section
-        const urgentLevelElement = document.getElementById('modalUrgentLevel');
-        urgentLevelElement.textContent = getUrgentLevelBurmese(helpSeeker.urgent_level) || 'မရှိပါ';
-        urgentLevelElement.className = `text-base font-medium ${getUrgentLevelClass(helpSeeker.urgent_level)}`;
+        document.getElementById('donatorModal').classList.remove('hidden');
 
-        document.getElementById('modalTownship').textContent = helpSeeker.township?.name || 'မရှိပါ';
-        document.getElementById('modalCity').textContent = helpSeeker.city?.name || 'မရှိပါ';
-        document.getElementById('modalLocation').textContent = helpSeeker.location || 'မရှိပါ';
-        document.getElementById('modalPhone').textContent = helpSeeker.phone || 'မရှိပါ';
-        document.getElementById('modalViber').textContent = helpSeeker.contact?.viber || 'မရှိပါ';
-        document.getElementById('modalTelegram').textContent = helpSeeker.contact?.telegram || helpSeeker.contact
-            ?.telegram_usename || 'မရှိပါ';
-        document.getElementById('modalHelpType').textContent = helpSeeker.category?.name || 'မရှိပါ';
-        document.getElementById('modalContent').textContent = helpSeeker.content || 'မရှိပါ';
-
-        document.getElementById('helpSeekerModal').classList.remove('hidden');
+        const donatorData = {
+            name: donator.user?.name || null,
+            category: donator.category?.name || null,
+            township: donator.township?.name || null,
+            city: donator.city?.name || null,
+            phone: donator.phone || null,
+            viber: donator.contact?.viber || null,
+            telegram: donator.contact?.telegram || donator.contact?.telegram_usename || null,
+            remark: donator.remark || null
+        };
     }
+
     // Close modal
     function closeModal() {
-        document.getElementById('helpSeekerModal').classList.add('hidden');
+        document.getElementById('donatorModal').classList.add('hidden');
     }
 
     // Copy phone number
@@ -695,8 +637,7 @@
     // Show success toast
     function showSuccessToast(message) {
         const toast = document.createElement('div');
-        toast.className =
-            'fixed bottom-4 right-4 flex items-center bg-green-500 text-white px-4 py-2 rounded-md shadow-lg z-50 animate-fade-in';
+        toast.className = 'fixed bottom-4 right-4 flex items-center bg-green-500 text-white px-4 py-2 rounded-md shadow-lg z-50 animate-fade-in';
         toast.innerHTML = `
             <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
@@ -716,8 +657,7 @@
     // Show error toast
     function showErrorToast(message) {
         const toast = document.createElement('div');
-        toast.className =
-            'fixed bottom-4 right-4 flex items-center bg-red-500 text-white px-4 py-2 rounded-md shadow-lg z-50 animate-fade-in';
+        toast.className = 'fixed bottom-4 right-4 flex items-center bg-red-500 text-white px-4 py-2 rounded-md shadow-lg z-50 animate-fade-in';
         toast.innerHTML = `
             <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
@@ -736,7 +676,7 @@
 
     // Initialize on page load
     document.addEventListener('DOMContentLoaded', () => {
-        fetchHelpSeekers(currentPage);
+        // bindSearchData(currentPage);
 
         // Add CSS for animations
         const style = document.createElement('style');
@@ -759,22 +699,6 @@
         document.head.appendChild(style);
     });
 
-    window.addEventListener('DOMContentLoaded', function() {
-        // Get the search data from the URL query parameters
-        const searchParams = new URLSearchParams(window.location.search);
-        const searchData = {
-            type: searchParams.get('type') || '',
-            city: searchParams.get('city') || '',
-            township: searchParams.get('township') || '',
-            category: searchParams.get('category') || ''
-        };
-
-
-
-        // Make an API request to fetch filtered data based on the search parameters
-        // fetchHelpSeekers(1, searchData);
-    });
-    // Modal control functions
     function openCreateModal() {
         document.getElementById('createHelpSeekerModal').classList.remove('hidden');
         loadFormSelectOptions();
@@ -784,7 +708,6 @@
         document.getElementById('createHelpSeekerModal').classList.add('hidden');
     }
 
-    // Load select options for the form
     async function loadFormSelectOptions() {
         try {
             // Load categories
@@ -812,7 +735,7 @@
             }
 
             // Load townships when city is selected
-            document.getElementById('city').addEventListener('change', async function() {
+            document.getElementById('city').addEventListener('change', async function () {
                 const cityId = this.value;
                 const townshipSelect = document.getElementById('township');
 
@@ -839,12 +762,18 @@
 
     // Handle form submission
     // Handle form submission
-    document.getElementById('createHelpSeekerForm').addEventListener('submit', async function(e) {
+    document.getElementById('createHelpSeekerForm').addEventListener('submit', async function (e) {
         e.preventDefault();
 
         // Get form data
         const formData = new FormData(this);
         const formObject = Object.fromEntries(formData.entries());
+
+        for (let key in formObject) {
+            if (formObject[key] === "" || formObject[key] === undefined) {
+                formObject[key] = null; 
+            }
+        }
 
         // Add CSRF token if needed (assuming you're using Laravel)
         // formObject._token = document.querySelector('meta[name="csrf-token"]').content;
@@ -880,7 +809,7 @@
                 showSuccessToast("Help seeker created successfully!");
                 closeCreateModal();
                 this.reset();
-                fetchHelpSeekers(currentPage); // Refresh the list
+                bindSearchData(currentPage); // Refresh the list
             } else {
                 // Handle validation errors or other errors
                 if (data.errors) {

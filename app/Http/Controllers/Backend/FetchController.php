@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Models\Donate;
-use App\Traits\ApiResponseTrait;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use App\Models\Donator;
 use App\Models\HelpSeeker;
+use Illuminate\Http\Request;
+use App\Traits\ApiResponseTrait;
+use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\Controller;
 
 class FetchController extends Controller
 {
@@ -14,98 +15,54 @@ class FetchController extends Controller
 
     public function filter(Request $request)
     {
-        $type = $request->input('type');
-        // $division = $request->input('division');
-        $city = $request->input('division');
-        $township = $request->input('township');
-        $category = $request->input('category');
-
+        $type = $request->type;
         if ($type == 'donators') {
-            $query = Donate::query()->with('city', 'township', 'category');
-
-            if ($category) {
-                $query->where('category_id', $category);
-            }
-
-            // if ($division) {
-            //     $query->where('division_id', $division);
-            // }
-
-            if ($city) {
-                $query->where('city_id', $city);
-            }
-
-            if ($township) {
-                $query->where('township_id', $township);
-            }
-
-            $donator = $query->paginate(9);
-            return $this->successResponse($donator);
+            $query = Donator::with('city', 'township', 'category');
+        } elseif ($type == 'receivers') {
+            $query = HelpSeeker::with('city', 'township', 'category');
         } else {
-            $query = HelpSeeker::query()->with('city', 'township', 'category');
-
-            if ($category) {
-                $query->where('category_id', $category);
-            }
-
-            // if ($division) {
-            //     $query->where('division_id', $division);
-            // }
-
-            if ($city) {
-                $query->where('city_id', $city);
-            }
-
-            if ($township) {
-                $query->where('township_id', $township);
-            }
-
-            $seeker = $query->paginate(9);
-            return $this->successResponse($seeker);
+            $data = Donator::with('city', 'township', 'category')->orderBy('updated_at')->paginate(9);
+            return $this->successResponse($data);
         }
+
+        $filters = [
+            'city_id' => $request->division ? (int) $request->division : null,
+            'township_id' => ($request->division && $request->township) ? (int) $request->township : null,
+            'category_id' => $request->category ? (int) $request->category : null,
+        ];
+
+        foreach (array_filter($filters) as $column => $value) {
+            $query->where($column, $value);
+        }
+
+        $data = $query->orderBy('updated_at')->paginate(9);
+
+        return $this->successResponse($data);
     }
 
     public function fetchFilter(Request $request)
     {
-        $type = $request->input('type');
-        $city = $request->input('division');
-        $township = $request->input('township');
-        $category = $request->input('category');
-
+        $type = $request->type;
         if ($type == 'donators') {
-            $query = Donate::query()->with('city', 'township', 'category');
-
-            if (!is_null($category)) {
-                $query->where('category_id', $category);
-            }
-
-            if (!is_null($city)) {
-                $query->where('city_id', $city);
-            }
-
-            if (!is_null($township)) {
-                $query->where('township_id', $township);
-            }
-
-            $donator = $query->paginate(9);
-            return $this->successResponse($donator);
+            $query = Donator::with('city', 'township', 'category');
+        } elseif ($type == 'receivers') {
+            $query = HelpSeeker::with('city', 'township', 'category');
         } else {
-            $query = HelpSeeker::query()->with('city', 'township', 'category');
-
-            $query->when($city, function ($q, $city) {
-                $q->where('city_id', $city);
-            });
-
-            $query->when($township, function ($q, $township) {
-                $q->where('township_id', $township);
-            });
-
-            $query->when($category, function ($q, $category) {
-                $q->where('category_id', $category);
-            });
-
-            $seeker = $query->paginate(9);
-            return $this->successResponse($seeker);
+            $data = HelpSeeker::with('city', 'township', 'category')->orderBy('updated_at')->paginate(9);
+            return $this->successResponse($data);
         }
+
+        $filters = [
+            'city_id' => $request->division ? (int) $request->division : null,
+            'township_id' => ($request->division && $request->township) ? (int) $request->township : null,
+            'category_id' => $request->category ? (int) $request->category : null,
+        ];
+
+        foreach (array_filter($filters) as $column => $value) {
+            $query->where($column, $value);
+        }
+
+        $data = $query->orderBy('updated_at')->paginate(9);
+        return $this->successResponse($data);
     }
 }
