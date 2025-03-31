@@ -26,9 +26,10 @@ class AuthUserRegisterRequest extends FormRequest
         return [
             'username'         => 'required|unique:users,username',
             'password'         => 'required|min:6',
+            'confirm_password' => 'same:password',
             'front_view'       => 'required|image|mimes:png,jpg,jpeg',
             'back_view'        => 'required|image|mimes:png,jpg,jpeg',
-            'division_id'      => 'required|exists:divisions,id',
+            'division_id'      => 'nullable',
             'city_id'          => 'required|exists:cities,id',
             'township_id'      => 'required|exists:townships,id',
             'category_id'      => 'required|exists:categories,id',

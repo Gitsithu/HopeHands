@@ -43,7 +43,6 @@ class AuthUserController extends Controller
             $token   = $user->createToken('User Token')->plainTextToken;
             $donator = [
                 'category_id' => $postData['category_id'],
-                'division_id' => $postData['division_id'],
                 'city_id'     => $postData['city_id'],
                 'township_id' => $postData['township_id'],
                 'phone'       => $postData['phone'],
