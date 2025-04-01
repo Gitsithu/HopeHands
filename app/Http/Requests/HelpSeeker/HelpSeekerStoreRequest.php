@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Requests\HelpSeeker;
 
 use App\Traits\ApiResponseTrait;
@@ -24,20 +23,20 @@ class HelpSeekerStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => [
+            'name'             => [
                 'required',
             ],
-            'phone' => 'required',
-            'city_id' => 'required',
+            'phone'            => 'required',
+            'city_id'          => 'required',
             // 'division_id' => 'required',
-            'category_id' => 'required',
-            'township_id' => 'required',
-            'location' => 'required',
-            'contact' => "nullable",
-            'content' => 'required',
-            'urgent_level' => 'required',
-            'viber' => 'required_without:telegram|string|regex:/^\+[1-9]\d{7,10}$/',
-            'telegram' => 'required_without:viber|string|regex:/^\+[1-9]\d{7,10}$/',
+            'category_id'      => 'required',
+            'township_id'      => 'required',
+            'location'         => 'required',
+            'contact'          => "nullable",
+            'content'          => 'required',
+            'urgent_level'     => 'required',
+            'viber'            => 'required_without:telegram|string|regex:/^\+[1-9]\d{7,15}$/',
+            'telegram'         => 'required_without:viber|string|regex:/^\+[1-9]\d{7,15}$/',
             'telegram_usename' => 'required_without_all:viber,telegram',
         ];
     }
