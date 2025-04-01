@@ -16,10 +16,10 @@ Route::get('/receivers', function () {
     return view('frontend.pages.main.receivers', compact('receivers'));
 })->name('receivers');
 
-// Route::get('/articles', function () {
-//     $receivers = []; // Your receivers data
-//     return view('frontend.pages.main.articles');
-// })->name('articles');
+Route::get('/articles', function () {
+    $receivers = []; // Your receivers data
+    return view('frontend.pages.main.articles');
+})->name('articles');
 
 Route::get('/donators', [DonatorController::class, 'donators'])->name('donators');
 Route::prefix('admin')->group(function () {
