@@ -153,6 +153,23 @@
                     </svg>
                     ဖုန်းနံပါတ်ကူးရန်
                 </button>
+                <button onclick="copyPageURL()"
+                    class="px-5 py-2.5 rounded-lg text-white bg-[#44991a] transition font-medium flex items-center justify-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20"
+                        viewBox="0,0,256,256">
+                        <g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt"
+                            stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0"
+                            font-family="none" font-weight="none" font-size="none" text-anchor="none"
+                            style="mix-blend-mode: normal">
+                            <g transform="scale(10.66667,10.66667)">
+                                <path
+                                    d="M16.70703,2.29297l-1.41406,1.41406l2.29297,2.29297h-0.58594c-6.06341,0 -11,4.93659 -11,11v1h2v-1c0,-4.98259 4.01741,-9 9,-9h0.58594l-2.29297,2.29297l1.41406,1.41406l4.70703,-4.70703zM2,8v1v10c0,1.64497 1.35503,3 3,3h14c1.64497,0 3,-1.35503 3,-3v-1v-1h-2v1v1c0,0.56503 -0.43497,1 -1,1h-14c-0.56503,0 -1,-0.43497 -1,-1v-10v-1z">
+                                </path>
+                            </g>
+                        </g>
+                    </svg>
+                    ဝေမျှရန်
+                </button>
             </div>
         </div>
     </div>
@@ -206,6 +223,7 @@
                             <input type="text" id="name" name="name" required
                                 class="w-full px-4 py-2.5 text-sm text-gray-800 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                         </div>
+                        <p class="text-red-500 text-sm mt-1 error-text" id="error-name"></p>
 
                         <div class="space-y-2">
                             <label for="category" class="block text-sm font-medium text-gray-700">
@@ -216,6 +234,7 @@
                                 <option value=""></option>
                                 <!-- Categories will be loaded via JavaScript -->
                             </select>
+                            <p class="text-red-500 text-sm mt-1 error-text" id="error-category_id"></p>
                         </div>
 
                         <div class="space-y-2">
@@ -231,6 +250,7 @@
                             </select>
                         </div>
                         <div id="contact-fields-container"></div>
+
                     </div>
 
 
@@ -842,89 +862,53 @@
         }
     }
 
-    // Handle form submission
-    // Handle form submission
+
     document.getElementById('createHelpSeekerForm').addEventListener('submit', async function (e) {
         e.preventDefault();
+
+        clearValidationErrors();
 
         // Get form data
         const formData = new FormData(this);
         const formObject = Object.fromEntries(formData.entries());
 
-        axios.post(`${BASE_API_URL}/help-seeker/store`, formData, {
-            headers: {
-                "Content-Type": "multipart/form-data"
-            }
-        })
-            .then(response => {
-                if (response.data.data) {
-
-                    window.location.href = "/receivers";
-
+        function showValidationErrors(errors) {
+            for (const [field, messages] of Object.entries(errors)) {
+                const errorElement = document.getElementById(`error-${field}`);
+                if (errorElement) {
+                    errorElement.textContent = messages.join(', ');
                 } else {
-                    alert("⚠️ Error: " + (response.data.message || "Something went wrong!"));
+                    // For fields that might not have explicit error elements
+                    console.warn(`No error element found for field: ${field}`);
+                }
+            }
+
+            function clearValidationErrors() {
+                document.querySelectorAll('.error-text').forEach(el => {
+                    el.textContent = '';
+                });
+            }
+
+            axios.post(`${BASE_API_URL}/help-seeker/store`, formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data"
                 }
             })
-            .catch(error => {
-                if (error.response && error.response.data.errors) {
-                    showValidationErrors(error.response.data.errors);
-                } else {
-                    alert("⚠️ Server error! Please try again later.");
-                }
-            });
+                .then(response => {
+                    if (response.data.data) {
 
-        // Add CSRF token if needed (assuming you're using Laravel)
-        // formObject._token = document.querySelector('meta[name="csrf-token"]').content;
+                        window.location.href = "/receivers";
 
-        // try {
-        //     const submitButton = this.querySelector('button[type="submit"]');
-        //     const originalButtonText = submitButton.innerHTML;
-        //     submitButton.innerHTML = `
-        //     <svg class="animate-spin -ml-1 mr-2 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-        //         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-        //         <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-        //     </svg>
-        //     Processing...
-        // `;
-        //     submitButton.disabled = true;
-
-        //     // Make the API request
-        //     const response = await fetch(`${BASE_API_URL}/help-seeker/store`, {
-        //         method: 'POST',
-        //         headers: {
-        //             'Content-Type': 'application/json',
-        //             'Accept': 'application/json',
-        //             // Add CSRF token header if needed
-        //             // 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-        //         },
-        //         body: JSON.stringify(formObject)
-        //     });
-
-        //     const data = await response.json();
-
-        //     if (response.ok && data.status) {
-        //         showSuccessToast("Help seeker created successfully!");
-        //         closeCreateModal();
-        //         this.reset();
-        //         bindSearchData(currentPage); // Refresh the list
-        //     } else {
-        //         // Handle validation errors or other errors
-        //         if (data.errors) {
-        //             const errorMessages = Object.values(data.errors).join('<br>');
-        //             showErrorToast(errorMessages);
-        //         } else {
-        //             showErrorToast(data.message || "Error creating help seeker");
-        //         }
-        //     }
-        // } catch (error) {
-        //     console.error('Error creating help seeker:', error);
-        //     showErrorToast("Network error. Please try again.");
-        // } finally {
-        //     // Reset button state
-        //     if (submitButton) {
-        //         submitButton.innerHTML = originalButtonText;
-        //         submitButton.disabled = false;
-        //     }
-        // }
-    });
+                    } else {
+                        alert("⚠️ Error: " + (response.data.message || "Something went wrong!"));
+                    }
+                })
+                .catch(error => {
+                    if (error.response && error.response.data.errors) {
+                        showValidationErrors(error.response.data.errors);
+                    } else {
+                        alert("⚠️ Server error! Please try again later.");
+                    }
+                });
+        });
 </script>
