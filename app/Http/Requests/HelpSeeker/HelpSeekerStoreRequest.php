@@ -29,7 +29,7 @@ class HelpSeekerStoreRequest extends FormRequest
             'phone'            => 'required',
             'city_id'          => 'required',
             // 'division_id' => 'required',
-            'category_id'      => 'required',
+            'category_ids'     => 'required|array',
             'township_id'      => 'nullable',
             'location'         => 'required',
             'contact'          => "nullable",

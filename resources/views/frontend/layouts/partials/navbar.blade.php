@@ -33,7 +33,7 @@
                     <div class="relative">
                         <input type="text" id="city-search"
                             class="px-2 py-3 w-full bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 rounded-lg text-white placeholder-gray-400"
-                            placeholder="တိုင်း/ပြည်နယ်" onclick="showDropdown('city-dropdown')" />
+                            placeholder="တိုင်း/ပြည်နယ်" onclick="showDropdown('city-dropdown')" data-id="" />
                         <div id="city-dropdown"
                             class="hidden absolute z-20 mt-1 w-full bg-gray-800 text-white rounded-lg shadow-xl max-h-60 overflow-y-auto border border-gray-700">
                         </div>
@@ -43,7 +43,7 @@
                     <div class="relative">
                         <input type="text" id="township-search"
                             class="px-4 py-3 w-full bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 rounded-lg text-white placeholder-gray-400"
-                            placeholder="မြို့နယ်" onclick="showDropdown('township-dropdown')" />
+                            placeholder="မြို့နယ်" onclick="showDropdown('township-dropdown')" data-id="" />
                         <div id="township-dropdown"
                             class="hidden absolute z-20 mt-1 w-full bg-gray-800 text-white rounded-lg shadow-xl max-h-60 overflow-y-auto border border-gray-700">
                             <!-- Options will be populated by JavaScript -->
@@ -54,7 +54,7 @@
                     <div class="relative">
                         <input type="text" id="category-search"
                             class="px-4 py-3 w-full bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 rounded-lg text-white placeholder-gray-400"
-                            placeholder="အမျိုးအစား" onclick="showDropdown('category-dropdown')" />
+                            placeholder="အမျိုးအစား" onclick="showDropdown('category-dropdown')" data-id="" />
                         <div id="category-dropdown"
                             class="hidden absolute z-20 mt-1 w-full bg-gray-800 text-white rounded-lg shadow-xl max-h-60 overflow-y-auto border border-gray-700">
                             <!-- Options will be populated by JavaScript -->
@@ -696,6 +696,7 @@
                     null,
                 category: document.getElementById('category-search').getAttribute('data-id') ?? null
             };
+            console.log(searchData);
             sendSearchRequest(searchData);
         });
 

@@ -215,7 +215,8 @@
                 </div>
                 <button onclick="closeCreateModal()" class="p-1 rounded-full hover:bg-gray-100 transition">
                     <svg class="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M6 18L18 6M6 6l12 12">
                         </path>
                     </svg>
                 </button>
@@ -229,7 +230,8 @@
                 <!-- Basic Information Section -->
                 <div class="bg-gray-50 p-5 rounded-lg">
                     <h4 class="text-base font-semibold text-gray-700 mb-4 flex items-center">
-                        <svg class="w-5 h-5 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-5 h-5 mr-2 text-blue-500" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                         </svg>
@@ -250,10 +252,10 @@
                             <label for="category" class="block text-sm font-medium text-gray-700">
                                 အကူအညီအမျိုးအစား <span class="text-red-500">*</span>
                             </label>
-                            <select id="category" name="category_id"
-                                class="w-full px-4 py-2.5 text-sm text-gray-800 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                                <option value=""></option>
-                                <!-- Categories will be loaded via JavaScript -->
+                            <select
+                                class="w-full px-4 py-2.5 text-sm text-gray-800 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                id="category" name="category_ids[]" multiple>
+                                <!-- Your other options will go here -->
                             </select>
                             <p class="text-red-500 text-sm mt-1 error-text" id="error-category_id"></p>
                         </div>
@@ -288,7 +290,8 @@
                 <!-- Location Information Section -->
                 <div class="bg-gray-50 p-5 rounded-lg">
                     <h4 class="text-base font-semibold text-gray-700 mb-4 flex items-center">
-                        <svg class="w-5 h-5 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-5 h-5 mr-2 text-blue-500" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -344,7 +347,8 @@
                 <!-- Contact Information Section -->
                 <div class="bg-gray-50 p-5 rounded-lg">
                     <h4 class="text-base font-semibold text-gray-700 mb-4 flex items-center">
-                        <svg class="w-5 h-5 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-5 h-5 mr-2 text-blue-500" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z">
                             </path>
@@ -404,11 +408,30 @@
 
 <!-- Include Select2 JS -->
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+
 <script>
     // API Configuration
     const HELP_SEEKERS_API_URL = BASE_API_URL + "/donator";
     const FILTER_API_URL = BASE_API_URL + "/filter";
 
+
+    $('#category').select2({
+        placeholder: "ကူညီရန်အမျိုးအစား ရွေးချယ်ပါ။",
+        allowClear: true,
+        width: '100%',
+        multiple: true,
+        maximumSelectionLength: 3,
+        closeOnSelect: false,
+        language: {
+            noResults: function() {
+                return "ရလဒ်မတွေ့ပါ";
+            },
+            maximumSelected: function(e) {
+                return "အများဆုံး " + e.maximum + " ခုသာ ရွေးချယ်နိုင်ပါသည်";
+            }
+        }
+    });
 
     // Global variables
     let currentPage = 1;
@@ -420,7 +443,7 @@
     const paginationContainer = document.getElementById('pagination-container');
     const loadingIndicator = document.getElementById('loading-indicator');
 
-    document.getElementById('contact-method').addEventListener('change', function () {
+    document.getElementById('contact-method').addEventListener('change', function() {
         const container = document.getElementById('contact-fields');
         container.innerHTML = ''; // Clear previous fields
 
@@ -466,7 +489,7 @@
         window.history.replaceState({}, document.title, window.location.pathname);
     }
 
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
         // Extract the search data from the URL
         const queryParams = new URLSearchParams(window.location.search);
         currentSearchData = {
@@ -486,10 +509,10 @@
             resultsContainer.innerHTML = '';
 
             let params = {
-                type: searchData.type || '',
-                division: searchData.division || '',
-                township: searchData.township || '',
-                category: searchData.category || ''
+                type: searchData.type || null,
+                division: searchData.division || null,
+                township: searchData.township || null,
+                category: searchData.category || null
             };
 
             var response = await axios.get(`${FILTER_API_URL}/search?page=${page}`, {
@@ -535,7 +558,8 @@
 
         data.forEach(item => {
             const card = document.createElement('div');
-            card.className = 'bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-all';
+            card.className =
+                'bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-all';
             card.innerHTML = `
                 <div class="p-5">
                     <div class="flex items-start justify-between">
@@ -546,7 +570,7 @@
                                 ${item.category?.name || 'Donor'}
                             </span>
                     </div>
-                    
+
                     <div class="mt-4 space-y-3">
                     </div><div class="mt-4 space-y-4">
     <!-- Township -->
@@ -577,8 +601,8 @@
                             </p>
                         </div>
                     </div>
-                                       
-                    
+
+
                     <!-- Phone Number -->
                     <div class="flex items-start">
                         <svg class="flex-shrink-0 mt-0.5 mr-3 h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -592,7 +616,7 @@
                         </div>
                     </div>
                 </div>
-                    
+
                     <button onclick="showDonatorDetail(${JSON.stringify(item).replace(/"/g, '&quot;')})"
                         class="mt-4 w-full py-2 text-white bg-[#44991a] rounded-md  transition flex items-center justify-center gap-2">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -642,7 +666,8 @@
 
         // Previous button
         const prevButton = document.createElement('button');
-        prevButton.className = `px-3 py-1.5 rounded-md ${data.prev_page_url ? 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300' : 'bg-gray-100 text-gray-400 cursor-not-allowed border border-gray-200'}`;
+        prevButton.className =
+            `px-3 py-1.5 rounded-md ${data.prev_page_url ? 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300' : 'bg-gray-100 text-gray-400 cursor-not-allowed border border-gray-200'}`;
         prevButton.innerHTML = `
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
@@ -668,7 +693,8 @@
 
         if (startPage > 1) {
             const firstPageButton = document.createElement('button');
-            firstPageButton.className = 'px-3.5 py-1.5 rounded-md bg-white text-gray-700 hover:bg-gray-50 border border-gray-300';
+            firstPageButton.className =
+                'px-3.5 py-1.5 rounded-md bg-white text-gray-700 hover:bg-gray-50 border border-gray-300';
             firstPageButton.textContent = '1';
             firstPageButton.onclick = () => {
                 currentPage = 1;
@@ -686,7 +712,8 @@
 
         for (let i = startPage; i <= endPage; i++) {
             const pageButton = document.createElement('button');
-            pageButton.className = `px-3.5 py-1.5 rounded-md ${i === data.current_page ? 'bg-[#44991a] text-white border border-[#44991a]' : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300'}`;
+            pageButton.className =
+                `px-3.5 py-1.5 rounded-md ${i === data.current_page ? 'bg-[#44991a] text-white border border-[#44991a]' : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300'}`;
             pageButton.textContent = i;
             pageButton.onclick = () => {
                 currentPage = i;
@@ -704,7 +731,8 @@
             }
 
             const lastPageButton = document.createElement('button');
-            lastPageButton.className = 'px-3.5 py-1.5 rounded-md bg-white text-gray-700 hover:bg-gray-50 border border-gray-300';
+            lastPageButton.className =
+                'px-3.5 py-1.5 rounded-md bg-white text-gray-700 hover:bg-gray-50 border border-gray-300';
             lastPageButton.textContent = data.last_page;
             lastPageButton.onclick = () => {
                 currentPage = data.last_page;
@@ -715,7 +743,8 @@
 
         // Next button
         const nextButton = document.createElement('button');
-        nextButton.className = `px-3 py-1.5 rounded-md ${data.next_page_url ? 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300' : 'bg-gray-100 text-gray-400 cursor-not-allowed border border-gray-200'}`;
+        nextButton.className =
+            `px-3 py-1.5 rounded-md ${data.next_page_url ? 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300' : 'bg-gray-100 text-gray-400 cursor-not-allowed border border-gray-200'}`;
         nextButton.innerHTML = `
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
@@ -773,7 +802,8 @@
     // Show success toast
     function showSuccessToast(message) {
         const toast = document.createElement('div');
-        toast.className = 'fixed bottom-4 right-4 flex items-center bg-green-500 text-white px-4 py-2 rounded-md shadow-lg z-50 animate-fade-in';
+        toast.className =
+            'fixed bottom-4 right-4 flex items-center bg-green-500 text-white px-4 py-2 rounded-md shadow-lg z-50 animate-fade-in';
         toast.innerHTML = `
             <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
@@ -793,7 +823,8 @@
     // Show error toast
     function showErrorToast(message) {
         const toast = document.createElement('div');
-        toast.className = 'fixed bottom-4 right-4 flex items-center bg-red-500 text-white px-4 py-2 rounded-md shadow-lg z-50 animate-fade-in';
+        toast.className =
+            'fixed bottom-4 right-4 flex items-center bg-red-500 text-white px-4 py-2 rounded-md shadow-lg z-50 animate-fade-in';
         toast.innerHTML = `
             <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
@@ -871,7 +902,7 @@
             }
 
             // Load townships when city is selected
-            document.getElementById('city').addEventListener('change', async function () {
+            document.getElementById('city').addEventListener('change', async function() {
                 const cityId = this.value;
                 const townshipSelect = document.getElementById('township');
 
@@ -897,7 +928,7 @@
     }
 
 
-    document.getElementById('createHelpSeekerForm').addEventListener('submit', async function (e) {
+    document.getElementById('createHelpSeekerForm').addEventListener('submit', async function(e) {
         e.preventDefault();
 
         clearValidationErrors();
@@ -908,10 +939,10 @@
 
 
         axios.post(`${BASE_API_URL}/help-seeker/store`, formData, {
-            headers: {
-                "Content-Type": "multipart/form-data"
-            }
-        })
+                headers: {
+                    "Content-Type": "multipart/form-data"
+                }
+            })
             .then(response => {
                 if (response.data.data) {
 
@@ -929,12 +960,13 @@
                 }
             });
     });
-    //for validation erros 
+    //for validation erros
     function clearValidationErrors() {
         document.querySelectorAll('.error-text').forEach(el => {
             el.textContent = '';
         });
     }
+
     function showValidationErrors(errors) {
         for (const [field, messages] of Object.entries(errors)) {
             const errorElement = document.getElementById(`error-${field}`);

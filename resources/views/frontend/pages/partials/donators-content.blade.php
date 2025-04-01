@@ -138,7 +138,7 @@
     </div>
 </div>
 
-<script src="{{asset('frontend/assets/js/app.js')}}"></script>
+<script src="{{ asset('frontend/assets/js/app.js') }}"></script>
 <script>
     // API Configuration
     const HELP_SEEKERS_API_URL = BASE_API_URL + "/donator";
@@ -159,7 +159,7 @@
         window.history.replaceState({}, document.title, window.location.pathname);
     }
 
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
         // Extract the search data from the URL
         const queryParams = new URLSearchParams(window.location.search);
         currentSearchData = {
@@ -225,18 +225,28 @@
 
         data.forEach(item => {
             const card = document.createElement('div');
-            card.className = 'bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-all';
+            let categoryNames = [];
+            console.log(item);
+            item.category_contributions?.forEach(contribution => {
+                console.log(contribution);
+                console.log(contribution.category);
+                console.log(contribution.category.name);
+                if (contribution.category?.name) {
+                    categoryNames.push(contribution.category.name);
+                }
+            });
+            const result = categoryNames.join(", "); // "a, b, c" (or empty string if none)
+            console.log(categoryNames);
+            card.className =
+                'bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-all';
             card.innerHTML = `
                 <div class="p-5">
                     <div class="flex items-start justify-between">
                         <div>
                             <h3 class="text-lg font-semibold text-gray-800">${item.user?.name || 'မရှိပါ'}</h3>
                         </div>
-                         <span class="inline-block mt-1 px-2 py-2 text-xs font-medium rounded-full bg-blue-100 text-blue-800">
-                                ${item.category?.name || 'Donor'}
-                            </span>
                     </div>
-                    
+
                     <div class="mt-4 space-y-3">
                     </div><div class="mt-4 space-y-4">
     <!-- Township -->
@@ -252,8 +262,20 @@
                             </p>
                         </div>
                     </div>
-                                       
-                    
+                    <div class="flex items-start">
+                        <svg class="flex-shrink-0 mt-0.5 mr-3 h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
+                        <div>
+                            <p class="text-sm font-medium text-gray-800">
+                                <span class="text-gray-500">အမျိုးအစား - </span>
+                                 ${categoryNames}
+                            </p>
+                        </div>
+                    </div>
+
+
                     <!-- Phone Number -->
                     <div class="flex items-start">
                         <svg class="flex-shrink-0 mt-0.5 mr-3 h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -267,7 +289,7 @@
                         </div>
                     </div>
                 </div>
-                    
+
                     <button onclick="showDonatorDetail(${JSON.stringify(item).replace(/"/g, '&quot;')})"
                         class="mt-4 w-full py-2 text-white bg-[#44991a] rounded-md  transition flex items-center justify-center gap-2">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -290,7 +312,8 @@
 
         // Previous button
         const prevButton = document.createElement('button');
-        prevButton.className = `px-3 py-1.5 rounded-md ${data.prev_page_url ? 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300' : 'bg-gray-100 text-gray-400 cursor-not-allowed border border-gray-200'}`;
+        prevButton.className =
+            `px-3 py-1.5 rounded-md ${data.prev_page_url ? 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300' : 'bg-gray-100 text-gray-400 cursor-not-allowed border border-gray-200'}`;
         prevButton.innerHTML = `
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
@@ -316,7 +339,8 @@
 
         if (startPage > 1) {
             const firstPageButton = document.createElement('button');
-            firstPageButton.className = 'px-3.5 py-1.5 rounded-md bg-white text-gray-700 hover:bg-gray-50 border border-gray-300';
+            firstPageButton.className =
+                'px-3.5 py-1.5 rounded-md bg-white text-gray-700 hover:bg-gray-50 border border-gray-300';
             firstPageButton.textContent = '1';
             firstPageButton.onclick = () => {
                 currentPage = 1;
@@ -334,7 +358,8 @@
 
         for (let i = startPage; i <= endPage; i++) {
             const pageButton = document.createElement('button');
-            pageButton.className = `px-3.5 py-1.5 rounded-md ${i === data.current_page ? 'bg-[#44991a] text-white border border-[#44991a]' : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300'}`;
+            pageButton.className =
+                `px-3.5 py-1.5 rounded-md ${i === data.current_page ? 'bg-[#44991a] text-white border border-[#44991a]' : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300'}`;
             pageButton.textContent = i;
             pageButton.onclick = () => {
                 currentPage = i;
@@ -352,7 +377,8 @@
             }
 
             const lastPageButton = document.createElement('button');
-            lastPageButton.className = 'px-3.5 py-1.5 rounded-md bg-white text-gray-700 hover:bg-gray-50 border border-gray-300';
+            lastPageButton.className =
+                'px-3.5 py-1.5 rounded-md bg-white text-gray-700 hover:bg-gray-50 border border-gray-300';
             lastPageButton.textContent = data.last_page;
             lastPageButton.onclick = () => {
                 currentPage = data.last_page;
@@ -363,7 +389,8 @@
 
         // Next button
         const nextButton = document.createElement('button');
-        nextButton.className = `px-3 py-1.5 rounded-md ${data.next_page_url ? 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300' : 'bg-gray-100 text-gray-400 cursor-not-allowed border border-gray-200'}`;
+        nextButton.className =
+            `px-3 py-1.5 rounded-md ${data.next_page_url ? 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300' : 'bg-gray-100 text-gray-400 cursor-not-allowed border border-gray-200'}`;
         nextButton.innerHTML = `
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
@@ -383,7 +410,8 @@
     function showDonatorDetail(donator) {
         document.getElementById('modalName').textContent = donator.user?.name || 'မရှိပါ';
         document.getElementById('modalCategory').textContent = donator.category?.name || 'မရှိပါ';
-        document.getElementById('modalTownship').textContent = donator.township?.name_mm || donator.township?.name || 'မရှိပါ';
+        document.getElementById('modalTownship').textContent = donator.township?.name_mm || donator.township?.name ||
+            'မရှိပါ';
         document.getElementById('modalState').textContent = donator.city?.name_mm || donator.city?.name || 'မရှိပါ';
         document.getElementById('modalPhone').textContent = donator.phone || 'မရှိပါ';
 
@@ -426,7 +454,8 @@
     // Show success toast
     function showSuccessToast(message) {
         const toast = document.createElement('div');
-        toast.className = 'fixed bottom-4 right-4 flex items-center bg-green-500 text-white px-4 py-2 rounded-md shadow-lg z-50 animate-fade-in';
+        toast.className =
+            'fixed bottom-4 right-4 flex items-center bg-green-500 text-white px-4 py-2 rounded-md shadow-lg z-50 animate-fade-in';
         toast.innerHTML = `
             <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
@@ -446,7 +475,8 @@
     // Show error toast
     function showErrorToast(message) {
         const toast = document.createElement('div');
-        toast.className = 'fixed bottom-4 right-4 flex items-center bg-red-500 text-white px-4 py-2 rounded-md shadow-lg z-50 animate-fade-in';
+        toast.className =
+            'fixed bottom-4 right-4 flex items-center bg-red-500 text-white px-4 py-2 rounded-md shadow-lg z-50 animate-fade-in';
         toast.innerHTML = `
             <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>

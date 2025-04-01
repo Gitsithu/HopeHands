@@ -16,7 +16,7 @@ class CategoryContribution extends Model
 
     public function category()
     {
-        return $this->belongsTo(Category::class, 'category_id');
+        return $this->belongsTo(Category::class)->select('id', 'name_mm as name');
     }
 
     public function donator()

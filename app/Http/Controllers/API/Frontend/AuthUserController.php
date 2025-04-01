@@ -33,7 +33,7 @@ class AuthUserController extends Controller
                 'city_id'     => $postData['city_id'],
                 'township_id' => $postData['township_id'],
                 'phone'       => $postData['phone'],
-                'link' => $postData['link'],
+                'link'        => $postData['link'],
                 'contact'     => [
                     'viber'            => $postData['viber'] ?? null,
                     'telegram'         => $postData['telegram'] ?? null,
@@ -113,7 +113,7 @@ class AuthUserController extends Controller
         try {
             $user = auth()->guard('api')->user();
 
-            $query = Donator::with(['user', 'division', 'city', 'township', 'category'])->orderByDesc('created_at');
+            $query = Donator::with(['user', 'division', 'city', 'township', 'category', 'categoryContributions.category'])->orderByDesc('created_at');
 
             if ($user) {
                 $query->where('user_id', '!=', $user->id);

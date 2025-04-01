@@ -94,7 +94,7 @@
                     </label>
                     <select
                         class="w-full px-4 py-2.5 text-sm text-gray-800 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                        id="category" name="category_id">
+                        id="category" name="category_ids[]" multiple>
                         <option value="">ကူညီရန်အမျိုးအစား ရွေးချယ်ပါ။</option>
                         <!-- Your other options will go here -->
                     </select>
@@ -246,15 +246,21 @@
     <!-- Include Select2 JS -->
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("DOMContentLoaded", function() {
             // Initialize Select2
             $('#category').select2({
                 placeholder: "ကူညီရန်အမျိုးအစား ရွေးချယ်ပါ။",
                 allowClear: true,
                 width: '100%',
+                multiple: true,
+                maximumSelectionLength: 3,
+                closeOnSelect: false,
                 language: {
-                    noResults: function () {
+                    noResults: function() {
                         return "ရလဒ်မတွေ့ပါ";
+                    },
+                    maximumSelected: function(e) {
+                        return "အများဆုံး " + e.maximum + " ခုသာ ရွေးချယ်နိုင်ပါသည်";
                     }
                 }
             });
@@ -275,7 +281,7 @@
                 url: '/api/admin/city',
                 method: 'GET',
                 dataType: 'json',
-                success: function (response) {
+                success: function(response) {
                     try {
                         // Check if data is nested
                         const data = response.data || response.results || response;
@@ -287,7 +293,7 @@
                         $('#division').empty().append(
                             '<option value="">တိုင်းဒေသကြီး ရွေးချယ်ပါ။</option>');
 
-                        $.each(data, function (index, division) {
+                        $.each(data, function(index, division) {
                             if (!division.id) {
                                 console.warn('Division missing ID:', division);
                                 return;
@@ -303,14 +309,14 @@
                         $('#division').html('<option value="">Error loading divisions</option>');
                     }
                 },
-                error: function (xhr, status, error) {
+                error: function(xhr, status, error) {
                     console.error('API request failed:', status, error);
                     $('#division').html('<option value="">Failed to load divisions</option>');
                 }
             });
 
             // When division changes, load related townships
-            $('#division').on('change', function () {
+            $('#division').on('change', function() {
                 const divisionId = $(this).val();
                 const $township = $('#township');
 
@@ -332,13 +338,13 @@
                         url: `${TOWNSHIPS_API_URL}${divisionId}`, // Fixed template literal syntax
                         method: 'GET',
                         dataType: 'json',
-                        beforeSend: function () {
+                        beforeSend: function() {
                             // Show loading state
                             $township.empty().append(
                                 '<option value="">Loading townships...</option>');
                             $township.prop('disabled', true).select2();
                         },
-                        success: function (response) {
+                        success: function(response) {
                             try {
                                 // Check if data is nested in response property
                                 const townships = response.data || response.results || response;
@@ -352,7 +358,7 @@
                                     '<option value="">မြို့နယ် ရွေးချယ်ပါ။</option>'
                                 );
 
-                                $.each(townships, function (index, township) {
+                                $.each(townships, function(index, township) {
                                     if (!township.id) {
                                         console.warn('Township missing ID:', township);
                                         return;
@@ -376,7 +382,7 @@
                                 $township.select2();
                             }
                         },
-                        error: function (xhr, status, error) {
+                        error: function(xhr, status, error) {
                             console.error('Township API Error:', {
                                 status: xhr.status,
                                 statusText: xhr.statusText,
@@ -388,7 +394,7 @@
             `);
                             $township.select2();
                         },
-                        complete: function () {
+                        complete: function() {
                             // Any cleanup operations if needed
                         }
                     });
@@ -402,7 +408,7 @@
 
 
             // Optional: If you need to handle errors with Select2
-            $('#category').on('change', function () {
+            $('#category').on('change', function() {
                 $('#error-category_id').text(''); // Clear error when selection changes
             });
         });
@@ -421,7 +427,7 @@
                 eyeIcon.classList.add('fa-eye');
             }
         }
-        document.getElementById('contact-method').addEventListener('change', function () {
+        document.getElementById('contact-method').addEventListener('change', function() {
             const container = document.getElementById('contact-fields-container');
             container.innerHTML = ''; // Clear previous fields
 
@@ -466,22 +472,10 @@
     <script>
         const DIVISION_API_URL = BASE_API_URL + "/city";
 
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             fetchCatgory();
 
-            // fetchDivisions();
-            // document.getElementById('division').addEventListener('change', function() {
-            //     const divisionId = this.value;
-            //     if (divisionId) {
-            //         fetchTownships(divisionId);
-            //     } else {
-            //         const townshipSelect = document.getElementById('township');
-            //         townshipSelect.innerHTML = '<option value="">မြို့နယ် ရွေးချယ်ပါ။</option>';
-            //         townshipSelect.disabled = true;
-            //     }
-            // });
-
-            document.getElementById("content-form").addEventListener("submit", function (event) {
+            document.getElementById("content-form").addEventListener("submit", function(event) {
                 event.preventDefault();
                 submitForm();
             });
@@ -513,59 +507,6 @@
                 });
         }
 
-        //     function fetchDivisions() {
-        //         const divisionSelect = document.getElementById('division');
-
-        //         // Show loading state
-        //         divisionSelect.innerHTML = '<option value="">လုပ်ဆောင်နေဆဲ...</option>';
-
-        //         axios.get(DIVISION_API_URL)
-        //             .then(response => {
-        //                 // Clear existing options
-        //                 divisionSelect.innerHTML = '<option value="">တိုင်းဒေသကြီး ရွေးချယ်ပါ။</option>';
-        //                 // Add new options from API
-        //                 response.data.data.forEach(division => {
-        //                     const option = document.createElement('option');
-        //                     option.value = division.id;
-        //                     option.textContent = division.name;
-        //                     divisionSelect.appendChild(option);
-        //                 });
-        //             })
-        //             .catch(error => {
-        //                 console.error('Error fetching divisions:', error);
-        //                 divisionSelect.innerHTML = `
-        //     <option value="">တိုင်းဒေသကြီးများ ရယူရာတွင် အမှားတစ်ခုဖြစ်နေပါသည်</option>
-        //   `;
-        //             });
-        //     }
-
-
-        //     function fetchTownships(divisionId) {
-        //         const townshipSelect = document.getElementById('township');
-
-        //         // Show loading state
-        //         townshipSelect.innerHTML = '<option value="">လုပ်ဆောင်နေဆဲ...</option>';
-
-        //         axios.get(`${TOWNSHIPS_API_URL}${divisionId}`)
-        //             .then(response => {
-        //                 // Clear existing options
-        //                 townshipSelect.innerHTML = '<option value="">မြို့နယ် ရွေးချယ်ပါ။</option>';
-        //                 // Add new options from API
-        //                 response.data.data.forEach(township => {
-        //                     const option = document.createElement('option');
-        //                     option.value = township.id;
-        //                     option.textContent = township.name;
-        //                     townshipSelect.appendChild(option);
-        //                 });
-        //             })
-        //             .catch(error => {
-        //                 console.error('Error fetching divisions:', error);
-        //                 divisionSelect.innerHTML = `
-        //     <option value="">မြို့နယ်များ ရယူရာတွင် အမှားတစ်ခုဖြစ်နေပါသည်</option>
-        //   `;
-        //             });
-        //     }
-
         function clearValidationErrors() {
             document.querySelectorAll(".error-text").forEach(el => el.textContent = "");
         }
@@ -587,10 +528,10 @@
             let formData = new FormData(form);
 
             axios.post(`${BASE_API_URL}/donator/register`, formData, {
-                headers: {
-                    "Content-Type": "multipart/form-data"
-                }
-            })
+                    headers: {
+                        "Content-Type": "multipart/form-data"
+                    }
+                })
                 .then(response => {
 
                     if (response.data.data) {
