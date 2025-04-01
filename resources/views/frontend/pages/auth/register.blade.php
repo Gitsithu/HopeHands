@@ -180,6 +180,16 @@
                         <p class="text-red-500 text-sm pt-2 error-text" id="error-remark"></p>
                     </div>
                 </div>
+
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="phone">
+                        Link တင်ရန်
+                    </label>
+                    <input
+                        class="w-full px-4 py-2.5 text-sm text-gray-800 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        id="link" type="text" name="link" placeholder="Link တင်ရန်...">
+                    <p class="text-red-500 text-sm mt-1 error-text"></p>
+                </div>
                 {{-- <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
                         လျှို့ဝှက်နံပါတ်
@@ -202,8 +212,7 @@
                     <div class="relative">
                         <input
                             class="w-full px-4 py-2.5 text-sm text-gray-800 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                            type="password" id="confirm_password" name="confirm_password"
-                            placeholder="စကားဝှက်အတည်ပြုပါ">
+                            type="password" id="confirm_password" name="confirm_password" placeholder="စကားဝှက်အတည်ပြုပါ">
                         <button type="button" onclick="togglePassword('confirm_password', 'eye-icon-confirm')"
                             class="absolute inset-y-0 right-0 flex items-center px-4 text-gray-600">
                             <i id="eye-icon-confirm" class="fas fa-eye"></i>
@@ -237,14 +246,14 @@
     <!-- Include Select2 JS -->
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
+        document.addEventListener("DOMContentLoaded", function () {
             // Initialize Select2
             $('#category').select2({
                 placeholder: "ကူညီရန်အမျိုးအစား ရွေးချယ်ပါ။",
                 allowClear: true,
                 width: '100%',
                 language: {
-                    noResults: function() {
+                    noResults: function () {
                         return "ရလဒ်မတွေ့ပါ";
                     }
                 }
@@ -266,7 +275,7 @@
                 url: '/api/admin/city',
                 method: 'GET',
                 dataType: 'json',
-                success: function(response) {
+                success: function (response) {
                     try {
                         // Check if data is nested
                         const data = response.data || response.results || response;
@@ -278,7 +287,7 @@
                         $('#division').empty().append(
                             '<option value="">တိုင်းဒေသကြီး ရွေးချယ်ပါ။</option>');
 
-                        $.each(data, function(index, division) {
+                        $.each(data, function (index, division) {
                             if (!division.id) {
                                 console.warn('Division missing ID:', division);
                                 return;
@@ -294,14 +303,14 @@
                         $('#division').html('<option value="">Error loading divisions</option>');
                     }
                 },
-                error: function(xhr, status, error) {
+                error: function (xhr, status, error) {
                     console.error('API request failed:', status, error);
                     $('#division').html('<option value="">Failed to load divisions</option>');
                 }
             });
 
             // When division changes, load related townships
-            $('#division').on('change', function() {
+            $('#division').on('change', function () {
                 const divisionId = $(this).val();
                 const $township = $('#township');
 
@@ -323,13 +332,13 @@
                         url: `${TOWNSHIPS_API_URL}${divisionId}`, // Fixed template literal syntax
                         method: 'GET',
                         dataType: 'json',
-                        beforeSend: function() {
+                        beforeSend: function () {
                             // Show loading state
                             $township.empty().append(
                                 '<option value="">Loading townships...</option>');
                             $township.prop('disabled', true).select2();
                         },
-                        success: function(response) {
+                        success: function (response) {
                             try {
                                 // Check if data is nested in response property
                                 const townships = response.data || response.results || response;
@@ -343,7 +352,7 @@
                                     '<option value="">မြို့နယ် ရွေးချယ်ပါ။</option>'
                                 );
 
-                                $.each(townships, function(index, township) {
+                                $.each(townships, function (index, township) {
                                     if (!township.id) {
                                         console.warn('Township missing ID:', township);
                                         return;
@@ -367,7 +376,7 @@
                                 $township.select2();
                             }
                         },
-                        error: function(xhr, status, error) {
+                        error: function (xhr, status, error) {
                             console.error('Township API Error:', {
                                 status: xhr.status,
                                 statusText: xhr.statusText,
@@ -375,11 +384,11 @@
                             });
 
                             $township.empty().append(`
-            <option value="">Error loading townships (${xhr.status} ${xhr.statusText})</option>
-        `);
+                <option value="">Error loading townships (${xhr.status} ${xhr.statusText})</option>
+            `);
                             $township.select2();
                         },
-                        complete: function() {
+                        complete: function () {
                             // Any cleanup operations if needed
                         }
                     });
@@ -393,7 +402,7 @@
 
 
             // Optional: If you need to handle errors with Select2
-            $('#category').on('change', function() {
+            $('#category').on('change', function () {
                 $('#error-category_id').text(''); // Clear error when selection changes
             });
         });
@@ -412,52 +421,52 @@
                 eyeIcon.classList.add('fa-eye');
             }
         }
-        document.getElementById('contact-method').addEventListener('change', function() {
+        document.getElementById('contact-method').addEventListener('change', function () {
             const container = document.getElementById('contact-fields-container');
             container.innerHTML = ''; // Clear previous fields
 
             if (this.value === 'viber') {
                 // Add Viber field
                 container.innerHTML = `
-            <div class="mb-4">
-                <label class="block text-gray-700 text-sm font-bold mb-2" for="viber-number">
-                    Viber ဖုန်းနံပါတ်
-                </label>
-                <input
-                    class="w-full px-4 py-2.5 text-sm text-gray-800 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                    type="text" id="viber-number" name="viber" placeholder="+959xxxxxxxx">
-                    <p class="text-red-500 text-sm mt-1 error-text" id="error-viber"></p>
-            </div>
-        `;
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="viber-number">
+                        Viber ဖုန်းနံပါတ်
+                    </label>
+                    <input
+                        class="w-full px-4 py-2.5 text-sm text-gray-800 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        type="text" id="viber-number" name="viber" placeholder="+959xxxxxxxx">
+                        <p class="text-red-500 text-sm mt-1 error-text" id="error-viber"></p>
+                </div>
+            `;
             } else if (this.value === 'telegram') {
                 // Add Telegram fields
                 container.innerHTML = `
-            <div class="mb-4">
-                <label class="block text-gray-700 text-sm font-bold mb-2" for="telegram-username">
-                    Telegram username
-                </label>
-                <input
-                    class="w-full px-4 py-2.5 text-sm text-gray-800 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                    type="text" id="telegram-username" name="telegram_username" placeholder="@username">
-                    <p class="text-red-500 text-sm mt-1 error-text" id="error-telegram_username"></p>
-            </div>
-            <div class="mb-4">
-                <label class="block text-gray-700 text-sm font-bold mb-2" for="telegram-phone">
-                    Telegram ဖုန်းနံပါတ် (optional)
-                </label>
-                <input
-                    class="w-full px-4 py-2.5 text-sm text-gray-800 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                    type="text" id="telegram-phone" name="telegram" placeholder="+959xxxxxxxx">
-                    <p class="text-red-500 text-sm mt-1 error-text" id="error-telegram"></p>
-            </div>
-        `;
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="telegram-username">
+                        Telegram username
+                    </label>
+                    <input
+                        class="w-full px-4 py-2.5 text-sm text-gray-800 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        type="text" id="telegram-username" name="telegram_username" placeholder="@username">
+                        <p class="text-red-500 text-sm mt-1 error-text" id="error-telegram_username"></p>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="telegram-phone">
+                        Telegram ဖုန်းနံပါတ် (optional)
+                    </label>
+                    <input
+                        class="w-full px-4 py-2.5 text-sm text-gray-800 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        type="text" id="telegram-phone" name="telegram" placeholder="+959xxxxxxxx">
+                        <p class="text-red-500 text-sm mt-1 error-text" id="error-telegram"></p>
+                </div>
+            `;
             }
         });
     </script>
     <script>
         const DIVISION_API_URL = BASE_API_URL + "/city";
 
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             fetchCatgory();
 
             // fetchDivisions();
@@ -472,7 +481,7 @@
             //     }
             // });
 
-            document.getElementById("content-form").addEventListener("submit", function(event) {
+            document.getElementById("content-form").addEventListener("submit", function (event) {
                 event.preventDefault();
                 submitForm();
             });
@@ -499,8 +508,8 @@
                 .catch(error => {
                     console.error('Error fetching categorys:', error);
                     categorySelect.innerHTML = `
-        <option value="">ကူညီရန်အမျိုးအစားများ ရယူရာတွင် အမှားတစ်ခုဖြစ်နေပါသည်</option>
-      `;
+            <option value="">ကူညီရန်အမျိုးအစားများ ရယူရာတွင် အမှားတစ်ခုဖြစ်နေပါသည်</option>
+          `;
                 });
         }
 
@@ -525,8 +534,8 @@
         //             .catch(error => {
         //                 console.error('Error fetching divisions:', error);
         //                 divisionSelect.innerHTML = `
-    //     <option value="">တိုင်းဒေသကြီးများ ရယူရာတွင် အမှားတစ်ခုဖြစ်နေပါသည်</option>
-    //   `;
+        //     <option value="">တိုင်းဒေသကြီးများ ရယူရာတွင် အမှားတစ်ခုဖြစ်နေပါသည်</option>
+        //   `;
         //             });
         //     }
 
@@ -552,8 +561,8 @@
         //             .catch(error => {
         //                 console.error('Error fetching divisions:', error);
         //                 divisionSelect.innerHTML = `
-    //     <option value="">မြို့နယ်များ ရယူရာတွင် အမှားတစ်ခုဖြစ်နေပါသည်</option>
-    //   `;
+        //     <option value="">မြို့နယ်များ ရယူရာတွင် အမှားတစ်ခုဖြစ်နေပါသည်</option>
+        //   `;
         //             });
         //     }
 
@@ -578,10 +587,10 @@
             let formData = new FormData(form);
 
             axios.post(`${BASE_API_URL}/donator/register`, formData, {
-                    headers: {
-                        "Content-Type": "multipart/form-data"
-                    }
-                })
+                headers: {
+                    "Content-Type": "multipart/form-data"
+                }
+            })
                 .then(response => {
 
                     if (response.data.data) {

@@ -16,9 +16,7 @@ class Article extends Model
         'title',
         'content',
         'status',
-        'password',
-        'is_admin',
-        'is_donator'
+        'image_url',
     ];
 
     protected $casts = [

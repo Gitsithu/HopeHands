@@ -20,6 +20,7 @@ class HelpSeeker extends Model
         'content',
         'contact',
         'urgent_level',
+        'link',
         'status',
     ];
 

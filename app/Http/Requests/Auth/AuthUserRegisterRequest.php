@@ -38,6 +38,7 @@ class AuthUserRegisterRequest extends FormRequest
             'telegram'         => 'nullable|string|regex:/^\+[1-9]\d{7,15}$/',
             'telegram_usename' => 'nullable',
             'remark'           => 'required',
+            'link'             => 'nullable'
         ];
     }
 
