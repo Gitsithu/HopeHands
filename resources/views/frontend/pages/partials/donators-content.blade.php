@@ -108,7 +108,7 @@
                     </svg>
                     ဖုန်းနံပါတ်ကူးရန်
                 </button>
-                <button onclick="copyPageURL()"
+                {{-- <button onclick="copyPageURL()"
                     class="px-5 py-2.5 rounded-lg text-white bg-[#44991a] transition font-medium flex items-center justify-center gap-2">
                     <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20"
                         viewBox="0,0,256,256">
@@ -124,7 +124,7 @@
                         </g>
                     </svg>
                     ဝေမျှရန်
-                </button>
+                </button> --}}
             </div>
         </div>
     </div>

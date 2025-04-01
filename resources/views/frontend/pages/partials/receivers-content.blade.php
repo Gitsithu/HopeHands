@@ -22,6 +22,23 @@
     .floating-button:hover {
         animation: none;
     }
+
+    .error-text {
+        color: #ef4444;
+        font-size: 0.875rem;
+        margin-top: 0.25rem;
+    }
+
+    input:invalid,
+    select:invalid {
+        border-color: #ef4444;
+    }
+
+    input:invalid:focus,
+    select:invalid:focus {
+        border-color: #ef4444;
+        box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.2);
+    }
 </style>
 <div class="mt-6">
     <!-- Search Results Container -->
@@ -153,7 +170,7 @@
                     </svg>
                     ဖုန်းနံပါတ်ကူးရန်
                 </button>
-                <button onclick="copyPageURL()"
+                {{-- <button onclick="copyPageURL()"
                     class="px-5 py-2.5 rounded-lg text-white bg-[#44991a] transition font-medium flex items-center justify-center gap-2">
                     <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20"
                         viewBox="0,0,256,256">
@@ -169,7 +186,7 @@
                         </g>
                     </svg>
                     ဝေမျှရန်
-                </button>
+                </button> --}}
             </div>
         </div>
     </div>
@@ -220,16 +237,16 @@
                             <label for="name" class="block text-sm font-medium text-gray-700">
                                 အမည်အပြည့်အစုံ <span class="text-red-500">*</span>
                             </label>
-                            <input type="text" id="name" name="name" required
+                            <input type="text" id="name" name="name"
                                 class="w-full px-4 py-2.5 text-sm text-gray-800 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                            <p class="text-red-500 text-sm mt-1 error-text" id="error-name"></p>
                         </div>
-                        <p class="text-red-500 text-sm mt-1 error-text" id="error-name"></p>
 
                         <div class="space-y-2">
                             <label for="category" class="block text-sm font-medium text-gray-700">
                                 အကူအညီအမျိုးအစား <span class="text-red-500">*</span>
                             </label>
-                            <select id="category" name="category_id" required
+                            <select id="category" name="category_id"
                                 class="w-full px-4 py-2.5 text-sm text-gray-800 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                                 <option value=""></option>
                                 <!-- Categories will be loaded via JavaScript -->
@@ -241,15 +258,15 @@
                             <label for="urgent_level" class="block text-sm font-medium text-gray-700">
                                 အရေးပေါ်သတ်မှတ်ချက် <span class="text-red-500">*</span>
                             </label>
-                            <select id="urgent_level" name="urgent_level" required
+                            <select id="urgent_level" name="urgent_level"
                                 class="w-full px-4 py-2.5 text-sm text-gray-800 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                                 <option value="">Select urgent level</option>
                                 <option value="high">High (အရေးတကြီး)</option>
                                 <option value="medium">Medium (သာမန်ထက်ပို)</option>
                                 <option value="low">Low (စောင့်ဆိုင်း၍ရ)</option>
                             </select>
+                            <p class="text-red-500 text-sm mt-1 error-text" id="error-urgent_level"></p>
                         </div>
-                        <div id="contact-fields-container"></div>
 
                     </div>
 
@@ -258,8 +275,9 @@
                         <label for="content" class="block text-sm font-medium text-gray-700">
                             အကြောင်းအရာ <span class="text-red-500">*</span>
                         </label>
-                        <textarea id="content" name="content" rows="4" required
+                        <textarea id="content" name="content" rows="4"
                             class="w-full px-4 py-2.5 text-sm text-gray-800 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"></textarea>
+                        <p class="text-red-500 text-sm mt-1 error-text" id="error-content"></p>
                     </div>
                 </div>
 
@@ -280,22 +298,24 @@
                             <label for="city" class="block text-sm font-medium text-gray-700">
                                 တိုင်းဒေသကြီး/ပြည်နယ် <span class="text-red-500">*</span>
                             </label>
-                            <select id="city" name="city_id" required
+                            <select id="city" name="city_id"
                                 class="w-full px-4 py-2.5 text-sm text-gray-800 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                                 <option value="">Select a city</option>
                                 <!-- Cities will be loaded via JavaScript -->
                             </select>
+                            <p class="text-red-500 text-sm mt-1 error-text" id="error-city_id"></p>
                         </div>
 
                         <div class="space-y-2">
                             <label for="township" class="block text-sm font-medium text-gray-700">
-                                မြို့နယ် <span class="text-red-500">*</span>
+                                မြို့နယ်
                             </label>
-                            <select id="township" name="township_id" required
+                            <select id="township" name="township_id"
                                 class="w-full px-4 py-2.5 text-sm text-gray-800 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                                 <option value="">Select a township</option>
                                 <!-- Townships will be loaded via JavaScript -->
                             </select>
+                            <p class="text-red-500 text-sm mt-1 error-text" id="error-township_id"></p>
                         </div>
                     </div>
 
@@ -303,8 +323,9 @@
                         <label for="location" class="block text-sm font-medium text-gray-700">
                             တည်နေရာအသေးစိတ် <span class="text-red-500">*</span>
                         </label>
-                        <input type="text" id="location" name="location" required
+                        <input type="text" id="location" name="location"
                             class="w-full px-4 py-2.5 text-sm text-gray-800 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                        <p class="text-red-500 text-sm mt-1 error-text" id="error-location"></p>
                     </div>
                 </div>
 
@@ -872,43 +893,44 @@
         const formData = new FormData(this);
         const formObject = Object.fromEntries(formData.entries());
 
-        function showValidationErrors(errors) {
-            for (const [field, messages] of Object.entries(errors)) {
-                const errorElement = document.getElementById(`error-${field}`);
-                if (errorElement) {
-                    errorElement.textContent = messages.join(', ');
+
+        axios.post(`${BASE_API_URL}/help-seeker/store`, formData, {
+            headers: {
+                "Content-Type": "multipart/form-data"
+            }
+        })
+            .then(response => {
+                if (response.data.data) {
+
+                    window.location.href = "/receivers";
+
                 } else {
-                    // For fields that might not have explicit error elements
-                    console.warn(`No error element found for field: ${field}`);
-                }
-            }
-
-            function clearValidationErrors() {
-                document.querySelectorAll('.error-text').forEach(el => {
-                    el.textContent = '';
-                });
-            }
-
-            axios.post(`${BASE_API_URL}/help-seeker/store`, formData, {
-                headers: {
-                    "Content-Type": "multipart/form-data"
+                    alert("⚠️ Error: " + (response.data.message || "Something went wrong!"));
                 }
             })
-                .then(response => {
-                    if (response.data.data) {
-
-                        window.location.href = "/receivers";
-
-                    } else {
-                        alert("⚠️ Error: " + (response.data.message || "Something went wrong!"));
-                    }
-                })
-                .catch(error => {
-                    if (error.response && error.response.data.errors) {
-                        showValidationErrors(error.response.data.errors);
-                    } else {
-                        alert("⚠️ Server error! Please try again later.");
-                    }
-                });
+            .catch(error => {
+                if (error.response && error.response.data.errors) {
+                    showValidationErrors(error.response.data.errors);
+                } else {
+                    alert("⚠️ Server error! Please try again later.");
+                }
+            });
+    });
+    //for validation erros 
+    function clearValidationErrors() {
+        document.querySelectorAll('.error-text').forEach(el => {
+            el.textContent = '';
         });
+    }
+    function showValidationErrors(errors) {
+        for (const [field, messages] of Object.entries(errors)) {
+            const errorElement = document.getElementById(`error-${field}`);
+            if (errorElement) {
+                // Join multiple error messages with line breaks
+                errorElement.textContent = messages.join('\n');
+            } else {
+                console.warn(`No error element found for field: ${field}`);
+            }
+        }
+    }
 </script>

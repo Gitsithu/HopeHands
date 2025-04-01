@@ -13,6 +13,9 @@
             <a href="{{ route('receivers') }}" class="px-6 py-3 bg-[#44991a] text-white font-semibold rounded-lg">
                 အကူအညီတောင်းခံသူ
             </a>
+            {{-- <a href="{{ route('articles') }}" class="px-6 py-3 bg-gray-300 text-black font-semibold rounded-lg hover:bg-gray-400">
+                သတင်းများ
+            </a> --}}
         </div>
 
         <!-- Receivers Content -->

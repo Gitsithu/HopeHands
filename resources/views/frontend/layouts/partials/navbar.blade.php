@@ -297,16 +297,16 @@
 
 
     // Close menu when clicking outside on mobile
-    document.addEventListener('click', (e) => {
-        if (window.innerWidth < 768 &&
-            !e.target.closest('#mobile-menu-content') &&
-            !e.target.closest('#mobile-menu-button') &&
-            !mobileMenuContent.classList.contains('hidden')) {
-            mobileMenuContent.classList.add('hidden');
-            menuIcon.classList.remove('hidden');
-            closeIcon.classList.add('hidden');
-        }
-    });
+    // document.addEventListener('click', (e) => {
+    //     if (window.innerWidth < 768 &&
+    //         !e.target.closest('#mobile-menu-content') &&
+    //         !e.target.closest('#mobile-menu-button') &&
+    //         !mobileMenuContent.classList.contains('hidden')) {
+    //         mobileMenuContent.classList.add('hidden');
+    //         menuIcon.classList.remove('hidden');
+    //         closeIcon.classList.add('hidden');
+    //     }
+    // });
 
     // Dropdown functions
     function showDropdown(dropdownId) {
