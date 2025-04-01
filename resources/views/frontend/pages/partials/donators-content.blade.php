@@ -108,6 +108,23 @@
                     </svg>
                     ဖုန်းနံပါတ်ကူးရန်
                 </button>
+                {{-- <button onclick="copyPageURL()"
+                    class="px-5 py-2.5 rounded-lg text-white bg-[#44991a] transition font-medium flex items-center justify-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20"
+                        viewBox="0,0,256,256">
+                        <g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt"
+                            stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0"
+                            font-family="none" font-weight="none" font-size="none" text-anchor="none"
+                            style="mix-blend-mode: normal">
+                            <g transform="scale(10.66667,10.66667)">
+                                <path
+                                    d="M16.70703,2.29297l-1.41406,1.41406l2.29297,2.29297h-0.58594c-6.06341,0 -11,4.93659 -11,11v1h2v-1c0,-4.98259 4.01741,-9 9,-9h0.58594l-2.29297,2.29297l1.41406,1.41406l4.70703,-4.70703zM2,8v1v10c0,1.64497 1.35503,3 3,3h14c1.64497,0 3,-1.35503 3,-3v-1v-1h-2v1v1c0,0.56503 -0.43497,1 -1,1h-14c-0.56503,0 -1,-0.43497 -1,-1v-10v-1z">
+                                </path>
+                            </g>
+                        </g>
+                    </svg>
+                    ဝေမျှရန်
+                </button> --}}
             </div>
         </div>
     </div>
@@ -361,19 +378,19 @@
         document.getElementById('modalTownship').textContent = donator.township?.name_mm || donator.township?.name || 'မရှိပါ';
         document.getElementById('modalState').textContent = donator.city?.name_mm || donator.city?.name || 'မရှိပါ';
         document.getElementById('modalPhone').textContent = donator.phone || 'မရှိပါ';
-        
+
         // Handle Viber contact
         const viberValue = donator.viber || donator.contact?.viber || 'မရှိပါ';
         document.getElementById('modalViber').textContent = viberValue;
-        
+
         // Handle Telegram contact
-        const telegramValue = donator.telegram || 
-                            donator.contact?.telegram || 
-                            donator.contact?.telegram_username || 
-                            donator.telegram_username || 
-                            'မရှိပါ';
+        const telegramValue = donator.telegram ||
+            donator.contact?.telegram ||
+            donator.contact?.telegram_username ||
+            donator.telegram_username ||
+            'မရှိပါ';
         document.getElementById('modalTelegram').textContent = telegramValue;
-        
+
         document.getElementById('modalNotes').textContent = donator.remark || 'မရှိပါ';
 
         document.getElementById('donatorModal').classList.remove('hidden');
