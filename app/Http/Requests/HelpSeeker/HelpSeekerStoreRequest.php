@@ -35,9 +35,9 @@ class HelpSeekerStoreRequest extends FormRequest
             'contact'          => "nullable",
             'content'          => 'required',
             'urgent_level'     => 'required',
-            'viber'            => 'required_without:telegram|string|regex:/^\+[1-9]\d{7,15}$/',
-            'telegram'         => 'required_without:viber|string|regex:/^\+[1-9]\d{7,15}$/',
-            'telegram_usename' => 'required_without_all:viber,telegram',
+            'viber'            => 'nullable|string|regex:/^\+[1-9]\d{7,15}$/',
+            'telegram'         => 'nullable|string|regex:/^\+[1-9]\d{7,15}$/',
+            'telegram_usename' => 'nullable',
         ];
     }
 

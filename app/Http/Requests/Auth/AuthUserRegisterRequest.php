@@ -33,8 +33,8 @@ class AuthUserRegisterRequest extends FormRequest
             'township_id'      => 'required|exists:townships,id',
             'category_id'      => 'required|exists:categories,id',
             'phone'            => 'nullable',
-            'viber'            => 'string|regex:/^\+[1-9]\d{7,15}$/',
-            'telegram'         => 'string|regex:/^\+[1-9]\d{7,15}$/',
+            'viber'            => 'nullable|string|regex:/^\+[1-9]\d{7,15}$/',
+            'telegram'         => 'nullable|string|regex:/^\+[1-9]\d{7,15}$/',
             'telegram_usename' => 'nullable',
             'remark'           => 'required',
         ];
