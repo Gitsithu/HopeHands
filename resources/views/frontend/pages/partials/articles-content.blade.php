@@ -171,7 +171,7 @@
                         </path>
                     </svg>
                 </div>
-                <h3 class="text-xl font-bold text-gray-800">Create New Article</h3>
+                <h3 class="text-xl font-bold text-gray-800">သတင်း အသစ်ဖန်တီးပါ။</h3>
             </div>
             <button onclick="closeCreateModal()" class="p-1 rounded-full hover:bg-gray-100 transition">
                 <svg class="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -187,9 +187,9 @@
                 <!-- Title Section -->
                 <div class="space-y-2">
                     <label for="title" class="block text-sm font-medium text-gray-700">
-                        Title <span class="text-red-500">*</span>
+                        သတင်းခေါင်းစဉ် <span class="text-red-500">*</span>
                     </label>
-                    <input type="text" id="title" name="title" placeholder="Enter article title"
+                    <input type="text" id="title" name="title" placeholder="သတင်းခေါင်းစဉ်ထည့်ပါ။"
                         class="w-full px-4 py-3 text-base text-gray-800 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
                     <p class="text-red-500 text-sm mt-1 error-text" id="error-title"></p>
                 </div>
@@ -197,9 +197,10 @@
                 <!-- Content Section -->
                 <div class="space-y-2">
                     <label for="content" class="block text-sm font-medium text-gray-700">
-                        Content <span class="text-red-500">*</span>
+                    သတင်းအကြောင်းအရာ <span class="text-red-500">*</span>
                     </label>
-                    <textarea id="content" name="content" rows="6" placeholder="Write your article content here..."
+                    <textarea id="content" name="content" rows="6"
+                        placeholder="သင့်သတင်းအကြောင်းအရာကို ဤနေရာတွင် ရေးပါ။..."
                         class="w-full px-4 py-3 text-base text-gray-800 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"></textarea>
                     <p class="text-red-500 text-sm mt-1 error-text" id="error-content"></p>
                 </div>
@@ -208,11 +209,11 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div class="space-y-2">
                         <label for="city_id" class="block text-sm font-medium text-gray-700">
-                            City <span class="text-red-500">*</span>
+                        တိုင်း/ပြည်နယ် <span class="text-red-500">*</span>
                         </label>
                         <select id="city_id" name="city_id"
                             class="w-full px-4 py-3 text-base text-gray-800 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
-                            <option value="">Select a city</option>
+                            <option value="">တိုင်း/ပြည်နယ် ရွေးပါ။</option>
                             <!-- Options will be loaded via JavaScript -->
                         </select>
                         <p class="text-red-500 text-sm mt-1 error-text" id="error-city_id"></p>
@@ -220,11 +221,11 @@
 
                     <div class="space-y-2">
                         <label for="township_id" class="block text-sm font-medium text-gray-700">
-                            Township
+                        မြို့နယ်
                         </label>
                         <select id="township_id" name="township_id"
                             class="w-full px-4 py-3 text-base text-gray-800 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
-                            <option value="">Select a township</option>
+                            <option value="">မြို့နယ်ကို ရွေးပါ။</option>
                             <!-- Options will be loaded via JavaScript -->
                         </select>
                         <p class="text-red-500 text-sm mt-1 error-text" id="error-township_id"></p>
@@ -236,7 +237,7 @@
                     <!-- Thumbnail Image Upload -->
                     <div class="space-y-2">
                         <label class="block text-sm font-medium text-gray-700">
-                            Thumbnail Image <span class="text-red-500">*</span>
+                        မျက်နှာစာပုံ <span class="text-red-500">*</span>
                         </label>
                         <div class="mt-1">
                             <label for="thumbnail" class="cursor-pointer">
@@ -251,7 +252,7 @@
                                         </svg>
                                         <span
                                             class="mt-2 block text-sm font-medium text-gray-700 group-hover:text-blue-500 transition">
-                                            Click to upload thumbnail
+                                            မျက်နှာစာပုံကို အပ်လုဒ်လုပ်ရန် နှိပ်ပါ။
                                         </span>
                                         <span class="mt-1 block text-xs text-gray-500">
                                             PNG, JPG, JPEG up to 5MB
@@ -263,12 +264,12 @@
                                                 class="w-full h-48 object-contain rounded border border-gray-200">
                                             <button type="button" onclick="removeImage('thumbnail')"
                                                 class="relative top-2 right-2 bg-red-500 text-white px-2 py-2 rounded hover:bg-red-600 transition">
-                                                Remove Image
+                                                ပုံကို ဖယ်ရှားပါ။
                                             </button>
                                         </div>
                                     </div>
-                                    <input id="thumbnail" name="thumbnail" type="file" accept="image/*"
-                                        class="sr-only" onchange="previewImage(event, 'thumbnail')">
+                                    <input id="thumbnail" name="thumbnail" type="file" accept="image/*" class="sr-only"
+                                        onchange="previewImage(event, 'thumbnail')">
 
                                 </div>
                             </label>
@@ -279,7 +280,7 @@
                     <!-- Additional Images -->
                     <div class="space-y-2">
                         <label class="block text-sm font-medium text-gray-700">
-                            Additional Images (Optional)
+                            အပိုပုံများ (ချန်လှပ်ထားနိုင်သည်)
                         </label>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <!-- Image 1 -->
@@ -287,8 +288,7 @@
                                 <label for="image_1" class="cursor-pointer">
                                     <div
                                         class="group relative border-2 border-dashed border-gray-300 rounded-lg p-4 text-center hover:border-blue-500 transition">
-                                        <div id="image_1-upload-area"
-                                            class="flex flex-col items-center justify-center">
+                                        <div id="image_1-upload-area" class="flex flex-col items-center justify-center">
                                             <svg class="mx-auto h-10 w-10 text-gray-400 group-hover:text-blue-500 transition"
                                                 fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -296,7 +296,7 @@
                                             </svg>
                                             <span
                                                 class="mt-1 block text-xs text-gray-700 group-hover:text-blue-500 transition">
-                                                Add Image </span>
+                                                ပုံထည့်ပါ။ </span>
                                         </div>
                                         <div id="image_1-preview-container" class="hidden mt-4">
                                             <div class="relative">
@@ -304,13 +304,13 @@
                                                     class="w-full h-40 object-contain rounded border border-gray-200">
                                                 <button type="button" onclick="removeImage('image_1')"
                                                     class="relative top-2 right-2 bg-red-500 text-white px-2 py-2 rounded hover:bg-red-600 transition">
-                                                    Remove Image
+                                                    ပုံကို ဖယ်ရှားပါ။
                                                 </button>
                                                 </button>
                                             </div>
                                         </div>
-                                        <input id="image_1" name="image_1" type="file" accept="image/*"
-                                            class="sr-only" onchange="previewImage(event, 'image_1')">
+                                        <input id="image_1" name="image_1" type="file" accept="image/*" class="sr-only"
+                                            onchange="previewImage(event, 'image_1')">
                                     </div>
                                 </label>
                             </div>
@@ -320,8 +320,7 @@
                                 <label for="image_2" class="cursor-pointer">
                                     <div
                                         class="group relative border-2 border-dashed border-gray-300 rounded-lg p-4 text-center hover:border-blue-500 transition">
-                                        <div id="image_2-upload-area"
-                                            class="flex flex-col items-center justify-center">
+                                        <div id="image_2-upload-area" class="flex flex-col items-center justify-center">
                                             <svg class="mx-auto h-10 w-10 text-gray-400 group-hover:text-blue-500 transition"
                                                 fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -329,7 +328,7 @@
                                             </svg>
                                             <span
                                                 class="mt-1 block text-xs text-gray-700 group-hover:text-blue-500 transition">
-                                                Add Image
+                                                ပုံထည့်ပါ။
                                             </span>
                                         </div>
                                         <div id="image_2-preview-container" class="hidden mt-4">
@@ -338,12 +337,12 @@
                                                     class="w-full h-40 object-contain rounded border border-gray-200">
                                                 <button type="button" onclick="removeImage('image_2')"
                                                     class="relative top-2 right-2 bg-red-500 text-white px-2 py-2 rounded hover:bg-red-600 transition">
-                                                    Remove Image
+                                                    ပုံကို ဖယ်ရှားပါ။
                                                 </button>
                                             </div>
                                         </div>
-                                        <input id="image_2" name="image_2" type="file" accept="image/*"
-                                            class="sr-only" onchange="previewImage(event, 'image_2')">
+                                        <input id="image_2" name="image_2" type="file" accept="image/*" class="sr-only"
+                                            onchange="previewImage(event, 'image_2')">
                                     </div>
                                 </label>
                             </div>
@@ -355,15 +354,15 @@
                 <div class="flex flex-col sm:flex-row justify-end gap-3 pt-6 border-t border-gray-200">
                     <button type="button" onclick="closeCreateModal()"
                         class="px-5 py-2.5 bg-white text-gray-700 rounded-lg hover:bg-gray-50 transition font-medium border border-gray-300 flex items-center justify-center">
-                        Cancel
+                        မလုပ်ပါ
                     </button>
                     <button type="submit"
-                        class="px-5 py-2.5 rounded-lg text-white bg-blue-600 hover:bg-blue-700 transition font-medium flex items-center justify-center gap-2">
+                        class="px-5 py-2.5 rounded-lg text-white bg-[#44991a] hover:bg-[#44991a] transition font-medium flex items-center justify-center gap-2">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7">
                             </path>
                         </svg>
-                        Create Article
+                        သတင်းဖန်တီးပါ။
                     </button>
                 </div>
             </form>
@@ -410,7 +409,7 @@
         if (input.files && input.files[0]) {
             const reader = new FileReader();
 
-            reader.onload = function(e) {
+            reader.onload = function (e) {
                 preview.src = e.target.result;
                 previewContainer.classList.remove('hidden');
                 uploadArea.classList.add('hidden');
@@ -443,7 +442,7 @@
         window.history.replaceState({}, document.title, window.location.pathname);
     }
 
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         // Extract the search data from the URL
         const queryParams = new URLSearchParams(window.location.search);
         currentSearchData = {
@@ -841,7 +840,7 @@
             const citySelect = document.getElementById('city_id');
 
             if (data.status && data.data) {
-                citySelect.innerHTML = '<option value="">Select a city</option>' +
+                citySelect.innerHTML = '<option value="">တိုင်း/ပြည်နယ် ရွေးပါ။</option>' +
                     data.data.map(city =>
                         `<option value="${city.id}">${city.name}</option>`
                     ).join('');
@@ -850,7 +849,7 @@
             console.error('Error loading cities:', error);
             showErrorToast("Error loading cities");
         }
-        document.getElementById('city_id').addEventListener('change', async function() {
+        document.getElementById('city_id').addEventListener('change', async function () {
             const cityId = this.value;
             const townshipSelect = document.getElementById('township_id');
 
@@ -876,7 +875,7 @@
     }
 
 
-    document.getElementById('createArticleForm').addEventListener('submit', async function(e) {
+    document.getElementById('createArticleForm').addEventListener('submit', async function (e) {
         e.preventDefault();
         clearValidationErrors();
 

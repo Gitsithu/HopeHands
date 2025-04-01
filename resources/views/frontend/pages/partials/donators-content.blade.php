@@ -54,12 +54,12 @@
         </div>
         <p class="mt-2 text-gray-600">Loading help seekers...</p>
     </div>
-    <button onclick="openCreateModal()"
+    <!-- <button onclick="openCreateModal()"
         class="floating-button fixed bottom-6 right-6 flex items-center justify-center w-14 h-14 rounded-full bg-blue-600 text-white bg-[#44991a] hover:bg-blue-700 transition shadow-lg z-40">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
         </svg>
-    </button>
+    </button> -->
 </div>
 
 <!-- Detail Modal -->
