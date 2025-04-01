@@ -1,7 +1,7 @@
 <?php
-
 namespace App\Models;
 
+use App\Models\CategoryContribution;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -45,5 +45,10 @@ class HelpSeeker extends Model
     public function category()
     {
         return $this->belongsTo(Category::class)->select('id', 'name_mm as name');
+    }
+
+    public function categoryContributions()
+    {
+        return $this->hasMany(CategoryContribution::class);
     }
 }
