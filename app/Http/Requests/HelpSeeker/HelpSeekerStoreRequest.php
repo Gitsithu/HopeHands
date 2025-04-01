@@ -29,7 +29,7 @@ class HelpSeekerStoreRequest extends FormRequest
             'phone'            => 'required',
             'city_id'          => 'required',
             // 'division_id' => 'required',
-<<<<<<< HEAD
+<<<<<<<<< Temporary merge branch 1
             'category_id'      => 'required',
             'township_id'      => 'nullable',
             'location'         => 'required',
@@ -55,7 +55,7 @@ class HelpSeekerStoreRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required'                     => 'အကူအညီတောင်းခံသူဧ။် အမည် ဖြည့်ရန်လိုအပ်ပါသည်။',
+            'name.required'                         => 'အကူအညီတောင်းခံသူဧ။် အမည် ဖြည့်ရန်လိုအပ်ပါသည်။',
             'city_id.required'                      => 'မြို့ရွေးချယ်ရန်လိုအပ်ပါသည်။',
             'city_id.exists'                        => 'ရွေးချယ်ထားသော မြို့သည် မရှိပါ။',
             'township_id.required'                  => 'မြို့နယ်ရွေးချယ်ရန်လိုအပ်ပါသည်။',
