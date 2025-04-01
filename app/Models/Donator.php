@@ -17,6 +17,7 @@ class Donator extends Model
         'phone',
         'contact',
         'remark',
+        'link',
         'status',
     ];
 

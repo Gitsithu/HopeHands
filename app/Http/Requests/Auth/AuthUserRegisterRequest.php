@@ -37,6 +37,7 @@ class AuthUserRegisterRequest extends FormRequest
             'telegram'         => 'required_without:viber|string|regex:/^\+[1-9]\d{7,12}$/',
             'telegram_usename' => 'required_without_all:viber,telegram',
             'remark'           => 'required',
+            'link'             => 'nullable'
         ];
     }
 

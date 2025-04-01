@@ -39,6 +39,7 @@ class HelpSeekerStoreRequest extends FormRequest
             'viber' => 'required_without:telegram|string|regex:/^\+[1-9]\d{7,10}$/',
             'telegram' => 'required_without:viber|string|regex:/^\+[1-9]\d{7,10}$/',
             'telegram_usename' => 'required_without_all:viber,telegram',
+            'link' => 'nullable'
         ];
     }
 

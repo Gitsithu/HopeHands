@@ -92,6 +92,10 @@
                         <p class="text-xs font-medium text-gray-500 mb-1">တည်နေရာ အသေးစိတ်</p>
                         <p id="modalLocation" class="text-base font-medium text-gray-800"></p>
                     </div>
+                    <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                        <p class="text-xs font-medium text-gray-500 mb-1">Link တင်ရန်</p>
+                        <p id="modalLink" class="text-base font-medium text-gray-800"></p>
+                    </div>
                 </div>
 
                 <!-- Urgent Level Section -->
@@ -283,6 +287,14 @@
                             တည်နေရာအသေးစိတ် <span class="text-red-500">*</span>
                         </label>
                         <input type="text" id="location" name="location" required
+                            class="w-full px-4 py-2.5 text-sm text-gray-800 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+
+                    <div class="mt-4 space-y-2">
+                        <label for="link" class="block text-sm font-medium text-gray-700">
+                            Link တင်ရန်
+                        </label>
+                        <input type="text" id="link" name="link" required
                             class="w-full px-4 py-2.5 text-sm text-gray-800 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                     </div>
                 </div>
@@ -689,6 +701,7 @@
         document.getElementById('modalTownship').textContent = helpSeeker.township?.name || 'မရှိပါ';
         document.getElementById('modalCity').textContent = helpSeeker.city?.name || 'မရှိပါ';
         document.getElementById('modalLocation').textContent = helpSeeker.location || 'မရှိပါ';
+        document.getElementById('modalLink').textContent = helpSeeker.link || 'မရှိပါ';
         document.getElementById('modalPhone').textContent = helpSeeker.phone || 'မရှိပါ';
         document.getElementById('modalViber').textContent = helpSeeker.contact?.viber || 'မရှိပါ';
         document.getElementById('modalTelegram').textContent = helpSeeker.contact?.telegram || helpSeeker.contact

@@ -91,6 +91,14 @@
                         <p id="modalNotes" class="text-gray-700"></p>
                     </div>
                 </div>
+
+                <div class="space-y-4">
+                    <h4 class="text-sm font-semibold text-gray-500 uppercase tracking-wider">Link တင်ရန်</h4>
+                    <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                        <p class="text-xs font-medium text-gray-500 mb-2">Link တင်ရန်</p>
+                        <p id="modalLink" class="text-gray-700"></p>
+                    </div>
+                </div>
             </div>
 
             <!-- Footer Buttons -->
@@ -375,6 +383,9 @@
         document.getElementById('modalTelegram').textContent = telegramValue;
         
         document.getElementById('modalNotes').textContent = donator.remark || 'မရှိပါ';
+
+        document.getElementById('modalLink').textContent = donator.link || 'မရှိပါ';
+
 
         document.getElementById('donatorModal').classList.remove('hidden');
     }

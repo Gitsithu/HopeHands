@@ -3,35 +3,24 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
-class HelpSeeker extends Model
+class Blog extends Model
 {
-    use SoftDeletes;
-
     protected $fillable = [
-        'name',
-        'phone',
         'division_id',
         'city_id',
         'township_id',
-        'category_id',
-        'location',
+        'title',
         'content',
-        'contact',
-        'urgent_level',
         'link',
         'status',
+        'image_url',
+        'thumbnail',
     ];
 
     protected $casts = [
-        'contact' => 'json',
+        'image_url' => 'array',
     ];
-
-    public function division()
-    {
-        return $this->belongsTo(Division::class)->select('id', 'name_mm as name');
-    }
 
     public function city()
     {
@@ -41,10 +30,5 @@ class HelpSeeker extends Model
     public function township()
     {
         return $this->belongsTo(Township::class)->select('id', 'name_mm as name');
-    }
-
-    public function category()
-    {
-        return $this->belongsTo(Category::class)->select('id', 'name_mm as name');
     }
 }
