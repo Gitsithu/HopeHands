@@ -30,7 +30,7 @@ return [
 
     'disks'   => [
 
-        'local'         => [
+        'local'  => [
             'driver' => 'local',
             'root'   => storage_path('app/private'),
             'serve'  => true,
@@ -38,7 +38,7 @@ return [
             'report' => false,
         ],
 
-        'public'        => [
+        'public' => [
             'driver'     => 'local',
             'root'       => storage_path('app/public'),
             'url'        => env('APP_URL') . '/storage',
@@ -46,8 +46,8 @@ return [
             'throw'      => false,
             'report'     => false,
         ],
-        'max_file_size' => env('MAX_FILE_SIZE', 100 * 1024 * 1024), // 100MB
-        's3'            => [
+        // 'max_file_size' => env('MAX_FILE_SIZE', 100 * 1024 * 1024), // 100MB
+        's3'     => [
             'driver'                  => 's3',
             'key'                     => env('AWS_ACCESS_KEY_ID'),
             'secret'                  => env('AWS_SECRET_ACCESS_KEY'),
