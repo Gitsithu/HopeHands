@@ -2,6 +2,7 @@
     /* Add this to your existing styles */
     .floating-button {
         animation: float 3s ease-in-out infinite;
+        background: #44991a;
     }
 
     @keyframes float {
@@ -21,6 +22,23 @@
     .floating-button:hover {
         animation: none;
     }
+
+    .error-text {
+        color: #ef4444;
+        font-size: 0.875rem;
+        margin-top: 0.25rem;
+    }
+
+    input:invalid,
+    select:invalid {
+        border-color: #ef4444;
+    }
+
+    input:invalid:focus,
+    select:invalid:focus {
+        border-color: #ef4444;
+        box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.2);
+    }
 </style>
 <div class="mt-6">
     <!-- Search Results Container -->
@@ -37,7 +55,7 @@
         <p class="mt-2 text-gray-600">Loading help seekers...</p>
     </div>
     <button onclick="openCreateModal()"
-        class="floating-button fixed bottom-6 right-6 flex items-center justify-center w-14 h-14 rounded-full bg-blue-600 text-white hover:bg-blue-700 transition shadow-lg z-40">
+        class="floating-button fixed bottom-6 right-6 flex items-center justify-center w-14 h-14 rounded-full bg-blue-600 text-white bg-[#44991a] hover:bg-blue-700 transition shadow-lg z-40">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
         </svg>
@@ -156,6 +174,23 @@
                     </svg>
                     ဖုန်းနံပါတ်ကူးရန်
                 </button>
+                {{-- <button onclick="copyPageURL()"
+                    class="px-5 py-2.5 rounded-lg text-white bg-[#44991a] transition font-medium flex items-center justify-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20"
+                        viewBox="0,0,256,256">
+                        <g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt"
+                            stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0"
+                            font-family="none" font-weight="none" font-size="none" text-anchor="none"
+                            style="mix-blend-mode: normal">
+                            <g transform="scale(10.66667,10.66667)">
+                                <path
+                                    d="M16.70703,2.29297l-1.41406,1.41406l2.29297,2.29297h-0.58594c-6.06341,0 -11,4.93659 -11,11v1h2v-1c0,-4.98259 4.01741,-9 9,-9h0.58594l-2.29297,2.29297l1.41406,1.41406l4.70703,-4.70703zM2,8v1v10c0,1.64497 1.35503,3 3,3h14c1.64497,0 3,-1.35503 3,-3v-1v-1h-2v1v1c0,0.56503 -0.43497,1 -1,1h-14c-0.56503,0 -1,-0.43497 -1,-1v-10v-1z">
+                                </path>
+                            </g>
+                        </g>
+                    </svg>
+                    ဝေမျှရန်
+                </button> --}}
             </div>
         </div>
     </div>
@@ -206,34 +241,37 @@
                             <label for="name" class="block text-sm font-medium text-gray-700">
                                 အမည်အပြည့်အစုံ <span class="text-red-500">*</span>
                             </label>
-                            <input type="text" id="name" name="name" required
+                            <input type="text" id="name" name="name"
                                 class="w-full px-4 py-2.5 text-sm text-gray-800 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                            <p class="text-red-500 text-sm mt-1 error-text" id="error-name"></p>
                         </div>
 
                         <div class="space-y-2">
                             <label for="category" class="block text-sm font-medium text-gray-700">
                                 အကူအညီအမျိုးအစား <span class="text-red-500">*</span>
                             </label>
-                            <select id="category" name="category_id" required
+                            <select id="category" name="category_id"
                                 class="w-full px-4 py-2.5 text-sm text-gray-800 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                                 <option value=""></option>
                                 <!-- Categories will be loaded via JavaScript -->
                             </select>
+                            <p class="text-red-500 text-sm mt-1 error-text" id="error-category_id"></p>
                         </div>
 
                         <div class="space-y-2">
                             <label for="urgent_level" class="block text-sm font-medium text-gray-700">
                                 အရေးပေါ်သတ်မှတ်ချက် <span class="text-red-500">*</span>
                             </label>
-                            <select id="urgent_level" name="urgent_level" required
+                            <select id="urgent_level" name="urgent_level"
                                 class="w-full px-4 py-2.5 text-sm text-gray-800 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                                 <option value="">Select urgent level</option>
                                 <option value="high">High (အရေးတကြီး)</option>
                                 <option value="medium">Medium (သာမန်ထက်ပို)</option>
                                 <option value="low">Low (စောင့်ဆိုင်း၍ရ)</option>
                             </select>
+                            <p class="text-red-500 text-sm mt-1 error-text" id="error-urgent_level"></p>
                         </div>
-                        <div id="contact-fields-container"></div>
+
                     </div>
 
 
@@ -241,8 +279,9 @@
                         <label for="content" class="block text-sm font-medium text-gray-700">
                             အကြောင်းအရာ <span class="text-red-500">*</span>
                         </label>
-                        <textarea id="content" name="content" rows="4" required
+                        <textarea id="content" name="content" rows="4"
                             class="w-full px-4 py-2.5 text-sm text-gray-800 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"></textarea>
+                        <p class="text-red-500 text-sm mt-1 error-text" id="error-content"></p>
                     </div>
                 </div>
 
@@ -263,22 +302,24 @@
                             <label for="city" class="block text-sm font-medium text-gray-700">
                                 တိုင်းဒေသကြီး/ပြည်နယ် <span class="text-red-500">*</span>
                             </label>
-                            <select id="city" name="city_id" required
+                            <select id="city" name="city_id"
                                 class="w-full px-4 py-2.5 text-sm text-gray-800 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                                 <option value="">Select a city</option>
                                 <!-- Cities will be loaded via JavaScript -->
                             </select>
+                            <p class="text-red-500 text-sm mt-1 error-text" id="error-city_id"></p>
                         </div>
 
                         <div class="space-y-2">
                             <label for="township" class="block text-sm font-medium text-gray-700">
-                                မြို့နယ် <span class="text-red-500">*</span>
+                                မြို့နယ်
                             </label>
-                            <select id="township" name="township_id" required
+                            <select id="township" name="township_id"
                                 class="w-full px-4 py-2.5 text-sm text-gray-800 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                                 <option value="">Select a township</option>
                                 <!-- Townships will be loaded via JavaScript -->
                             </select>
+                            <p class="text-red-500 text-sm mt-1 error-text" id="error-township_id"></p>
                         </div>
                     </div>
 
@@ -286,8 +327,9 @@
                         <label for="location" class="block text-sm font-medium text-gray-700">
                             တည်နေရာအသေးစိတ် <span class="text-red-500">*</span>
                         </label>
-                        <input type="text" id="location" name="location" required
+                        <input type="text" id="location" name="location"
                             class="w-full px-4 py-2.5 text-sm text-gray-800 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                        <p class="text-red-500 text-sm mt-1 error-text" id="error-location"></p>
                     </div>
 
                     <div class="mt-4 space-y-2">
@@ -341,7 +383,7 @@
                         Cancel
                     </button>
                     <button type="submit"
-                        class="px-5 py-2.5 rounded-lg text-white bg-blue-600 hover:bg-blue-700 transition font-medium flex items-center justify-center gap-2">
+                        class="px-5 py-2.5 rounded-lg text-white bg-[#44991a] hover:bg-[#44991a] transition font-medium flex items-center justify-center gap-2">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
@@ -644,7 +686,7 @@
 
         for (let i = startPage; i <= endPage; i++) {
             const pageButton = document.createElement('button');
-            pageButton.className = `px-3.5 py-1.5 rounded-md ${i === data.current_page ? 'bg-blue-600 text-white border border-blue-600' : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300'}`;
+            pageButton.className = `px-3.5 py-1.5 rounded-md ${i === data.current_page ? 'bg-[#44991a] text-white border border-[#44991a]' : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300'}`;
             pageButton.textContent = i;
             pageButton.onclick = () => {
                 currentPage = i;
@@ -854,14 +896,16 @@
         }
     }
 
-    // Handle form submission
-    // Handle form submission
+
     document.getElementById('createHelpSeekerForm').addEventListener('submit', async function (e) {
         e.preventDefault();
+
+        clearValidationErrors();
 
         // Get form data
         const formData = new FormData(this);
         const formObject = Object.fromEntries(formData.entries());
+
 
         axios.post(`${BASE_API_URL}/help-seeker/store`, formData, {
             headers: {
@@ -884,59 +928,22 @@
                     alert("⚠️ Server error! Please try again later.");
                 }
             });
-
-        // Add CSRF token if needed (assuming you're using Laravel)
-        // formObject._token = document.querySelector('meta[name="csrf-token"]').content;
-
-        // try {
-        //     const submitButton = this.querySelector('button[type="submit"]');
-        //     const originalButtonText = submitButton.innerHTML;
-        //     submitButton.innerHTML = `
-        //     <svg class="animate-spin -ml-1 mr-2 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-        //         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-        //         <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-        //     </svg>
-        //     Processing...
-        // `;
-        //     submitButton.disabled = true;
-
-        //     // Make the API request
-        //     const response = await fetch(`${BASE_API_URL}/help-seeker/store`, {
-        //         method: 'POST',
-        //         headers: {
-        //             'Content-Type': 'application/json',
-        //             'Accept': 'application/json',
-        //             // Add CSRF token header if needed
-        //             // 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-        //         },
-        //         body: JSON.stringify(formObject)
-        //     });
-
-        //     const data = await response.json();
-
-        //     if (response.ok && data.status) {
-        //         showSuccessToast("Help seeker created successfully!");
-        //         closeCreateModal();
-        //         this.reset();
-        //         bindSearchData(currentPage); // Refresh the list
-        //     } else {
-        //         // Handle validation errors or other errors
-        //         if (data.errors) {
-        //             const errorMessages = Object.values(data.errors).join('<br>');
-        //             showErrorToast(errorMessages);
-        //         } else {
-        //             showErrorToast(data.message || "Error creating help seeker");
-        //         }
-        //     }
-        // } catch (error) {
-        //     console.error('Error creating help seeker:', error);
-        //     showErrorToast("Network error. Please try again.");
-        // } finally {
-        //     // Reset button state
-        //     if (submitButton) {
-        //         submitButton.innerHTML = originalButtonText;
-        //         submitButton.disabled = false;
-        //     }
-        // }
     });
+    //for validation erros 
+    function clearValidationErrors() {
+        document.querySelectorAll('.error-text').forEach(el => {
+            el.textContent = '';
+        });
+    }
+    function showValidationErrors(errors) {
+        for (const [field, messages] of Object.entries(errors)) {
+            const errorElement = document.getElementById(`error-${field}`);
+            if (errorElement) {
+                // Join multiple error messages with line breaks
+                errorElement.textContent = messages.join('\n');
+            } else {
+                console.warn(`No error element found for field: ${field}`);
+            }
+        }
+    }
 </script>

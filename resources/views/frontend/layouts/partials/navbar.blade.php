@@ -101,9 +101,7 @@
                 <div class="relative">
                     <input type="text" id="mobile-city-search"
                         class="px-4 py-3 w-full bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 rounded-lg text-white placeholder-gray-400"
-                        placeholder="တိုင်း/ပြည်နယ်" 
-                        onclick="showDropdown('mobile-city-dropdown')" 
-                        data-id=""/>
+                        placeholder="တိုင်း/ပြည်နယ်" onclick="showDropdown('mobile-city-dropdown')" data-id="" />
                     <div id="mobile-city-dropdown"
                         class="hidden absolute z-20 mt-1 w-full bg-gray-800 text-white rounded-lg shadow-xl max-h-60 overflow-y-auto border border-gray-700">
                         <!-- Options will be populated by JavaScript -->
@@ -114,9 +112,7 @@
                 <div class="relative">
                     <input type="text" id="mobile-township-search"
                         class="px-4 py-3 w-full bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 rounded-lg text-white placeholder-gray-400"
-                        placeholder="မြို့နယ်" 
-                        onclick="showDropdown('mobile-township-dropdown')"
-                        data-id=""/>
+                        placeholder="မြို့နယ်" onclick="showDropdown('mobile-township-dropdown')" data-id="" />
                     <div id="mobile-township-dropdown"
                         class="hidden absolute z-20 mt-1 w-full bg-gray-800 text-white rounded-lg shadow-xl max-h-60 overflow-y-auto border border-gray-700">
                         <!-- Options will be populated by JavaScript -->
@@ -127,9 +123,7 @@
                 <div class="relative">
                     <input type="text" id="mobile-category-search"
                         class="px-4 py-3 w-full bg-gray-800 border border-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 rounded-lg text-white placeholder-gray-400"
-                        placeholder="အမျိုးအစား" 
-                        onclick="showDropdown('mobile-category-dropdown')"
-                        data-id=""/>
+                        placeholder="အမျိုးအစား" onclick="showDropdown('mobile-category-dropdown')" data-id="" />
                     <div id="mobile-category-dropdown"
                         class="hidden absolute z-20 mt-1 w-full bg-gray-800 text-white rounded-lg shadow-xl max-h-60 overflow-y-auto border border-gray-700">
                         <!-- Options will be populated by JavaScript -->
@@ -297,16 +291,16 @@
 
 
     // Close menu when clicking outside on mobile
-    document.addEventListener('click', (e) => {
-        if (window.innerWidth < 768 &&
-            !e.target.closest('#mobile-menu-content') &&
-            !e.target.closest('#mobile-menu-button') &&
-            !mobileMenuContent.classList.contains('hidden')) {
-            mobileMenuContent.classList.add('hidden');
-            menuIcon.classList.remove('hidden');
-            closeIcon.classList.add('hidden');
-        }
-    });
+    // document.addEventListener('click', (e) => {
+    //     if (window.innerWidth < 768 &&
+    //         !e.target.closest('#mobile-menu-content') &&
+    //         !e.target.closest('#mobile-menu-button') &&
+    //         !mobileMenuContent.classList.contains('hidden')) {
+    //         mobileMenuContent.classList.add('hidden');
+    //         menuIcon.classList.remove('hidden');
+    //         closeIcon.classList.add('hidden');
+    //     }
+    // });
 
     // Dropdown functions
     function showDropdown(dropdownId) {
@@ -715,7 +709,7 @@
                 division: document.getElementById('mobile-city-search').getAttribute('data-id') ??
                     null,
                 township: document.getElementById('mobile-township-search').getAttribute(
-                    'data-id') ??
+                        'data-id') ??
                     null,
                 category: document.getElementById('mobile-category-search').getAttribute(
                     'data-id') ?? null
