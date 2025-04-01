@@ -36,7 +36,7 @@ class HelpSeekerController extends Controller
                 'location' => $postData['location'],
                 'content' => $postData['content'],
                 'urgent_level' => $postData['urgent_level'],
-                'link' => $postData['link'],
+                'link' => $postData['link'] ?? null,
                 'contact' => [
                     'telegram' => $postData['telegram'] ?? null,
                     'telegram_usename' => $postData['telegram_usename'] ?? null,
