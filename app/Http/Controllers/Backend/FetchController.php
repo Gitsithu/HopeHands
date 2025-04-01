@@ -54,21 +54,19 @@ class FetchController extends Controller
     {
         $type = $request->type;
         if ($type == 'donators') {
-            $query = Donator::with('city', 'township', 'category', 'user');
+            $query = Donator::with('city', 'township', 'category', 'user', 'categoryContributions.category');
         } elseif ($type == 'receivers') {
-            $query = HelpSeeker::with('city', 'township', 'category');
+            $query = HelpSeeker::with('city', 'township', 'category', 'categoryContributions.category');
         } else {
-            $data = HelpSeeker::with('city', 'township', 'category')->orderBy('updated_at')->paginate(9);
+            $data = HelpSeeker::with('city', 'township', 'category', 'categoryContributions.category')->orderBy('updated_at')->paginate(9);
             return $this->successResponse($data);
         }
 
         if ($request->division) {
             $query->where('city_id', (int) $request->division);
-            Log::info('Division work');
         }
         if ($request->township) {
             $query->where('township_id', (int) $request->township);
-            Log::info('Township work');
         }
         if ($request->category) {
             $categoryId = (int) $request->category;
@@ -80,20 +78,8 @@ class FetchController extends Controller
                     $q->whereNull('donator_id');
                 }
             });
-            Log::info('category work');
         }
-
-        // $filters = [
-        //     'city_id'     => $request->division ? (int) $request->division : null,
-        //     'township_id' => ($request->division && $request->township) ? (int) $request->township : null,
-        //     'category_id' => $request->category ? (int) $request->category : null,
-        // ];
-
-        // foreach (array_filter($filters) as $column => $value) {
-        //     $query->where($column, $value);
-        // }
-
-        $data = $query->orderBy('updated_at')->paginate(9);
+        $data = $query->orderBy('updated_at', 'desc')->paginate(9);
         return $this->successResponse($data);
     }
 }

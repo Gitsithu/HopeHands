@@ -253,7 +253,7 @@
                 allowClear: true,
                 width: '100%',
                 multiple: true,
-                maximumSelectionLength: 3,
+                maximumSelectionLength: 2,
                 closeOnSelect: false,
                 language: {
                     noResults: function() {

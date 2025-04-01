@@ -696,7 +696,7 @@
                     null,
                 category: document.getElementById('category-search').getAttribute('data-id') ?? null
             };
-            console.log(searchData);
+
             sendSearchRequest(searchData);
         });
 

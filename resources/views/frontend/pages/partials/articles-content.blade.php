@@ -267,9 +267,9 @@
                                             </button>
                                         </div>
                                     </div>
-                                    <input id="thumbnail" name="thumbnail" type="file" accept="image/*" class="sr-only"
-                                        onchange="previewImage(event, 'thumbnail')">
-                                        
+                                    <input id="thumbnail" name="thumbnail" type="file" accept="image/*"
+                                        class="sr-only" onchange="previewImage(event, 'thumbnail')">
+
                                 </div>
                             </label>
                         </div>
@@ -287,7 +287,8 @@
                                 <label for="image_1" class="cursor-pointer">
                                     <div
                                         class="group relative border-2 border-dashed border-gray-300 rounded-lg p-4 text-center hover:border-blue-500 transition">
-                                        <div id="image_1-upload-area" class="flex flex-col items-center justify-center">
+                                        <div id="image_1-upload-area"
+                                            class="flex flex-col items-center justify-center">
                                             <svg class="mx-auto h-10 w-10 text-gray-400 group-hover:text-blue-500 transition"
                                                 fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -295,22 +296,21 @@
                                             </svg>
                                             <span
                                                 class="mt-1 block text-xs text-gray-700 group-hover:text-blue-500 transition">
-                                                Add Image 1
-                                            </span>
+                                                Add Image </span>
                                         </div>
                                         <div id="image_1-preview-container" class="hidden mt-4">
                                             <div class="relative">
                                                 <img id="image_1-preview" src="#" alt="Image 1 Preview"
                                                     class="w-full h-40 object-contain rounded border border-gray-200">
-                                                    <button type="button" onclick="removeImage('image_1')"
+                                                <button type="button" onclick="removeImage('image_1')"
                                                     class="relative top-2 right-2 bg-red-500 text-white px-2 py-2 rounded hover:bg-red-600 transition">
                                                     Remove Image
                                                 </button>
                                                 </button>
                                             </div>
                                         </div>
-                                        <input id="image_1" name="image_1" type="file" accept="image/*" class="sr-only"
-                                            onchange="previewImage(event, 'image_1')">
+                                        <input id="image_1" name="image_1" type="file" accept="image/*"
+                                            class="sr-only" onchange="previewImage(event, 'image_1')">
                                     </div>
                                 </label>
                             </div>
@@ -320,7 +320,8 @@
                                 <label for="image_2" class="cursor-pointer">
                                     <div
                                         class="group relative border-2 border-dashed border-gray-300 rounded-lg p-4 text-center hover:border-blue-500 transition">
-                                        <div id="image_2-upload-area" class="flex flex-col items-center justify-center">
+                                        <div id="image_2-upload-area"
+                                            class="flex flex-col items-center justify-center">
                                             <svg class="mx-auto h-10 w-10 text-gray-400 group-hover:text-blue-500 transition"
                                                 fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -328,21 +329,21 @@
                                             </svg>
                                             <span
                                                 class="mt-1 block text-xs text-gray-700 group-hover:text-blue-500 transition">
-                                                Add Image 2
+                                                Add Image
                                             </span>
                                         </div>
                                         <div id="image_2-preview-container" class="hidden mt-4">
                                             <div class="relative">
                                                 <img id="image_2-preview" src="#" alt="Image 2 Preview"
                                                     class="w-full h-40 object-contain rounded border border-gray-200">
-                                                    <button type="button" onclick="removeImage('image_2')"
+                                                <button type="button" onclick="removeImage('image_2')"
                                                     class="relative top-2 right-2 bg-red-500 text-white px-2 py-2 rounded hover:bg-red-600 transition">
                                                     Remove Image
                                                 </button>
                                             </div>
                                         </div>
-                                        <input id="image_2" name="image_2" type="file" accept="image/*" class="sr-only"
-                                            onchange="previewImage(event, 'image_2')">
+                                        <input id="image_2" name="image_2" type="file" accept="image/*"
+                                            class="sr-only" onchange="previewImage(event, 'image_2')">
                                     </div>
                                 </label>
                             </div>
@@ -392,7 +393,11 @@
     function formatDate(dateString) {
         if (!dateString) return '';
         const date = new Date(dateString);
-        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        const options = {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        };
         return date.toLocaleDateString('my-MM', options);
     }
 
@@ -405,7 +410,7 @@
         if (input.files && input.files[0]) {
             const reader = new FileReader();
 
-            reader.onload = function (e) {
+            reader.onload = function(e) {
                 preview.src = e.target.result;
                 previewContainer.classList.remove('hidden');
                 uploadArea.classList.add('hidden');
@@ -438,7 +443,7 @@
         window.history.replaceState({}, document.title, window.location.pathname);
     }
 
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
         // Extract the search data from the URL
         const queryParams = new URLSearchParams(window.location.search);
         currentSearchData = {
@@ -473,7 +478,9 @@
             // var response = await axios.get(`${FILTER_API_URL}/search?page=${page}`, {
             //     params: params,
             // });
-            var response = await axios.get(ARTICLES_API_URL, { params: params });
+            var response = await axios.get(ARTICLES_API_URL, {
+                params: params
+            });
             var data = response.data;
             if (data.status && data.data) {
                 currentData = data.data;
@@ -516,7 +523,8 @@
             const card = document.createElement('div');
             const defaultImage = "{{ asset('frontend/assets/images/no-image.jpg') }}";
             const thumbnail = item.thumbnail ? `/storage/${item.thumbnail}` : defaultImage;
-            card.className = 'bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-all';
+            card.className =
+                'bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-all';
             card.innerHTML = `
              <div class="p-5 h-full flex flex-col">
     <!-- Thumbnail Image with Fixed Aspect Ratio (16:9) -->
@@ -587,7 +595,8 @@
 
         // Previous button
         const prevButton = document.createElement('button');
-        prevButton.className = `px-3 py-1.5 rounded-md ${data.current_page > 1 ? 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300' : 'bg-gray-100 text-gray-400 cursor-not-allowed border border-gray-200'}`;
+        prevButton.className =
+            `px-3 py-1.5 rounded-md ${data.current_page > 1 ? 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300' : 'bg-gray-100 text-gray-400 cursor-not-allowed border border-gray-200'}`;
         prevButton.innerHTML = `
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
@@ -614,7 +623,8 @@
         // First page and ellipsis if needed
         if (startPage > 1) {
             const firstPageButton = document.createElement('button');
-            firstPageButton.className = 'px-3.5 py-1.5 rounded-md bg-white text-gray-700 hover:bg-gray-50 border border-gray-300';
+            firstPageButton.className =
+                'px-3.5 py-1.5 rounded-md bg-white text-gray-700 hover:bg-gray-50 border border-gray-300';
             firstPageButton.textContent = '1';
             firstPageButton.onclick = () => bindSearchData(currentSearchData, 1);
             paginationContainer.appendChild(firstPageButton);
@@ -630,7 +640,8 @@
         // Page buttons
         for (let i = startPage; i <= endPage; i++) {
             const pageButton = document.createElement('button');
-            pageButton.className = `px-3.5 py-1.5 rounded-md ${i === data.current_page ? 'bg-[#44991a] text-white border border-[#44991a]' : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300'}`;
+            pageButton.className =
+                `px-3.5 py-1.5 rounded-md ${i === data.current_page ? 'bg-[#44991a] text-white border border-[#44991a]' : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300'}`;
             pageButton.textContent = i;
             pageButton.onclick = () => bindSearchData(currentSearchData, i);
             paginationContainer.appendChild(pageButton);
@@ -646,7 +657,8 @@
             }
 
             const lastPageButton = document.createElement('button');
-            lastPageButton.className = 'px-3.5 py-1.5 rounded-md bg-white text-gray-700 hover:bg-gray-50 border border-gray-300';
+            lastPageButton.className =
+                'px-3.5 py-1.5 rounded-md bg-white text-gray-700 hover:bg-gray-50 border border-gray-300';
             lastPageButton.textContent = data.last_page;
             lastPageButton.onclick = () => bindSearchData(currentSearchData, data.last_page);
             paginationContainer.appendChild(lastPageButton);
@@ -654,7 +666,8 @@
 
         // Next button
         const nextButton = document.createElement('button');
-        nextButton.className = `px-3 py-1.5 rounded-md ${data.current_page < data.last_page ? 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300' : 'bg-gray-100 text-gray-400 cursor-not-allowed border border-gray-200'}`;
+        nextButton.className =
+            `px-3 py-1.5 rounded-md ${data.current_page < data.last_page ? 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300' : 'bg-gray-100 text-gray-400 cursor-not-allowed border border-gray-200'}`;
         nextButton.innerHTML = `
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
@@ -691,7 +704,7 @@
         if (article.thumbnail) {
             thumbnailImg.src = `/storage/${article.thumbnail}`;
         } else {
-            thumbnailImg.src = '{{ asset("frontend/assets/images/no-image.jpg") }}';
+            thumbnailImg.src = '{{ asset('frontend/assets/images/no-image.jpg') }}';
         }
         thumbnailContainer.classList.remove('hidden');
 
@@ -748,7 +761,8 @@
     // Show success toast
     function showSuccessToast(message) {
         const toast = document.createElement('div');
-        toast.className = 'fixed bottom-4 right-4 flex items-center bg-green-500 text-white px-4 py-2 rounded-md shadow-lg z-50 animate-fade-in';
+        toast.className =
+            'fixed bottom-4 right-4 flex items-center bg-green-500 text-white px-4 py-2 rounded-md shadow-lg z-50 animate-fade-in';
         toast.innerHTML = `
             <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
@@ -768,7 +782,8 @@
     // Show error toast
     function showErrorToast(message) {
         const toast = document.createElement('div');
-        toast.className = 'fixed bottom-4 right-4 flex items-center bg-red-500 text-white px-4 py-2 rounded-md shadow-lg z-50 animate-fade-in';
+        toast.className =
+            'fixed bottom-4 right-4 flex items-center bg-red-500 text-white px-4 py-2 rounded-md shadow-lg z-50 animate-fade-in';
         toast.innerHTML = `
             <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
@@ -835,7 +850,7 @@
             console.error('Error loading cities:', error);
             showErrorToast("Error loading cities");
         }
-        document.getElementById('city_id').addEventListener('change', async function () {
+        document.getElementById('city_id').addEventListener('change', async function() {
             const cityId = this.value;
             const townshipSelect = document.getElementById('township_id');
 
@@ -861,7 +876,7 @@
     }
 
 
-    document.getElementById('createArticleForm').addEventListener('submit', async function (e) {
+    document.getElementById('createArticleForm').addEventListener('submit', async function(e) {
         e.preventDefault();
         clearValidationErrors();
 
@@ -879,6 +894,9 @@
                 closeCreateModal();
                 // Refresh the articles list
                 bindSearchData(currentSearchData, currentPage);
+                removeImage('thumbnail');
+                removeImage('image_1');
+                removeImage('image_2');
             } else {
                 showErrorToast(response.data.message || "Failed to create article");
             }
@@ -892,12 +910,56 @@
         }
     });
 
-    //for validation erros 
+    function removeImage(id) {
+        const previewContainer = document.getElementById(`${id}-preview-container`);
+        const previewImage = document.getElementById(`${id}-preview`);
+
+        if (previewImage) {
+            previewImage.src = "#"; // Remove the image source
+            previewImage.classList.add("hidden"); // Hide the image
+        }
+
+        // Optionally, replace the preview with a default upload UI
+        if (id == "thumbnail") {
+            var defaultUploadUI = `<div id="thumbnail-upload-area" class="flex flex-col items-center justify-center">
+                                        <svg class="mx-auto h-12 w-12 text-gray-400 group-hover:text-blue-500 transition"
+                                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z">
+                                            </path>
+                                        </svg>
+                                        <span
+                                            class="mt-2 block text-sm font-medium text-gray-700 group-hover:text-blue-500 transition">
+                                            Click to upload thumbnail
+                                        </span>
+                                        <span class="mt-1 block text-xs text-gray-500">
+                                            PNG, JPG, JPEG up to 5MB
+                                        </span>
+                                    </div>`;
+        } else {
+            var defaultUploadUI = `<div id="${id}-upload-area"
+                                            class="flex flex-col items-center justify-center">
+                                            <svg class="mx-auto h-10 w-10 text-gray-400 group-hover:text-blue-500 transition"
+                                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                            </svg>
+                                            <span
+                                                class="mt-1 block text-xs text-gray-700 group-hover:text-blue-500 transition">
+                                                Add Image
+                                            </span>
+                                        </div>`;
+        }
+        previewContainer.innerHTML = defaultUploadUI;
+    }
+
+    //for validation erros
     function clearValidationErrors() {
         document.querySelectorAll('.error-text').forEach(el => {
             el.textContent = '';
         });
     }
+
     function showValidationErrors(errors) {
         for (const [field, messages] of Object.entries(errors)) {
             const errorElement = document.getElementById(`error-${field}`);

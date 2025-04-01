@@ -17,7 +17,7 @@ Route::prefix('admin')->group(function () {
     Route::prefix('filter')->group(function () {
         // category
         Route::get('/search', [FetchController::class, 'fetchFilter']);
-        Route::get('/changes', [FetchController::class, 'filter']);
+        // Route::get('/changes', [FetchController::class, 'filter']);
     });
 
     Route::prefix('division')->group(function () {

@@ -421,7 +421,7 @@
         allowClear: true,
         width: '100%',
         multiple: true,
-        maximumSelectionLength: 3,
+        maximumSelectionLength: 2,
         closeOnSelect: false,
         language: {
             noResults: function() {
@@ -558,22 +558,39 @@
 
         data.forEach(item => {
             const card = document.createElement('div');
+            let categoryNames = [];
+            item.category_contributions?.forEach(contribution => {
+                if (contribution.category?.name) {
+                    categoryNames.push(contribution.category.name);
+                }
+            });
+            const result = categoryNames.join(", ");
             card.className =
                 'bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-all';
             card.innerHTML = `
                 <div class="p-5">
                     <div class="flex items-start justify-between">
                         <div>
-                            <h3 class="text-lg font-semibold text-gray-800">${item.name || 'N/A'}</h3>
+                            <h3 class="text-lg font-semibold text-gray-800">${item.name || 'မရှိပါ။'}</h3>
                         </div>
-                         <span class="inline-block mt-1 px-2 py-2 text-xs font-medium rounded-full bg-blue-100 text-blue-800">
-                                ${item.category?.name || 'Donor'}
-                            </span>
                     </div>
 
                     <div class="mt-4 space-y-3">
                     </div><div class="mt-4 space-y-4">
     <!-- Township -->
+                    <div class="flex items-start">
+                        <svg class="flex-shrink-0 mt-0.5 mr-3 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9.568 3H5.25A2.25 2.25 0 0 0 3 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 0 0 5.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 0 0 9.568 3Z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 6h.008v.008H6V6Z" />
+                            </svg>
+
+                        <div>
+                            <p class="text-sm font-medium text-gray-800">
+                                <span class="text-gray-500">အမျိုးအစား - </span>
+                                ${categoryNames}
+                            </p>
+                        </div>
+                    </div>
                     <div class="flex items-start">
                         <svg class="flex-shrink-0 mt-0.5 mr-3 h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
@@ -582,7 +599,7 @@
                         <div>
                             <p class="text-sm font-medium text-gray-800">
                                 <span class="text-gray-500">မြို့နယ် - </span>
-                                ${item.township?.name || 'N/A'}
+                                ${item.township?.name || 'မရှိပါ။'}
                             </p>
                         </div>
                     </div>
@@ -764,7 +781,7 @@
     function showDonatorDetail(helpSeeker) {
 
         document.getElementById('modalName').textContent = helpSeeker.name || 'မရှိပါ';
-        document.getElementById('modalCategory').textContent = helpSeeker.category?.name || 'မရှိပါ';
+        // document.getElementById('modalCategory').textContent = helpSeeker.category?.name || 'မရှိပါ';
 
         const urgentLevelElement = document.getElementById('modalUrgentLevel');
         urgentLevelElement.textContent = getUrgentLevelBurmese(helpSeeker.urgent_level) || 'မရှိပါ';
