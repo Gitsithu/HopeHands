@@ -20,7 +20,7 @@ class ArticleController extends Controller
 
     public function index()
     {
-        $data = Blog::orderBy('updated_at')->with('city', 'township')->get();
+        $data = Blog::orderBy('updated_at')->with('city', 'township')->paginate(9);
         return $this->successResponse($data);
     }
 

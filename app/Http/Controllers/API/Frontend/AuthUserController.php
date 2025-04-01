@@ -33,7 +33,7 @@ class AuthUserController extends Controller
                 'city_id'     => $postData['city_id'],
                 'township_id' => $postData['township_id'],
                 'phone'       => $postData['phone'],
-                'link'        => $postData['link'],
+                'link'        => $postData['link'] ?? null,
                 'contact'     => [
                     'viber'            => $postData['viber'] ?? null,
                     'telegram'         => $postData['telegram'] ?? null,
