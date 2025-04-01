@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\Frontend;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\AuthUserLoginRequest;
 use App\Http\Requests\Auth\AuthUserRegisterRequest;
+use App\Models\CategoryContribution;
 use App\Models\Donator;
 use App\Models\User;
 use App\Traits\ApiResponseTrait;
@@ -11,6 +12,7 @@ use App\Traits\ImageUploadTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class AuthUserController extends Controller
 {
@@ -25,22 +27,9 @@ class AuthUserController extends Controller
             $postData               = $request->validated();
             $postData['is_donator'] = 1;
             $postData['name']       = $postData['username'];
+            $user                   = User::create($postData);
 
-            // if (isset($postData['front_view'])) {
-            //     $postData['front_view'] = $this->uploadImage($postData['front_view'], 'KYC');
-            // }
-
-            // if (isset($postData['back_view'])) {
-            //     $postData['back_view'] = $this->uploadImage($postData['back_view'], 'KYC');
-            // }
-            // $postData['kyc'] = [
-            //     'front_view' => $postData['front_view'] ?? null,
-            //     'back_view'  => $postData['back_view'] ?? null,
-            // ];
-            $user = User::create($postData);
-            // $token   = $user->createToken('User Token')->plainTextToken;
             $donator = [
-                'category_id' => $postData['category_id'],
                 'city_id'     => $postData['city_id'],
                 'township_id' => $postData['township_id'],
                 'phone'       => $postData['phone'],
@@ -52,11 +41,18 @@ class AuthUserController extends Controller
                 'remark'      => $postData['remark'] ?? null,
                 'user_id'     => $user->id,
             ];
-            // $user['token'] = $token;
-            Donator::create($donator);
+            $data            = Donator::create($donator);
+            $categoryDonator = [
+                'donator_id' => $data['id'],
+            ];
+            foreach ($postData['category_ids'] as $category) {
+                $categoryDonator['category_id'] = $category;
+                CategoryContribution::create($categoryDonator);
+            }
             DB::commit();
             return $this->successResponse($user, 'User registered successfully', 201);
         } catch (\Exception $e) {
+            Log::info('Error :' . $e);
             DB::rollBack();
             return $this->errorResponse('User registration failed', 500, ['error' => $e->getMessage()]);
         }

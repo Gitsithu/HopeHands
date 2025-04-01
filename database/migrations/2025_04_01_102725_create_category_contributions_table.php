@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('category_contributions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('donator_id')->nullable()->constrained('divisions');
-            $table->foreignId('help_seeker_id')->nullable()->constrained('divisions');
-            $table->foreignId('category_id')->nullable()->constrained('divisions');
+            $table->foreignId('donator_id')->nullable()->constrained('donators');
+            $table->foreignId('help_seeker_id')->nullable()->constrained('help_seekers');
+            $table->foreignId('category_id')->nullable()->constrained('categories');
             $table->timestamps();
             $table->softDeletes();
         });
