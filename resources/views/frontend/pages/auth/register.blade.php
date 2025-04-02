@@ -453,7 +453,7 @@
                     </label>
                     <input
                         class="w-full px-4 py-2.5 text-sm text-gray-800 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                        type="text" id="telegram-username" name="telegram_username" placeholder="@username">
+                        type="text" id="telegram-username" name="telegram_usename" placeholder="@username">
                         <p class="text-red-500 text-sm mt-1 error-text" id="error-telegram_username"></p>
                 </div>
                 <div class="mb-4">

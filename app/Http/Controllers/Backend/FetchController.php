@@ -14,7 +14,6 @@ class FetchController extends Controller
 
     public function filter(Request $request)
     {
-        Log::info('Request', [$request->all()]);
         $type = $request->type;
         if ($type == 'donators') {
             $query = Donator::with('city', 'township', 'category', 'user', 'categoryContributions.category');
@@ -27,11 +26,9 @@ class FetchController extends Controller
 
         if ($request->division) {
             $query->where('city_id', (int) $request->division);
-            Log::info('Division work');
         }
         if ($request->township) {
             $query->where('township_id', (int) $request->township);
-            Log::info('Township work');
         }
         if ($request->category) {
             $categoryId = (int) $request->category;
@@ -43,7 +40,6 @@ class FetchController extends Controller
                     $q->whereNull('donator_id');
                 }
             });
-            Log::info('category work');
         }
         $data = $query->orderBy('updated_at', 'desc')->paginate(9);
 
