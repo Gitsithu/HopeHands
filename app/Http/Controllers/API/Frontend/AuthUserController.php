@@ -21,6 +21,7 @@ class AuthUserController extends Controller
 
     public function register(AuthUserRegisterRequest $request)
     {
+
         // Handle user registration logic
         DB::beginTransaction();
         try {

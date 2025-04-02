@@ -469,7 +469,7 @@
                 </label>
                 <input
                     class="w-full px-4 py-2.5 text-sm text-gray-800 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                    type="text" id="telegram-username" name="telegram_username" placeholder="@username">
+                    type="text" id="telegram-username" name="telegram_usename" placeholder="@username">
                 <p class="text-red-500 text-sm mt-1 error-text" id="error-telegram_username"></p>
             </div>
             <div class="mb-4">
@@ -792,8 +792,8 @@
         document.getElementById('modalLink').textContent = helpSeeker.link || 'မရှိပါ';
         document.getElementById('modalPhone').textContent = helpSeeker.phone || 'မရှိပါ';
         document.getElementById('modalViber').textContent = helpSeeker.contact?.viber || 'မရှိပါ';
-        document.getElementById('modalTelegram').textContent = helpSeeker.contact?.telegram || helpSeeker.contact
-            ?.telegram_username || 'မရှိပါ';
+        document.getElementById('modalTelegram').textContent = helpSeeker.contact?.telegram || 'မရှိပါ';
+        document.getElementById('modalTelegramUsername').textContent = helpSeeker.contact?.telegram_usename || 'မရှိပါ';
         document.getElementById('modalHelpType').textContent = helpSeeker.category?.name || 'မရှိပါ';
         document.getElementById('modalContent').textContent = helpSeeker.content || 'မရှိပါ';
 
