@@ -66,6 +66,10 @@
         overflow: hidden;
         text-overflow: ellipsis;
     }
+
+    .lineHeight {
+        line-height: 2;
+    }
 </style>
 <div class="mt-6">
     <!-- Search Results Container -->
@@ -144,8 +148,9 @@
 
             <!-- Article Content -->
             <div class="prose max-w-none mb-6 text-lg leading-relaxed text-gray-700">
-                <p id="modalContent" class="text-left whitespace-pre-line"></p>
+                <p id="modalContent" class="text-left leading-8 lineHeight overflow-x-hidden px-4"></p>
             </div>
+
 
             <!-- Additional Images -->
             <div id="extraImagesContainer" class="mb-6 space-y-4 hidden"></div>
@@ -197,7 +202,7 @@
                 <!-- Content Section -->
                 <div class="space-y-2">
                     <label for="content" class="block text-sm font-medium text-gray-700">
-                    သတင်းအကြောင်းအရာ <span class="text-red-500">*</span>
+                        သတင်းအကြောင်းအရာ <span class="text-red-500">*</span>
                     </label>
                     <textarea id="content" name="content" rows="6"
                         placeholder="သင့်သတင်းအကြောင်းအရာကို ဤနေရာတွင် ရေးပါ။..."
@@ -209,7 +214,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div class="space-y-2">
                         <label for="city_id" class="block text-sm font-medium text-gray-700">
-                        တိုင်း/ပြည်နယ် <span class="text-red-500">*</span>
+                            တိုင်း/ပြည်နယ် <span class="text-red-500">*</span>
                         </label>
                         <select id="city_id" name="city_id"
                             class="w-full px-4 py-3 text-base text-gray-800 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
@@ -221,7 +226,7 @@
 
                     <div class="space-y-2">
                         <label for="township_id" class="block text-sm font-medium text-gray-700">
-                        မြို့နယ်
+                            မြို့နယ်
                         </label>
                         <select id="township_id" name="township_id"
                             class="w-full px-4 py-3 text-base text-gray-800 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
@@ -231,13 +236,25 @@
                         <p class="text-red-500 text-sm mt-1 error-text" id="error-township_id"></p>
                     </div>
                 </div>
+                <div class="space-y-2">
+                    <label for="article_link" class="block text-sm font-medium text-gray-700">
+                        Original Article Link (Optional)
+                    </label>
+                    <input type="url" id="article_link" name="link" placeholder="https://www.example.com"
+                        class="w-full px-4 py-3 text-base text-gray-800 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+                        pattern="https?://.+">
+                    <p class="text-gray-500 text-xs mt-1">
+                        Enter the full URL including https://
+                    </p>
+                    <p class="text-red-500 text-sm mt-1 error-text" id="error-link"></p>
+                </div>
 
                 <!-- Image Upload Section -->
                 <div class="space-y-4">
                     <!-- Thumbnail Image Upload -->
                     <div class="space-y-2">
                         <label class="block text-sm font-medium text-gray-700">
-                        မျက်နှာစာပုံ <span class="text-red-500">*</span>
+                            မျက်နှာစာပုံ <span class="text-red-500">*</span>
                         </label>
                         <div class="mt-1">
                             <label for="thumbnail" class="cursor-pointer">
@@ -276,6 +293,7 @@
                         </div>
                         <p class="text-red-500 text-sm mt-1 error-text" id="error-thumbnail"></p>
                     </div>
+
 
                     <!-- Additional Images -->
                     <div class="space-y-2">
@@ -696,6 +714,38 @@
         // Set article content
         document.getElementById('modalContent').textContent = article.content || 'မရှိပါ';
 
+        // Handle link display
+        const linkHtml = article.link ? `
+        <div class="mt-6 bg-gray-50 rounded-lg border border-gray-200 p-4 hover:bg-gray-100 transition">
+            <div class="space-y-1">
+                <p class="text-sm font-medium text-gray-500">Link</p>
+                <a href="${article.link.startsWith('http') ? article.link : 'https://' + article.link}"
+                   target="_blank" 
+                   rel="noopener noreferrer"
+                   class="text-blue-600 hover:underline break-all">
+                   ${article.link}
+                </a>
+            </div>
+        </div>
+    ` : `
+        <div class="mt-6 bg-gray-50 rounded-lg border border-gray-200 p-4">
+            <div class="space-y-1">
+                <p class="text-sm font-medium text-gray-500">Link</p>
+                <p class="text-gray-600">မရှိပါ</p>
+            </div>
+        </div>
+    `;
+
+        // Create or update link container
+        let linkContainer = document.getElementById('linkContainer');
+        if (!linkContainer) {
+            linkContainer = document.createElement('div');
+            linkContainer.id = 'linkContainer';
+            // Insert after the article content
+            document.getElementById('modalContent').insertAdjacentElement('afterend', linkContainer);
+        }
+        linkContainer.innerHTML = linkHtml;
+
         // Handle thumbnail image
         const thumbnailImg = document.getElementById('modalThumbnail');
         const thumbnailContainer = document.getElementById('thumbnailContainer');
@@ -735,6 +785,7 @@
         } else {
             extraImagesContainer.classList.add('hidden');
         }
+
         // Show the modal
         document.getElementById('helpSeekerModal').classList.remove('hidden');
     }
