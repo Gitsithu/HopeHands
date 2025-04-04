@@ -27,7 +27,6 @@ class AuthUserController extends Controller
         try {
             $postData               = $request->validated();
             $postData['is_donator'] = 1;
-            $postData['name']       = $postData['username'];
             $user                   = User::create($postData);
 
             $donator = [
@@ -114,7 +113,7 @@ class AuthUserController extends Controller
         try {
             $user = auth()->guard('api')->user();
 
-            $query = Donator::with(['user', 'division', 'city', 'township', 'category', 'categoryContributions.category'])->orderByDesc('created_at');
+            $query = Donator::with(['user', 'division', 'city', 'township', 'category', 'categoryContributions.category'])->orderBy('updated_at', 'desc');
 
             if ($user) {
                 $query->where('user_id', '!=', $user->id);
