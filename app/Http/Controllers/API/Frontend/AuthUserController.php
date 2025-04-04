@@ -27,7 +27,6 @@ class AuthUserController extends Controller
         try {
             $postData               = $request->validated();
             $postData['is_donator'] = 1;
-            $postData['name']       = $postData['username'];
             $user                   = User::create($postData);
 
             $donator = [

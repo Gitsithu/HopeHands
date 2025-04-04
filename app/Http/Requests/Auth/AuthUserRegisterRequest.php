@@ -24,7 +24,7 @@ class AuthUserRegisterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'username'         => 'required',
+            'name'         => 'required',
             // 'password'         => 'required|min:6',
             // 'confirm_password' => 'same:password',
             // 'front_view'       => 'required|image|mimes:png,jpg,jpeg',
@@ -45,8 +45,8 @@ class AuthUserRegisterRequest extends FormRequest
     public function messages()
     {
         return [
-            'username.required'    => 'သင့်၏ အသုံးပြုသူအမည် ဖြည့်ရန်လိုအပ်ပါသည်။',
-            'username.unique'      => 'ဤ အသုံးပြုသူအမည်သည် ရှိပြီးသား ဖြစ်ပါသည်။',
+            'name.required'    => 'သင့်၏ အသုံးပြုသူအမည် ဖြည့်ရန်လိုအပ်ပါသည်။',
+            // 'name.unique'      => 'ဤ အသုံးပြုသူအမည်သည် ရှိပြီးသား ဖြစ်ပါသည်။',
             // 'password.required'                     => 'စကားဝှက် ဖြည့်ရန်လိုအပ်ပါသည်။',
             // 'password.min'                          => 'စကားဝှက်တွင် အနည်းဆုံး ၆ လုံး ပါဝင်ရမည်။',
             // 'confirm_password.same'                 => 'စကားဝှက် နှင့် ကိုက်ညီမှုမရှိပါ။',
