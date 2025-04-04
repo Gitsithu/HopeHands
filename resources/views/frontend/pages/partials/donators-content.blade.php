@@ -207,7 +207,8 @@
                 </div>
                 <button onclick="closeCreateModal()" class="p-1 rounded-full hover:bg-gray-100 transition">
                     <svg class="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M6 18L18 6M6 6l12 12">
                         </path>
                     </svg>
                 </button>
@@ -221,7 +222,8 @@
                 <!-- Basic Information Section -->
                 <div class="bg-gray-50 p-5 rounded-lg">
                     <h4 class="text-base font-semibold text-gray-700 mb-4 flex items-center">
-                        <svg class="w-5 h-5 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-5 h-5 mr-2 text-blue-500" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                         </svg>
@@ -280,7 +282,8 @@
                 <!-- Location Information Section -->
                 <div class="bg-gray-50 p-5 rounded-lg">
                     <h4 class="text-base font-semibold text-gray-700 mb-4 flex items-center">
-                        <svg class="w-5 h-5 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-5 h-5 mr-2 text-blue-500" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -336,7 +339,8 @@
                 <!-- Contact Information Section -->
                 <div class="bg-gray-50 p-5 rounded-lg">
                     <h4 class="text-base font-semibold text-gray-700 mb-4 flex items-center">
-                        <svg class="w-5 h-5 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-5 h-5 mr-2 text-blue-500" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z">
                             </path>
@@ -412,7 +416,7 @@
     const paginationContainer = document.getElementById('pagination-container');
     const loadingIndicator = document.getElementById('loading-indicator');
 
-    document.getElementById('contact-method').addEventListener('change', function () {
+    document.getElementById('contact-method').addEventListener('change', function() {
         const container = document.getElementById('contact-fields');
         container.innerHTML = ''; // Clear previous fields
 
@@ -458,7 +462,7 @@
         window.history.replaceState({}, document.title, window.location.pathname);
     }
 
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
         // Extract the search data from the URL
         const queryParams = new URLSearchParams(window.location.search);
         currentSearchData = {
@@ -732,9 +736,7 @@
 
     // Show donator detail modal
     function showDonatorDetail(helpSeeker) {
-
-        console.log(helpSeeker, 'helpSeeker');
-
+        // Clear previous content
         let categoryNames = [];
         helpSeeker.category_contributions?.forEach(contribution => {
             if (contribution.category?.name) {
@@ -763,7 +765,7 @@
             <div class="space-y-1">
                 <p class="text-sm font-medium text-gray-500">မူရင်း Link</p>
                 <a href="${helpSeeker.link.startsWith('http') ? helpSeeker.link : 'https://' + helpSeeker.link}"
-                   target="_blank" 
+                   target="_blank"
                    rel="noopener noreferrer"
                    class="text-blue-600 hover:underline break-all">
                    ${helpSeeker.link}
@@ -911,7 +913,7 @@
             }
 
             // Load townships when city is selected
-            document.getElementById('city').addEventListener('change', async function () {
+            document.getElementById('city').addEventListener('change', async function() {
                 const cityId = this.value;
                 const townshipSelect = document.getElementById('township');
 
@@ -937,7 +939,7 @@
     }
 
 
-    document.getElementById('createHelpSeekerForm').addEventListener('submit', async function (e) {
+    document.getElementById('createHelpSeekerForm').addEventListener('submit', async function(e) {
         e.preventDefault();
 
         clearValidationErrors();
@@ -948,10 +950,10 @@
 
 
         axios.post(`${BASE_API_URL}/help-seeker/store`, formData, {
-            headers: {
-                "Content-Type": "multipart/form-data"
-            }
-        })
+                headers: {
+                    "Content-Type": "multipart/form-data"
+                }
+            })
             .then(response => {
                 if (response.data.data) {
 
