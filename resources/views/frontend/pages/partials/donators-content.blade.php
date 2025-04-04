@@ -106,10 +106,6 @@
                             <p id="modalCity" class="text-base font-medium text-gray-800"></p>
                         </div>
                     </div>
-                    <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
-                        <p class="text-xs font-medium text-gray-500 mb-1">Link တင်ရန်</p>
-                        <p id="modalLink" class="text-base font-medium text-gray-800"></p>
-                    </div>
                 </div>
 
                 <!-- Urgent Level Section -->
@@ -737,8 +733,8 @@
     // Show donator detail modal
     function showDonatorDetail(helpSeeker) {
 
-        console.log(helpSeeker,'helpSeeker');
-        
+        console.log(helpSeeker, 'helpSeeker');
+
         let categoryNames = [];
         helpSeeker.category_contributions?.forEach(contribution => {
             if (contribution.category?.name) {
@@ -755,14 +751,43 @@
 
         document.getElementById('modalTownship').textContent = helpSeeker.township?.name || 'မရှိပါ';
         document.getElementById('modalCity').textContent = helpSeeker.city?.name || 'မရှိပါ';
-        // document.getElementById('modalLocation').textContent = helpSeeker.location || 'မရှိပါ';
-        document.getElementById('modalLink').textContent = helpSeeker.link || 'မရှိပါ';
         document.getElementById('modalPhone').textContent = helpSeeker.phone || 'မရှိပါ';
         document.getElementById('modalViber').textContent = helpSeeker.contact?.viber || 'မရှိပါ';
         document.getElementById('modalTelegram').textContent = helpSeeker.contact?.telegram || 'မရှိပါ';
         document.getElementById('modalTelegramUsername').textContent = helpSeeker.contact?.telegram_usename || 'မရှိပါ';
         document.getElementById('modalHelpType').textContent = categoryNames || 'မရှိပါ';
         document.getElementById('modalContent').textContent = helpSeeker.remark || 'မရှိပါ';
+
+        const linkHtml = helpSeeker.link ? `
+        <div class="mt-6 bg-gray-50 rounded-lg border border-gray-200 p-4 hover:bg-gray-100 transition">
+            <div class="space-y-1">
+                <p class="text-sm font-medium text-gray-500">မူရင်း Link</p>
+                <a href="${helpSeeker.link.startsWith('http') ? helpSeeker.link : 'https://' + helpSeeker.link}"
+                   target="_blank" 
+                   rel="noopener noreferrer"
+                   class="text-blue-600 hover:underline break-all">
+                   ${helpSeeker.link}
+                </a>
+            </div>
+        </div>
+    ` : `
+        <div class="mt-6 bg-gray-50 rounded-lg border border-gray-200 p-4">
+            <div class="space-y-1">
+                <p class="text-sm font-medium text-gray-500">Link</p>
+                <p class="text-gray-600">မရှိပါ</p>
+            </div>
+        </div>
+    `;
+
+        // Create or update link container
+        let linkContainer = document.getElementById('linkContainer');
+        if (!linkContainer) {
+            linkContainer = document.createElement('div');
+            linkContainer.id = 'linkContainer';
+            // Insert after the article content
+            document.getElementById('modalContent').insertAdjacentElement('afterend', linkContainer);
+        }
+        linkContainer.innerHTML = linkHtml;
 
         document.getElementById('helpSeekerModal').classList.remove('hidden');
     }

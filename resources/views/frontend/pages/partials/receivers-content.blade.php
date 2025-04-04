@@ -110,10 +110,6 @@
                         <p class="text-xs font-medium text-gray-500 mb-1">တည်နေရာ အသေးစိတ်</p>
                         <p id="modalLocation" class="text-base font-medium text-gray-800"></p>
                     </div>
-                    <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
-                        <p class="text-xs font-medium text-gray-500 mb-1">Link တင်ရန်</p>
-                        <p id="modalLink" class="text-base font-medium text-gray-800"></p>
-                    </div>
                 </div>
 
                 <!-- Urgent Level Section -->
@@ -215,8 +211,7 @@
                 </div>
                 <button onclick="closeCreateModal()" class="p-1 rounded-full hover:bg-gray-100 transition">
                     <svg class="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M6 18L18 6M6 6l12 12">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
                         </path>
                     </svg>
                 </button>
@@ -230,8 +225,7 @@
                 <!-- Basic Information Section -->
                 <div class="bg-gray-50 p-5 rounded-lg">
                     <h4 class="text-base font-semibold text-gray-700 mb-4 flex items-center">
-                        <svg class="w-5 h-5 mr-2 text-blue-500" fill="none" stroke="currentColor"
-                            viewBox="0 0 24 24">
+                        <svg class="w-5 h-5 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                         </svg>
@@ -290,8 +284,7 @@
                 <!-- Location Information Section -->
                 <div class="bg-gray-50 p-5 rounded-lg">
                     <h4 class="text-base font-semibold text-gray-700 mb-4 flex items-center">
-                        <svg class="w-5 h-5 mr-2 text-blue-500" fill="none" stroke="currentColor"
-                            viewBox="0 0 24 24">
+                        <svg class="w-5 h-5 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -339,16 +332,17 @@
                         <label for="link" class="block text-sm font-medium text-gray-700">
                             Link တင်ရန်
                         </label>
-                        <input type="text" id="link" name="link"
-                            class="w-full px-4 py-2.5 text-sm text-gray-800 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                        <input type="url" id="link" name="link" placeholder="https://example.com"
+                            class="w-full px-4 py-2.5 text-sm text-gray-800 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                            pattern="https?://.+">
+                        <p class="text-red-500 text-sm mt-1 error-text" id="error-link"></p>
                     </div>
                 </div>
 
                 <!-- Contact Information Section -->
                 <div class="bg-gray-50 p-5 rounded-lg">
                     <h4 class="text-base font-semibold text-gray-700 mb-4 flex items-center">
-                        <svg class="w-5 h-5 mr-2 text-blue-500" fill="none" stroke="currentColor"
-                            viewBox="0 0 24 24">
+                        <svg class="w-5 h-5 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z">
                             </path>
@@ -424,10 +418,10 @@
         maximumSelectionLength: 2,
         closeOnSelect: false,
         language: {
-            noResults: function() {
+            noResults: function () {
                 return "ရလဒ်မတွေ့ပါ";
             },
-            maximumSelected: function(e) {
+            maximumSelected: function (e) {
                 return "အများဆုံး " + e.maximum + " ခုသာ ရွေးချယ်နိုင်ပါသည်";
             }
         }
@@ -443,7 +437,7 @@
     const paginationContainer = document.getElementById('pagination-container');
     const loadingIndicator = document.getElementById('loading-indicator');
 
-    document.getElementById('contact-method').addEventListener('change', function() {
+    document.getElementById('contact-method').addEventListener('change', function () {
         const container = document.getElementById('contact-fields');
         container.innerHTML = ''; // Clear previous fields
 
@@ -489,7 +483,7 @@
         window.history.replaceState({}, document.title, window.location.pathname);
     }
 
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         // Extract the search data from the URL
         const queryParams = new URLSearchParams(window.location.search);
         currentSearchData = {
@@ -779,6 +773,44 @@
 
     // Show donator detail modal
     function showDonatorDetail(helpSeeker) {
+        console.log(helpSeeker);
+        let categoryNames = [];
+        helpSeeker.category_contributions?.forEach(contribution => {
+            if (contribution.category?.name) {
+                categoryNames.push(contribution.category.name);
+            }
+        });
+
+        const linkHtml = helpSeeker.link ? `
+        <div class="mt-6 bg-gray-50 rounded-lg border border-gray-200 p-4 hover:bg-gray-100 transition">
+            <div class="space-y-1">
+                <p class="text-sm font-medium text-gray-500">Link</p>
+                <a href="${helpSeeker.link.startsWith('http') ? helpSeeker.link : 'https://' + helpSeeker.link}"
+                   target="_blank" 
+                   rel="noopener noreferrer"
+                   class="text-blue-600 hover:underline break-all">
+                   ${helpSeeker.link}
+                </a>
+            </div>
+        </div>
+    ` : `
+        <div class="mt-6 bg-gray-50 rounded-lg border border-gray-200 p-4">
+            <div class="space-y-1">
+                <p class="text-sm font-medium text-gray-500">မူရင်း Link</p>
+                <p class="text-gray-600">မရှိပါ</p>
+            </div>
+        </div>
+    `;
+
+        // Create or update link container
+        let linkContainer = document.getElementById('linkContainer');
+        if (!linkContainer) {
+            linkContainer = document.createElement('div');
+            linkContainer.id = 'linkContainer';
+            // Insert after the article content
+            document.getElementById('modalContent').insertAdjacentElement('afterend', linkContainer);
+        }
+        linkContainer.innerHTML = linkHtml;
 
         document.getElementById('modalName').textContent = helpSeeker.name || 'မရှိပါ';
         // document.getElementById('modalCategory').textContent = helpSeeker.category?.name || 'မရှိပါ';
@@ -789,12 +821,11 @@
         document.getElementById('modalTownship').textContent = helpSeeker.township?.name || 'မရှိပါ';
         document.getElementById('modalCity').textContent = helpSeeker.city?.name || 'မရှိပါ';
         document.getElementById('modalLocation').textContent = helpSeeker.location || 'မရှိပါ';
-        document.getElementById('modalLink').textContent = helpSeeker.link || 'မရှိပါ';
         document.getElementById('modalPhone').textContent = helpSeeker.phone || 'မရှိပါ';
         document.getElementById('modalViber').textContent = helpSeeker.contact?.viber || 'မရှိပါ';
         document.getElementById('modalTelegram').textContent = helpSeeker.contact?.telegram || 'မရှိပါ';
         document.getElementById('modalTelegramUsername').textContent = helpSeeker.contact?.telegram_usename || 'မရှိပါ';
-        document.getElementById('modalHelpType').textContent = helpSeeker.category?.name || 'မရှိပါ';
+        document.getElementById('modalHelpType').textContent = categoryNames || 'မရှိပါ';
         document.getElementById('modalContent').textContent = helpSeeker.content || 'မရှိပါ';
 
         document.getElementById('helpSeekerModal').classList.remove('hidden');
@@ -919,7 +950,7 @@
             }
 
             // Load townships when city is selected
-            document.getElementById('city').addEventListener('change', async function() {
+            document.getElementById('city').addEventListener('change', async function () {
                 const cityId = this.value;
                 const townshipSelect = document.getElementById('township');
 
@@ -945,7 +976,7 @@
     }
 
 
-    document.getElementById('createHelpSeekerForm').addEventListener('submit', async function(e) {
+    document.getElementById('createHelpSeekerForm').addEventListener('submit', async function (e) {
         e.preventDefault();
 
         clearValidationErrors();
@@ -956,10 +987,10 @@
 
 
         axios.post(`${BASE_API_URL}/help-seeker/store`, formData, {
-                headers: {
-                    "Content-Type": "multipart/form-data"
-                }
-            })
+            headers: {
+                "Content-Type": "multipart/form-data"
+            }
+        })
             .then(response => {
                 if (response.data.data) {
 

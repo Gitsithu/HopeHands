@@ -718,7 +718,7 @@
         const linkHtml = article.link ? `
         <div class="mt-6 bg-gray-50 rounded-lg border border-gray-200 p-4 hover:bg-gray-100 transition">
             <div class="space-y-1">
-                <p class="text-sm font-medium text-gray-500">Link</p>
+                <p class="text-sm font-medium text-gray-500">မူရင်း Link</p>
                 <a href="${article.link.startsWith('http') ? article.link : 'https://' + article.link}"
                    target="_blank" 
                    rel="noopener noreferrer"

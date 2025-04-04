@@ -32,6 +32,7 @@ class HelpSeekerStoreRequest extends FormRequest
             'category_ids'     => 'required|array',
             'township_id'      => 'nullable',
             'location'         => 'required',
+            'link'            => 'nullable',
             'contact'          => "nullable",
             'content'          => 'required',
             'urgent_level'     => 'required',

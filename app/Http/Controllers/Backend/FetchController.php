@@ -20,7 +20,7 @@ class FetchController extends Controller
         } elseif ($type == 'receivers') {
             $query = HelpSeeker::with('city', 'township', 'category');
         } else {
-            $data = Donator::with('city', 'township', 'category', 'user', 'categoryContributions.category')->orderBy('updated_at')->paginate(9);
+            $data = Donator::with('city', 'township', 'category', 'user', 'categoryContributions.category')->orderBy('updated_at', 'desc')->paginate(9);
             return $this->successResponse($data);
         }
 
@@ -54,7 +54,7 @@ class FetchController extends Controller
         } elseif ($type == 'receivers') {
             $query = HelpSeeker::with('city', 'township', 'category', 'categoryContributions.category');
         } else {
-            $data = HelpSeeker::with('city', 'township', 'category', 'categoryContributions.category')->orderBy('updated_at')->paginate(9);
+            $data = HelpSeeker::with('city', 'township', 'category', 'categoryContributions.category')->orderBy('updated_at', 'desc')->paginate(9);
             return $this->successResponse($data);
         }
 

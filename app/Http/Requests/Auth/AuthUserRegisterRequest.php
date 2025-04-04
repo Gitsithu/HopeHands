@@ -24,7 +24,7 @@ class AuthUserRegisterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'username'         => 'required|unique:users,username',
+            'username'         => 'required',
             // 'password'         => 'required|min:6',
             // 'confirm_password' => 'same:password',
             // 'front_view'       => 'required|image|mimes:png,jpg,jpeg',

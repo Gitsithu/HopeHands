@@ -1,6 +1,6 @@
 @extends('frontend.layouts.master')
 
-@section('title', 'Donators')
+@section('title', 'Articles')
 
 @section('content')
 <div class="text-center">

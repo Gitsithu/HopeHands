@@ -114,7 +114,7 @@ class AuthUserController extends Controller
         try {
             $user = auth()->guard('api')->user();
 
-            $query = Donator::with(['user', 'division', 'city', 'township', 'category', 'categoryContributions.category'])->orderByDesc('created_at');
+            $query = Donator::with(['user', 'division', 'city', 'township', 'category', 'categoryContributions.category'])->orderBy('updated_at', 'desc');
 
             if ($user) {
                 $query->where('user_id', '!=', $user->id);
